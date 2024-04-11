@@ -5,19 +5,16 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Menu extends GUI implements ActionListener {
-    private JComboBox<String> dishComboBox;
+public class MenuGUI extends GUI implements ActionListener {
+    private JComboBox dishComboBox;
     private JButton addToMenuButton;
     private JButton finalizeMenuButton;
     private List<String> selectedDishes;
 
-    public Menu() {
-        initializeComponents();
+    public MenuGUI() {
         selectedDishes = new ArrayList<>();
-    }
-
-    private void initializeComponents() {
         JLabel dishLabel = new JLabel("Select Dish:");
+        dishLabel.setForeground(Color.white);
         dishLabel.setBounds(50, 50, 100, 25);
         add(dishLabel);
 
@@ -34,6 +31,11 @@ public abstract class Menu extends GUI implements ActionListener {
         finalizeMenuButton.setBounds(220, 100, 150, 25);
         finalizeMenuButton.addActionListener(this);
         add(finalizeMenuButton);
+        populateDishes(new String[]{"Spaghetti", "Salad", "Pizza"});
+    }
+
+    private void initializeComponents() {
+
     }
 
     @Override
@@ -50,7 +52,7 @@ public abstract class Menu extends GUI implements ActionListener {
                 // Here you can finalize the menu
                 // For now, let's just print a message
                 System.out.println("Menu finalized!");
-                JOptionPane.showMessageDialog(null, "Menu Finalized!", "Sucess", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Menu Finalized!", "Success", JOptionPane.PLAIN_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Menu is empty!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -63,19 +65,6 @@ public abstract class Menu extends GUI implements ActionListener {
         for (String dishName : dishNames) {
             dishComboBox.addItem(dishName);
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Menu menu = new Menu() {
-                // Dummy implementation of abstract method
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                }
-            };
-            // Dummy dish data
-            menu.populateDishes(new String[]{"Spaghetti", "Salad", "Pizza"});
-        });
     }
 }
 

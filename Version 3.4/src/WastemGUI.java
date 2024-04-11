@@ -12,6 +12,7 @@ public class WastemGUI extends GUI implements ActionListener {
         setTitle("Waste Management");
 
         JLabel ingredientLabel = new JLabel("Select Ingredient:");
+        ingredientLabel.setForeground(Color.white);
         ingredientLabel.setBounds(50, 50, 150, 25);
         add(ingredientLabel);
 

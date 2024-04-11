@@ -20,8 +20,6 @@ public class LoginGUI extends GUI implements ActionListener {
         this.logininfo = logininfo;
         setLayout(null); // Use absolute positioning
 
-
-
         // Add user ID label and combo box
         userIDLabel.setForeground(Color.WHITE);
         userIDLabel.setBounds(330,300,75,25);
@@ -36,7 +34,6 @@ public class LoginGUI extends GUI implements ActionListener {
         userPasswordField.setBounds(375,350,200,25);
         add(userPasswordField);
 
-        // Add login button
         loginButton.setBounds(425,400,100,25);
         loginButton.setFocusable(false);
         loginButton.addActionListener(this);
@@ -54,9 +51,9 @@ public class LoginGUI extends GUI implements ActionListener {
 
             if (logininfo.containsKey(userID)) {
                 if (logininfo.get(userID).equals(password)) {
-                    // Successful login - close login window or do something else
+
                     dispose();
-                    // Example: MainMenu mainmenu = new MainMenu();
+                    MainMenuGUI mainmenu = new MainMenuGUI();
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Password", "Error!", JOptionPane.ERROR_MESSAGE);
                 }

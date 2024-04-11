@@ -5,8 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderGUI implements ActionListener {
-    private JFrame frame;
+public class OrderGUI extends GUI implements ActionListener {
     private JButton addButton;
     private JButton submitButton;
     private JTextArea orderTextArea;
@@ -15,10 +14,7 @@ public class OrderGUI implements ActionListener {
     private List<Course> Coursees;
 
     public OrderGUI() {
-        frame = new JFrame("Order System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLayout(new GridLayout(4, 1));
+        setLayout(new GridLayout(4, 1));
 
         // Initialize components
         addButton = new JButton("Start Cooking");
@@ -42,15 +38,17 @@ public class OrderGUI implements ActionListener {
         tableNumField = new JTextField();
 
         // Add components to the frame
-        frame.add(new JLabel("Select Course:"));
-        frame.add(CourseComboBox);
-        frame.add(new JLabel("Table Number:"));
-        frame.add(tableNumField);
-        frame.add(addButton);
-        frame.add(submitButton);
-        frame.add(new JScrollPane(orderTextArea));
+        add(new JLabel("Select Course:"));
+        add(CourseComboBox);
+        add(new JLabel("Table Number:"));
+        add(tableNumField);
+        add(addButton);
+        add(submitButton);
+        add(new JScrollPane(orderTextArea));
 
-        frame.setVisible(true);
+        revalidate();
+        repaint();
+
     }
 
     @Override
@@ -64,17 +62,13 @@ public class OrderGUI implements ActionListener {
                 selectedCourse.setTableNum(tableNum);
                 orderTextArea.append(selectedCourse.toString() + "\n");
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(frame, "Please enter a valid table number.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid table number.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == submitButton) {
             // Handle submitting the order
             // You can implement this based on your requirements
-            JOptionPane.showMessageDialog(frame, "Order Completed!");
+            JOptionPane.showMessageDialog(null, "Order Completed!");
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(OrderGUI::new);
     }
 
     // Dummy Course class for demonstration

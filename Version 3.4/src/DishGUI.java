@@ -1,19 +1,17 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DishGUI extends JFrame implements ActionListener {
+public class DishGUI extends GUI implements ActionListener {
     private JComboBox<String> recipeComboBox;
     private JButton addButton;
 
     public DishGUI() {
         setTitle("Dish");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 200);
-        setLocationRelativeTo(null);
-        setLayout(null);
 
         JLabel recipeLabel = new JLabel("Select Recipe:");
+        recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(50, 50, 100, 25);
         add(recipeLabel);
 
@@ -26,7 +24,7 @@ public class DishGUI extends JFrame implements ActionListener {
         recipeComboBox.addItem("Recipe 2");
         recipeComboBox.addItem("Recipe 3");
 
-        addButton = new JButton("Add Recipe");
+        addButton = new JButton("Add to Dish");
         addButton.setBounds(160, 100, 150, 25);
         addButton.addActionListener(this);
         add(addButton);
