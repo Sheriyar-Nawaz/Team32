@@ -47,3 +47,4 @@ public class WastemGUI extends GUI implements ActionListener {
         SwingUtilities.invokeLater(WastemGUI::new);
     }
 }
+//iyfkjhg
