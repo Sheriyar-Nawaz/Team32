@@ -60,7 +60,8 @@ public class Login implements ActionListener {
 
             if(logininfo.containsKey(userID)){
                 if(logininfo.get(userID).equals(password)){
-                    JOptionPane.showMessageDialog(null, "Login Successful", "Success!", JOptionPane.PLAIN_MESSAGE);
+                    frame.dispose();
+                    MainMenu mainmenu = new MainMenu();
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Password", "Error!", JOptionPane.ERROR_MESSAGE);
                 }

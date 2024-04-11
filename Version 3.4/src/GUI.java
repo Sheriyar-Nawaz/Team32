@@ -7,41 +7,8 @@ public class GUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 700);
         setLocationRelativeTo(null);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Kitchen", SwingConstants.CENTER);
-        panel.add(label, BorderLayout.NORTH);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 3, 10, 10));
-
-        JButton button1 = new JButton("Recipes");
-        JButton button2 = new JButton("Dishes");
-        JButton button3 = new JButton("Menus");
-        JButton button4 = new JButton("Orders");
-        JButton button5 = new JButton("Stock");
-        JButton button6 = new JButton("Waste Management");
-        buttonPanel.add(button1);
-        buttonPanel.add(button2);
-        buttonPanel.add(button3);
-        buttonPanel.add(button4);
-        buttonPanel.add(button5);
-        buttonPanel.add(button6);
-
-        panel.add(buttonPanel, BorderLayout.CENTER);
-
-        add(panel);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GUI gui = new GUI();
-                gui.setVisible(true);
-            }
-        });
+        getContentPane().setBackground(new Color(43,51,54));
+        setLayout(null);
+        setVisible(true);
     }
 }
