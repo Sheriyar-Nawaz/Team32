@@ -5,7 +5,7 @@ public class GUI extends JFrame {
     public GUI() {
         setTitle("Kitchen");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 750);
+        setSize(900, 700);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
@@ -17,12 +17,12 @@ public class GUI extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(2, 3, 10, 10));
 
-        JButton button1 = new JButton("X");
-        JButton button2 = new JButton("X");
-        JButton button3 = new JButton("X");
-        JButton button4 = new JButton("X");
-        JButton button5 = new JButton("X");
-        JButton button6 = new JButton("X");
+        JButton button1 = new JButton("Recipes");
+        JButton button2 = new JButton("Dishes");
+        JButton button3 = new JButton("Menus");
+        JButton button4 = new JButton("Orders");
+        JButton button5 = new JButton("Stock");
+        JButton button6 = new JButton("Waste Management");
         buttonPanel.add(button1);
         buttonPanel.add(button2);
         buttonPanel.add(button3);

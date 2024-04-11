@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Login implements ActionListener {
     JFrame frame = new JFrame();
     JButton loginButton = new JButton("Login");
-    String[] users = {"","Line Chef", "Sous Chef", "Head Chef"};
+    String[] users = {"Line Chef", "Sous Chef", "Head Chef"};
     JComboBox userIDs = new JComboBox(users);
     JPasswordField userPasswordField = new JPasswordField();
     JLabel userIDLabel = new JLabel("User:");
@@ -30,6 +30,7 @@ public class Login implements ActionListener {
 
         userIDs.setBounds(375,300,200,25);
         userIDs.addActionListener(this);
+        //userIDs.setSelectedIndex(0);
         userPasswordField.setBounds(375,350,200,25);
 
         loginButton.setBounds(425,400,100,25);
