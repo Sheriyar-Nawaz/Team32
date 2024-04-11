@@ -2,7 +2,7 @@ import java.util.Map;
 
 public interface KitchenFrontOfHouseReceiver {
 
-  Order receiveOrder();
+  OrderGUI receiveOrder();
   Map<Integer, Boolean> receiveCourseCompletionStatus();
 
 

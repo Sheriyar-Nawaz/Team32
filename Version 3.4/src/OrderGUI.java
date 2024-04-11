@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order implements ActionListener {
+public class OrderGUI implements ActionListener {
     private JFrame frame;
     private JButton addButton;
     private JButton submitButton;
@@ -14,7 +14,7 @@ public class Order implements ActionListener {
     private JTextField tableNumField;
     private List<Course> Coursees;
 
-    public Order() {
+    public OrderGUI() {
         frame = new JFrame("Order System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
@@ -74,7 +74,7 @@ public class Order implements ActionListener {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Order::new);
+        SwingUtilities.invokeLater(OrderGUI::new);
     }
 
     // Dummy Course class for demonstration
