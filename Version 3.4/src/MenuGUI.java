@@ -17,23 +17,26 @@ public class MenuGUI extends GUI implements ActionListener {
         selectedDishes = new ArrayList<>();
         JLabel dishLabel = new JLabel("Select Dish:");
         dishLabel.setForeground(Color.white);
-        dishLabel.setBounds(50, 50, 100, 25);
+        dishLabel.setBounds(290, 300, 100, 25);
         add(dishLabel);
 
         add(backButton);
         backButton.addActionListener(this);
+
+        logo.setBounds(300,0,300,300);
+        add(logo);
 
         dishComboBox = new JComboBox<>();
         dishComboBox.setBounds(375,300,200,25);
         add(dishComboBox);
 
         addToMenuButton = new JButton("Add to Menu");
-        addToMenuButton.setBounds(50, 100, 150, 25);
+        addToMenuButton.setBounds(350,350,150,25);
         addToMenuButton.addActionListener(this);
         add(addToMenuButton);
 
         finalizeMenuButton = new JButton("Finalize Menu");
-        finalizeMenuButton.setBounds(220, 100, 150, 25);
+        finalizeMenuButton.setBounds(350,400,150,25);
         finalizeMenuButton.addActionListener(this);
         if (!Objects.equals(user, "Head Chef")){
             finalizeMenuButton.setEnabled(false);
