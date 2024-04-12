@@ -17,7 +17,7 @@ public class MenuGUI extends GUI implements ActionListener {
         selectedDishes = new ArrayList<>();
         JLabel dishLabel = new JLabel("Select Dish:");
         dishLabel.setForeground(Color.white);
-        dishLabel.setBounds(290, 300, 100, 25);
+        dishLabel.setBounds(250, 300, 100, 25);
         add(dishLabel);
 
         add(backButton);
@@ -27,7 +27,7 @@ public class MenuGUI extends GUI implements ActionListener {
         add(logo);
 
         dishComboBox = new JComboBox<>();
-        dishComboBox.setBounds(375,300,200,25);
+        dishComboBox.setBounds(325,300,200,25);
         add(dishComboBox);
 
         addToMenuButton = new JButton("Add to Menu");
@@ -43,6 +43,9 @@ public class MenuGUI extends GUI implements ActionListener {
         }
         add(finalizeMenuButton);
         populateDishes(new String[]{"Spaghetti", "Salad", "Pizza"});
+
+        revalidate();
+        repaint();
     }
 
     @Override
