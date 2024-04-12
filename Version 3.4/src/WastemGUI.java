@@ -16,6 +16,9 @@ public class WastemGUI extends GUI implements ActionListener {
         ingredientLabel.setBounds(50, 50, 150, 25);
         add(ingredientLabel);
 
+        add(backButton);
+        backButton.addActionListener(this);
+
         ingredientComboBox = new JComboBox<>();
         ingredientComboBox.setBounds(200, 50, 200, 25);
         add(ingredientComboBox);
@@ -41,6 +44,10 @@ public class WastemGUI extends GUI implements ActionListener {
             // For now, let's just print it
             System.out.println("Selected ingredient added to waste: " + selectedIngredient);
             JOptionPane.showMessageDialog(this, "Added to Waste: " + selectedIngredient);
+        }
+        if (e.getSource() == backButton){
+            dispose();
+            MainMenuGUI mm = new MainMenuGUI(user);
         }
     }
 }

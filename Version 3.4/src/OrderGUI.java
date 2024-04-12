@@ -17,6 +17,9 @@ public class OrderGUI extends GUI implements ActionListener {
         super(user);
         setLayout(new GridLayout(4, 1));
 
+        add(backButton);
+        backButton.addActionListener(this);
+
         // Initialize components
         addButton = new JButton("Start Cooking");
         addButton.addActionListener(this);
@@ -69,6 +72,10 @@ public class OrderGUI extends GUI implements ActionListener {
             // Handle submitting the order
             // You can implement this based on your requirements
             JOptionPane.showMessageDialog(null, "Order Completed!");
+        }
+        if (e.getSource() == backButton){
+            dispose();
+            MainMenuGUI mm = new MainMenuGUI(user);
         }
     }
 

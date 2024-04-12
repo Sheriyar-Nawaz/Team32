@@ -16,6 +16,9 @@ public class DishGUI extends GUI implements ActionListener {
         recipeLabel.setBounds(50, 50, 100, 25);
         add(recipeLabel);
 
+        add(backButton);
+        backButton.addActionListener(this);
+
         recipeComboBox = new JComboBox<>();
         recipeComboBox.setBounds(160, 50, 200, 25);
         add(recipeComboBox);
@@ -41,6 +44,10 @@ public class DishGUI extends GUI implements ActionListener {
             // For now, let's just print it
             System.out.println("Selected recipe: " + selectedRecipe);
             JOptionPane.showMessageDialog(this, "Recipe added to dish: " + selectedRecipe);
+        }
+        if (e.getSource() == backButton){
+            dispose();
+            MainMenuGUI mm = new MainMenuGUI(user);
         }
     }
 
