@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MenuGUI extends GUI implements ActionListener {
-    private JComboBox dishComboBox;
+    private JComboBox<Object> dishComboBox;
     private JButton addToMenuButton;
     private JButton finalizeMenuButton;
     private List<String> selectedDishes;
@@ -21,9 +21,10 @@ public class MenuGUI extends GUI implements ActionListener {
         add(dishLabel);
 
         add(backButton);
+        backButton.addActionListener(this);
 
         dishComboBox = new JComboBox<>();
-        dishComboBox.setBounds(160, 50, 200, 25);
+        dishComboBox.setBounds(375,300,200,25);
         add(dishComboBox);
 
         addToMenuButton = new JButton("Add to Menu");
@@ -34,10 +35,10 @@ public class MenuGUI extends GUI implements ActionListener {
         finalizeMenuButton = new JButton("Finalize Menu");
         finalizeMenuButton.setBounds(220, 100, 150, 25);
         finalizeMenuButton.addActionListener(this);
-        System.out.println(this.user);
-        if (Objects.equals(this.user, "Head Chef")){
-            add(finalizeMenuButton);
+        if (!Objects.equals(user, "Head Chef")){
+            finalizeMenuButton.setEnabled(false);
         }
+        add(finalizeMenuButton);
         populateDishes(new String[]{"Spaghetti", "Salad", "Pizza"});
     }
 
@@ -50,7 +51,7 @@ public class MenuGUI extends GUI implements ActionListener {
             // For now, let's just print it
             System.out.println("Selected dish: " + selectedDish);
             JOptionPane.showMessageDialog(null, "Dish added to menu: " + selectedDish);
-        } else if (e.getSource() == finalizeMenuButton) {
+        } if (e.getSource() == finalizeMenuButton) {
             if (!selectedDishes.isEmpty()) {
                 // Here you can finalize the menu
                 // For now, let's just print a message
@@ -59,6 +60,10 @@ public class MenuGUI extends GUI implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Menu is empty!", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }
+        if (e.getSource() == backButton){
+            dispose();
+            MainMenuGUI mm = new MainMenuGUI(user);
         }
     }
 

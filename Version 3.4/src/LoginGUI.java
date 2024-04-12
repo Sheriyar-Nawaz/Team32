@@ -11,8 +11,7 @@ public class LoginGUI extends GUI implements ActionListener {
     JPasswordField userPasswordField = new JPasswordField();
     JLabel userIDLabel = new JLabel("User:");
     JLabel userPasswordLabel = new JLabel("Password:");
-    JLabel logo = new JLabel();
-    ImageIcon image = new ImageIcon("Lancasters-logos.jpeg");
+
     HashMap<String,String> logininfo;
 
     public LoginGUI(HashMap<String,String> logininfo) {
@@ -22,19 +21,22 @@ public class LoginGUI extends GUI implements ActionListener {
 
         // Add user ID label and combo box
         userIDLabel.setForeground(Color.WHITE);
-        userIDLabel.setBounds(330,300,75,25);
+        userIDLabel.setBounds(305,300,75,25);
         add(userIDLabel);
-        userIDs.setBounds(375,300,200,25);
+        userIDs.setBounds(350,300,200,25);
         add(userIDs);
+
+        logo.setBounds(300,0,300,300);
+        add(logo);
 
         // Add user password label and password field
         userPasswordLabel.setForeground(Color.WHITE);
-        userPasswordLabel.setBounds(300,350,75,25);
+        userPasswordLabel.setBounds(275,350,75,25);
         add(userPasswordLabel);
-        userPasswordField.setBounds(375,350,200,25);
+        userPasswordField.setBounds(350,350,200,25);
         add(userPasswordField);
 
-        loginButton.setBounds(425,400,100,25);
+        loginButton.setBounds(400,400,100,25);
         loginButton.setFocusable(false);
         loginButton.addActionListener(this);
         add(loginButton);

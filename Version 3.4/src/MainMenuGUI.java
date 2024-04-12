@@ -5,11 +5,9 @@ import java.awt.event.ActionListener;
 
 
 public class MainMenuGUI extends GUI implements ActionListener {
-    //GUI Class was supposed to be like a very rough sketch of the main menu, feel free to use the code from their and change it up
-
     JButton recipeButton = new JButton("Recipes");
-    JButton dishButton = new JButton("Dishes");
-    JButton menusButton = new JButton("Menus");
+    JButton dishButton = new JButton("Dish Construction");
+    JButton menusButton = new JButton("Menu Compilation");
     JButton orderButton = new JButton("Orders");
     JButton stockButton = new JButton("Stock");
     JButton wasteButton = new JButton("Waste Management");
