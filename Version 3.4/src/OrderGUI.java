@@ -13,7 +13,8 @@ public class OrderGUI extends GUI implements ActionListener {
     private JTextField tableNumField;
     private List<Course> Coursees;
 
-    public OrderGUI() {
+    public OrderGUI(String user) {
+        super(user);
         setLayout(new GridLayout(4, 1));
 
         // Initialize components

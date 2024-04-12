@@ -7,7 +7,8 @@ public class DishGUI extends GUI implements ActionListener {
     private JComboBox<String> recipeComboBox;
     private JButton addButton;
 
-    public DishGUI() {
+    public DishGUI(String user) {
+        super(user);
         setTitle("Dish");
 
         JLabel recipeLabel = new JLabel("Select Recipe:");
@@ -43,7 +44,4 @@ public class DishGUI extends GUI implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(DishGUI::new);
-    }
 }

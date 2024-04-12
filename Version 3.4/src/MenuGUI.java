@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuGUI extends GUI implements ActionListener {
     private JComboBox dishComboBox;
@@ -11,12 +12,15 @@ public class MenuGUI extends GUI implements ActionListener {
     private JButton finalizeMenuButton;
     private List<String> selectedDishes;
 
-    public MenuGUI() {
+    public MenuGUI(String user) {
+        super(user);
         selectedDishes = new ArrayList<>();
         JLabel dishLabel = new JLabel("Select Dish:");
         dishLabel.setForeground(Color.white);
         dishLabel.setBounds(50, 50, 100, 25);
         add(dishLabel);
+
+        add(backButton);
 
         dishComboBox = new JComboBox<>();
         dishComboBox.setBounds(160, 50, 200, 25);
@@ -30,12 +34,11 @@ public class MenuGUI extends GUI implements ActionListener {
         finalizeMenuButton = new JButton("Finalize Menu");
         finalizeMenuButton.setBounds(220, 100, 150, 25);
         finalizeMenuButton.addActionListener(this);
-        add(finalizeMenuButton);
+        System.out.println(this.user);
+        if (Objects.equals(this.user, "Head Chef")){
+            add(finalizeMenuButton);
+        }
         populateDishes(new String[]{"Spaghetti", "Salad", "Pizza"});
-    }
-
-    private void initializeComponents() {
-
     }
 
     @Override

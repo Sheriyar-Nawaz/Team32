@@ -7,8 +7,8 @@ public class WastemGUI extends GUI implements ActionListener {
     private JComboBox<String> ingredientComboBox;
     private JButton addToWasteButton;
 
-    public WastemGUI() {
-        super();
+    public WastemGUI(String user) {
+        super(user);
         setTitle("Waste Management");
 
         JLabel ingredientLabel = new JLabel("Select Ingredient:");
@@ -42,10 +42,6 @@ public class WastemGUI extends GUI implements ActionListener {
             System.out.println("Selected ingredient added to waste: " + selectedIngredient);
             JOptionPane.showMessageDialog(this, "Added to Waste: " + selectedIngredient);
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(WastemGUI::new);
     }
 }
 //iyfkjhg

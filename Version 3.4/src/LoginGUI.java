@@ -16,7 +16,7 @@ public class LoginGUI extends GUI implements ActionListener {
     HashMap<String,String> logininfo;
 
     public LoginGUI(HashMap<String,String> logininfo) {
-        super();
+        super(null);
         this.logininfo = logininfo;
         setLayout(null); // Use absolute positioning
 
@@ -51,9 +51,9 @@ public class LoginGUI extends GUI implements ActionListener {
 
             if (logininfo.containsKey(userID)) {
                 if (logininfo.get(userID).equals(password)) {
-
+                    user = userID;
                     dispose();
-                    MainMenuGUI mainmenu = new MainMenuGUI();
+                    MainMenuGUI mainmenu = new MainMenuGUI(user);
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Password", "Error!", JOptionPane.ERROR_MESSAGE);
                 }

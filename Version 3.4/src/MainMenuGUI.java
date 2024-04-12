@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,29 +14,30 @@ public class MainMenuGUI extends GUI implements ActionListener {
     JButton stockButton = new JButton("Stock");
     JButton wasteButton = new JButton("Waste Management");
 
-    public MainMenuGUI(){
-        super();
-        recipeButton.setBounds(100,100,200,100);
+    public MainMenuGUI(String user){
+        super(user);
+        recipeButton.setBounds(100,150,200,100);
         recipeButton.addActionListener(this);
         add(recipeButton);
-        dishButton.setBounds(350,100,200,100);
+        dishButton.setBounds(350,150,200,100);
         dishButton.addActionListener(this);
         add(dishButton);
-        menusButton.setBounds(600,100,200,100);
+        menusButton.setBounds(600,150,200,100);
         menusButton.addActionListener(this);
         add(menusButton);
-        orderButton.setBounds(100,300,200,100);
+        orderButton.setBounds(100,350,200,100);
         orderButton.addActionListener(this);
         add(orderButton);
-        stockButton.setBounds(350,300,200,100);
+        stockButton.setBounds(350,350,200,100);
         stockButton.addActionListener(this);
         add(stockButton);
-        wasteButton.setBounds(600,300,200,100);
+        wasteButton.setBounds(600,350,200,100);
         wasteButton.addActionListener(this);
         add(wasteButton);
 
-        revalidate();
-        repaint();
+        add(backButton);
+        backButton.setText("Log out");
+        backButton.addActionListener(this);
 
     }
 
@@ -44,19 +46,23 @@ public class MainMenuGUI extends GUI implements ActionListener {
 
         if (e.getSource() == dishButton) {
             dispose();
-            DishGUI dishGUI = new DishGUI();
+            DishGUI dishGUI = new DishGUI(user);
         }
         if (e.getSource() == menusButton) {
             dispose();
-            MenuGUI menuGUI = new MenuGUI();
+            MenuGUI menuGUI = new MenuGUI(user);
         }
         if (e.getSource() == orderButton) {
             dispose();
-            OrderGUI orderGUI = new OrderGUI();
+            OrderGUI orderGUI = new OrderGUI(user);
         }
         if (e.getSource() == wasteButton) {
             dispose();
-            WastemGUI wasteGUI = new WastemGUI();
+            WastemGUI wasteGUI = new WastemGUI(user);
+        }
+        if (e.getSource() == backButton) {
+            dispose();
+            LoginGUI loginGUI = new LoginGUI(new UserPass().getLogininfo());
         }
 
 
