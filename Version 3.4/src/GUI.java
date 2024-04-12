@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class GUI extends JFrame {
     String user;
     JButton backButton = new JButton("Back");
     JLabel logo = new JLabel();
-    ImageIcon image = new ImageIcon("C:\\IN1007\\Team32\\Version 3.4\\src\\logo.png");
+    ImageIcon image = new ImageIcon(Objects.requireNonNull(GUI.class.getResource("/Lancasters-logos.jpeg")));
     public GUI(String userType) {
         user = userType;
 
