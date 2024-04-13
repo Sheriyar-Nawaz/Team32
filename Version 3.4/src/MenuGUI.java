@@ -4,18 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class MenuGUI extends GUI implements ActionListener {
-    private JList<String> dishList;
-    private JList<String> menu;
-    private JComboBox<Object> menuComboBox;
-    private JButton addToMenuButton;
-    private JButton finalizeMenuButton;
+    private final JButton addToMenuButton;
+    private final JButton createMenuButton;
+    JFrame frame;
+    private JButton createButton;
     private JDateChooser dateChooser;
+    private final JButton finalizeMenuButton;
     private List<String> selectedDishes;
 
     public MenuGUI(String user) {
@@ -32,7 +30,7 @@ public class MenuGUI extends GUI implements ActionListener {
         dishLabel.setForeground(Color.white);
         dishLabel.setBounds(50, 300, 100, 25);
         add(dishLabel);
-        dishList = new JList<>(new String[]{"Spaghetti", "Salad", "Pizza"});
+        JList<String> dishList = new JList<>(new String[]{"Spaghetti", "Salad", "Pizza"});
         JScrollPane dishScrollPane = new JScrollPane(dishList);
         dishScrollPane.setBounds(50,325,200,275);
         dishList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -42,7 +40,7 @@ public class MenuGUI extends GUI implements ActionListener {
         menuLabel.setForeground(Color.white);
         menuLabel.setBounds(650, 300, 100, 25);
         add(menuLabel);
-        menu = new JList<>(new String[]{"Spaghetti", "Salad", "Pizza"});
+        JList<String> menu = new JList<>(new String[]{"Spaghetti", "Salad", "Pizza"});
         JScrollPane menuScrollPane = new JScrollPane(menu);
         menuScrollPane.setBounds(650,325,200,275);
         menu.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
@@ -52,20 +50,19 @@ public class MenuGUI extends GUI implements ActionListener {
         selectMenuLabel.setForeground(Color.white);
         selectMenuLabel.setBounds(50, 175, 100, 25);
         add(selectMenuLabel);
-        menuComboBox = new JComboBox<>();
+        JComboBox<Object> menuComboBox = new JComboBox<>();
         menuComboBox.setBounds(50,200,200,25);
         add(menuComboBox);
-
-        Calendar cld = Calendar.getInstance();
-        dateChooser = new JDateChooser(cld.getTime());
-        dateChooser.setDateFormatString("dd/MM/yyyy");
-        dateChooser.setBounds(100,100,100,25);
-        add(dateChooser);
 
         addToMenuButton = new JButton("Add to Menu");
         addToMenuButton.setBounds(50,600,200,25);
         addToMenuButton.addActionListener(this);
         add(addToMenuButton);
+
+        createMenuButton = new JButton("Create New Menu");
+        createMenuButton.setBounds(350,350,150,75);
+        createMenuButton.addActionListener(this);
+        add(createMenuButton);
 
         finalizeMenuButton = new JButton("Finalise Menu");
         finalizeMenuButton.setBounds(350,450,150,75);
@@ -80,6 +77,35 @@ public class MenuGUI extends GUI implements ActionListener {
         repaint();
     }
 
+    public void createMenuGUI(){
+        frame = new JFrame();
+        frame.setTitle("Create Menu");
+        //frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel dateLabel = new JLabel("Date:");
+        dateLabel.setBounds(80,50,40,25);
+        frame.add(dateLabel);
+
+        Calendar cld = Calendar.getInstance();
+        dateChooser = new JDateChooser(cld.getTime());
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+        dateChooser.setBounds(120,50,100,25);
+        frame.add(dateChooser);
+
+        createButton = new JButton("Create");
+        createButton.setBounds(100,100,100,25);
+        createButton.addActionListener(this);
+        frame.add(createButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToMenuButton) {
@@ -89,7 +115,12 @@ public class MenuGUI extends GUI implements ActionListener {
             // For now, let's just print it
             //System.out.println("Selected dish: " + selectedDish);
             //JOptionPane.showMessageDialog(null, "Dish added to menu: " + selectedDish);
-        } if (e.getSource() == finalizeMenuButton) {
+        } if (e.getSource() == createMenuButton) {
+            createMenuGUI();
+        } if (e.getSource() == createButton) {
+            frame.dispose();
+        }
+        if (e.getSource() == finalizeMenuButton) {
             if (!selectedDishes.isEmpty()) {
                 // Here you can finalize the menu
                 // For now, let's just print a message
