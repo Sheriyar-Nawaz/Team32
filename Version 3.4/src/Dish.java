@@ -10,4 +10,16 @@ public class Dish {
         this.dishName = name;
         this.recipes = recipes;
     }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public String getDishId() {
+        return dishId;
+    }
+
+    public String getDishName() {
+        return dishName;
+    }
 }

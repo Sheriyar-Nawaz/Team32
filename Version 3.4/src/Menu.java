@@ -8,4 +8,12 @@ public class Menu {
         this.menuId = id;
         this.dishes = dishes;
     }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
 }

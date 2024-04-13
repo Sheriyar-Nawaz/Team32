@@ -23,4 +23,19 @@ public class Recipe {
         ingredients.remove(ingredient);
     }
 
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public String getRecipeId() {
+        return recipeId;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
 }
