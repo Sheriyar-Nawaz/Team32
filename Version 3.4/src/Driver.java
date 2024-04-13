@@ -18,22 +18,7 @@ public class Driver {
 
             Connection connection = DriverManager.getConnection(url, username, password);
             statement1 = connection.createStatement(); // For Simple Queries (creationStatement)
-            statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
-
-            statement2.setInt(1, 1);
-            statement2.setInt(2, 1);
-
-            resultSet = statement2.executeQuery();
-
-            while(resultSet.next()){
-                int recID = resultSet.getInt("RecipeID");
-                String name = resultSet.getString("Name");
-                String desc = resultSet.getString("Description");
-                int isApproved = resultSet.getInt("isApproved");
-
-                System.out.println(recID + " " + name + " " + desc + " " + isApproved);
-            }
-
+            //            statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
 
 
 
@@ -85,7 +70,20 @@ public class Driver {
 //            System.out.println("Delete Complete.");
 
 
-
+//            statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
+//            statement2.setInt(1, 1);
+//            statement2.setInt(2, 1);
+//
+//            resultSet = statement2.executeQuery();
+//
+//            while(resultSet.next()){
+//                int recID = resultSet.getInt("RecipeID");
+//                String name = resultSet.getString("Name");
+//                String desc = resultSet.getString("Description");
+//                int isApproved = resultSet.getInt("isApproved");
+//
+//                System.out.println(recID + " " + name + " " + desc + " " + isApproved);
+//            }
 
             connection.close();
         }

@@ -50,5 +50,4 @@ public class DishGUI extends GUI implements ActionListener {
             MainMenuGUI mm = new MainMenuGUI(user);
         }
     }
-
 }
