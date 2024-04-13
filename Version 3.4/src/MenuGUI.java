@@ -16,39 +16,49 @@ public class MenuGUI extends GUI implements ActionListener {
 
     public MenuGUI(String user) {
         super(user);
-        selectedDishes = new ArrayList<>();
-        JLabel dishLabel = new JLabel("Available Dishes");
-        dishLabel.setForeground(Color.white);
-        dishLabel.setBounds(50, 300, 100, 25);
-        add(dishLabel);
 
         add(backButton);
         backButton.addActionListener(this);
 
-        logo.setBounds(270,0,300,300);
+        logo.setBounds(270,-50,300,300);
         add(logo);
 
+        //selectedDishes = new ArrayList<>();
+        JLabel dishLabel = new JLabel("Available Dishes");
+        dishLabel.setForeground(Color.white);
+        dishLabel.setBounds(50, 300, 100, 25);
+        add(dishLabel);
         dishList = new JList<>(new String[]{"Spaghetti", "Salad", "Pizza"});
         JScrollPane dishScrollPane = new JScrollPane(dishList);
-        dishScrollPane.setBounds(50,325,200,300);
+        dishScrollPane.setBounds(50,325,200,275);
         dishList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(dishScrollPane);
 
+        JLabel menuLabel = new JLabel("Menu");
+        menuLabel.setForeground(Color.white);
+        menuLabel.setBounds(650, 300, 100, 25);
+        add(menuLabel);
         menu = new JList<>(new String[]{"Spaghetti", "Salad", "Pizza"});
-        menu.setBounds(650,325,200,300);
-        add(menu);
+        JScrollPane menuScrollPane = new JScrollPane(menu);
+        menuScrollPane.setBounds(650,325,200,275);
+        menu.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        add(menuScrollPane);
 
+        JLabel selectMenuLabel = new JLabel("Select Menu");
+        selectMenuLabel.setForeground(Color.white);
+        selectMenuLabel.setBounds(50, 175, 100, 25);
+        add(selectMenuLabel);
         menuComboBox = new JComboBox<>();
-        menuComboBox.setBounds(50,250,200,25);
+        menuComboBox.setBounds(50,200,200,25);
         add(menuComboBox);
 
         addToMenuButton = new JButton("Add to Menu");
-        addToMenuButton.setBounds(350,400,150,25);
+        addToMenuButton.setBounds(50,600,200,25);
         addToMenuButton.addActionListener(this);
         add(addToMenuButton);
 
-        finalizeMenuButton = new JButton("Finalize Menu");
-        finalizeMenuButton.setBounds(350,450,150,25);
+        finalizeMenuButton = new JButton("Finalise Menu");
+        finalizeMenuButton.setBounds(350,450,150,75);
         finalizeMenuButton.addActionListener(this);
         if (!Objects.equals(user, "Head Chef")){
             finalizeMenuButton.setEnabled(false);
