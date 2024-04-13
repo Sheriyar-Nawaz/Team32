@@ -4,7 +4,7 @@ public class Main {
         UserPass userPass = new UserPass();
         LoginGUI login = new LoginGUI(userPass.getLogininfo());
         //MainMenuGUI m = new MainMenuGUI(null);
-        //MenuGUI m = new MenuGUI(null);
+        // MenuGUI m = new MenuGUI(null);
 
     }
 }
