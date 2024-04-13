@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
-public class MenuGUI extends GUI implements ActionListener {
+public class MenuCompGUI extends GUI implements ActionListener {
     private final JButton addToMenuButton;
     private final JButton createMenuButton;
     JFrame frame;
@@ -16,7 +16,7 @@ public class MenuGUI extends GUI implements ActionListener {
     private final JButton finalizeMenuButton;
     private List<String> selectedDishes;
 
-    public MenuGUI(String user) {
+    public MenuCompGUI(String user) {
         super(user);
 
         add(backButton);
@@ -60,12 +60,12 @@ public class MenuGUI extends GUI implements ActionListener {
         add(addToMenuButton);
 
         createMenuButton = new JButton("Create New Menu");
-        createMenuButton.setBounds(350,350,150,75);
+        createMenuButton.setBounds(350,250,150,75);
         createMenuButton.addActionListener(this);
         add(createMenuButton);
 
         finalizeMenuButton = new JButton("Finalise Menu");
-        finalizeMenuButton.setBounds(350,450,150,75);
+        finalizeMenuButton.setBounds(350,400,150,75);
         finalizeMenuButton.addActionListener(this);
         if (!Objects.equals(user, "Head Chef")){
             finalizeMenuButton.setEnabled(false);
@@ -80,7 +80,6 @@ public class MenuGUI extends GUI implements ActionListener {
     public void createMenuGUI(){
         frame = new JFrame();
         frame.setTitle("Create Menu");
-        //frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setSize(300, 200);
         frame.setLocationRelativeTo(null);

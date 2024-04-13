@@ -1,6 +1,6 @@
 import java.util.List;
 
 public interface KitchenManagementReceiver {
-    MenuGUI receiveMenu();
+    MenuCompGUI receiveMenu();
     List<Ingredient> receiveIngredientList();
 }

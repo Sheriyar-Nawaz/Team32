@@ -3,11 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DishGUI extends GUI implements ActionListener {
+public class DishConstructionGUI extends GUI implements ActionListener {
     private JComboBox<String> recipeComboBox;
     private JButton addButton;
 
-    public DishGUI(String user) {
+    public DishConstructionGUI(String user) {
         super(user);
         setTitle("Dish");
 

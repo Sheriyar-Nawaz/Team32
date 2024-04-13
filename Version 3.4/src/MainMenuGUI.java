@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,11 +43,11 @@ public class MainMenuGUI extends GUI implements ActionListener {
 
         if (e.getSource() == dishButton) {
             dispose();
-            DishGUI dishGUI = new DishGUI(user);
+            DishConstructionGUI dishGUI = new DishConstructionGUI(user);
         }
         if (e.getSource() == menusButton) {
             dispose();
-            MenuGUI menuGUI = new MenuGUI(user);
+            MenuCompGUI menuGUI = new MenuCompGUI(user);
         }
         if (e.getSource() == orderButton) {
             dispose();
