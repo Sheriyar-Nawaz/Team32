@@ -3,6 +3,9 @@ public class Main {
     public static void main(String[] args){
         UserPass userPass = new UserPass();
         LoginGUI login = new LoginGUI(userPass.getLogininfo());
+        DishConstructionDB DCDB = new DishConstructionDB();
+        DCDB.getDishes();
+
         //MainMenuGUI m = new MainMenuGUI(null);
         //MenuGUI m = new MenuGUI(null);
 //<<<<<<< HEAD

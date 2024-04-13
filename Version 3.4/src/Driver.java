@@ -18,9 +18,7 @@ public class Driver {
 
             Connection connection = DriverManager.getConnection(url, username, password);
             statement1 = connection.createStatement(); // For Simple Queries (creationStatement)
-            //            statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
-
-
+//          statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
 
 
               /*
@@ -43,8 +41,9 @@ public class Driver {
 //            statement1.executeUpdate(sql1);
 //            System.out.println("Insert Complete.");
 
+
               /*
-              Insert + Update
+              Insert + Update:
               */
 //            String sql2 = "INSERT into Menus "
 //                    + "(MenuID, Title, CreationDate)"
@@ -55,14 +54,15 @@ public class Driver {
 
 //            String sql3 = "UPDATE MenuDishes "
 //                    + " set MenuID = 2"
-//                    + " where DishID = 3";
+//                    + " where DishID = 2";
 //
 //            statement1.executeUpdate(sql3);
 //            System.out.println("Update Complete.");
 
-            /*
-            Delete Example:
-             */
+
+              /*
+              Delete Example:
+              */
 //            String sql4 = "DELETE from Recipes WHERE RecipeID = 5";
 //            int rowsAffected = statement.executeUpdate(sql4);
 //
@@ -70,6 +70,9 @@ public class Driver {
 //            System.out.println("Delete Complete.");
 
 
+              /*
+              Larger Query example:
+              */
 //            statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
 //            statement2.setInt(1, 1);
 //            statement2.setInt(2, 1);
