@@ -12,24 +12,24 @@ public class MainMenuGUI extends GUI implements ActionListener {
     JButton stockButton = new JButton("Stock");
     JButton wasteButton = new JButton("Waste Management");
 
-    public MainMenuGUI(String user){
+    public MainMenuGUI(String user) {
         super(user);
-        recipeButton.setBounds(100,150,200,100);
+        recipeButton.setBounds(100, 150, 200, 100);
         recipeButton.addActionListener(this);
         add(recipeButton);
-        dishButton.setBounds(350,150,200,100);
+        dishButton.setBounds(350, 150, 200, 100);
         dishButton.addActionListener(this);
         add(dishButton);
-        menusButton.setBounds(600,150,200,100);
+        menusButton.setBounds(600, 150, 200, 100);
         menusButton.addActionListener(this);
         add(menusButton);
-        orderButton.setBounds(100,350,200,100);
+        orderButton.setBounds(100, 350, 200, 100);
         orderButton.addActionListener(this);
         add(orderButton);
-        stockButton.setBounds(350,350,200,100);
+        stockButton.setBounds(350, 350, 200, 100);
         stockButton.addActionListener(this);
         add(stockButton);
-        wasteButton.setBounds(600,350,200,100);
+        wasteButton.setBounds(600, 350, 200, 100);
         wasteButton.addActionListener(this);
         add(wasteButton);
 
@@ -58,11 +58,16 @@ public class MainMenuGUI extends GUI implements ActionListener {
             dispose();
             WastemGUI wasteGUI = new WastemGUI(user);
         }
+
+        if (e.getSource() == stockButton) {
+            dispose();
+            StockGUI stockGUI = new StockGUI(user);
+        }
         if (e.getSource() == backButton) {
             dispose();
             LoginGUI loginGUI = new LoginGUI(new UserPass().getLogininfo());
         }
 
-
     }
+
 }
