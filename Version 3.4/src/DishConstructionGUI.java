@@ -1,39 +1,97 @@
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 
 public class DishConstructionGUI extends GUI implements ActionListener {
+    private final JButton addToDishButton;
+    private final JButton createDishButton;
+    private final JButton finalizeDishButton;
     private JComboBox<String> recipeComboBox;
+    JFrame frame;
+
     private JButton addButton;
 
     public DishConstructionGUI(String user) {
         super(user);
-        setTitle("Dish");
-
-        JLabel recipeLabel = new JLabel("Select Recipe:");
-        recipeLabel.setForeground(Color.white);
-        recipeLabel.setBounds(50, 50, 100, 25);
-        add(recipeLabel);
 
         add(backButton);
         backButton.addActionListener(this);
 
-        recipeComboBox = new JComboBox<>();
-        recipeComboBox.setBounds(160, 50, 200, 25);
-        add(recipeComboBox);
+        logo.setBounds(270,-50,300,300);
+        add(logo);
 
-        // Add some sample recipes
-        recipeComboBox.addItem("Recipe 1");
-        recipeComboBox.addItem("Recipe 2");
-        recipeComboBox.addItem("Recipe 3");
+        //selectedRecipes = new ArrayList<>();
+        JLabel recipeLabel = new JLabel("Available Recipes");
+        recipeLabel.setForeground(Color.white);
+        recipeLabel.setBounds(50, 300, 100, 25);
+        add(recipeLabel);
+        JList<String> recipeList = new JList<>(new String[]{"1", "2", "3"});
+        JScrollPane recipeScrollPane = new JScrollPane(recipeList);
+        recipeScrollPane.setBounds(50,325,200,275);
+        recipeList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        add(recipeScrollPane);
 
-        addButton = new JButton("Add to Dish");
-        addButton.setBounds(160, 100, 150, 25);
-        addButton.addActionListener(this);
-        add(addButton);
+        JLabel dishLabel = new JLabel("Dish");
+        dishLabel.setForeground(Color.white);
+        dishLabel.setBounds(650, 300, 100, 25);
+        add(dishLabel);
+        JList<String> dish = new JList<>(new String[]{"1", "2", "3"});
+        JScrollPane dishScrollPane = new JScrollPane(dish);
+        dishScrollPane.setBounds(650,325,200,275);
+        dish.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        add(dishScrollPane);
 
-        setVisible(true);
+        JLabel selectDishLabel = new JLabel("Select Dish");
+        selectDishLabel.setForeground(Color.white);
+        selectDishLabel.setBounds(50, 175, 100, 25);
+        add(selectDishLabel);
+        JComboBox<Object> dishComboBox = new JComboBox<>();
+        dishComboBox.setBounds(50,200,200,25);
+        add(dishComboBox);
+
+        addToDishButton = new JButton("Add to Dish");
+        addToDishButton.setBounds(50,600,200,25);
+        addToDishButton.addActionListener(this);
+        add(addToDishButton);
+
+        createDishButton = new JButton("Create New Dish");
+        createDishButton.setBounds(350,250,150,75);
+        createDishButton.addActionListener(this);
+        add(createDishButton);
+
+        finalizeDishButton = new JButton("Finalise Dish");
+        finalizeDishButton.setBounds(350,400,150,75);
+        finalizeDishButton.addActionListener(this);
+        if (!Objects.equals(user, "Head Chef")){
+            finalizeDishButton.setEnabled(false);
+        }
+        add(finalizeDishButton);
+
+        revalidate();
+        repaint();
+    }
+
+    public void createDishGUI(){
+        frame = new JFrame();
+        frame.setTitle("Create Dish");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JTextField dishNameField = new JTextField();
+        dishNameField.setBounds(100, 50, 150, 20);
+        frame.add(dishNameField);
+
+        frame.revalidate();
+        frame.repaint();
     }
 
     @Override
