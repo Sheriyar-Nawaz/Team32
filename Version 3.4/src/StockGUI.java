@@ -3,16 +3,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StockGUI extends JFrame {
+public class StockGUI extends GUI implements ActionListener {
     private JButton addDeliveryButton;
     private JButton addOrderButton;
     private JButton viewStockButton;
     private JButton viewWasteButton;
 
-    public StockGUI() {
+    public StockGUI(String user) {
+        super(user); // Call the constructor of the superclass with the user parameter
+        logo.setBounds(270,-80,200,200);
+        add(logo);
         setTitle("Stock Management");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 200);
+        setSize(800, 500);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(4, 1));
 
@@ -60,6 +63,11 @@ public class StockGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(StockGUI::new);
+        SwingUtilities.invokeLater(() -> new StockGUI("Admin")); // Example user parameter
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
