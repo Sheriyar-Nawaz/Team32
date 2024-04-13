@@ -14,6 +14,8 @@ public class DishConstructionGUI extends GUI implements ActionListener {
     private final JButton finalizeDishButton;
     private JComboBox<String> recipeComboBox;
     JFrame frame;
+    private JButton createButton;
+
 
     private JButton addButton;
 
@@ -90,12 +92,29 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         dishNameField.setBounds(100, 50, 150, 20);
         frame.add(dishNameField);
 
+        createButton = new JButton("Create");
+        createButton.setBounds(100,100,100,25);
+        createButton.addActionListener(this);
+        frame.add(createButton);
+
         frame.revalidate();
         frame.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addToDishButton) {
+            //String selectedDish = (String) scrollPane.getSelectedItem();
+            // selectedDishes.add(selectedDish);
+            // Here you can add the selected dish to the menu
+            // For now, let's just print it
+            //System.out.println("Selected dish: " + selectedDish);
+            //JOptionPane.showMessageDialog(null, "Dish added to menu: " + selectedDish);
+        } if (e.getSource() == createDishButton) {
+            createDishGUI();
+        } if (e.getSource() == createButton) {
+            frame.dispose();
+        }
         if (e.getSource() == addButton) {
             String selectedRecipe = (String) recipeComboBox.getSelectedItem();
             // Here you can add the selected recipe to the dish
