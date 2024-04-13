@@ -1,8 +1,11 @@
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +15,7 @@ public class MenuGUI extends GUI implements ActionListener {
     private JComboBox<Object> menuComboBox;
     private JButton addToMenuButton;
     private JButton finalizeMenuButton;
+    private JDateChooser dateChooser;
     private List<String> selectedDishes;
 
     public MenuGUI(String user) {
@@ -51,6 +55,12 @@ public class MenuGUI extends GUI implements ActionListener {
         menuComboBox = new JComboBox<>();
         menuComboBox.setBounds(50,200,200,25);
         add(menuComboBox);
+
+        Calendar cld = Calendar.getInstance();
+        dateChooser = new JDateChooser(cld.getTime());
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+        dateChooser.setBounds(100,100,100,25);
+        add(dateChooser);
 
         addToMenuButton = new JButton("Add to Menu");
         addToMenuButton.setBounds(50,600,200,25);

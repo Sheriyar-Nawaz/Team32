@@ -7,7 +7,6 @@ public class Main {
 //<<<<<<< HEAD
         MenuGUI m = new MenuGUI(null);
 
-        // MenuGUI m = new MenuGUI(null);
 
 //>>>>>>> e277b40984dd885437e530a68fd22473157f477d
     }
