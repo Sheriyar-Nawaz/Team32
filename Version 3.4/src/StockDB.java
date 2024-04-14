@@ -26,7 +26,7 @@ public class StockDB {
         //Insert dishID and quantity
     }
 
-    public void getStock(){
+    public JTable getStock(){
         //Load all records from stock table. Get quantity recieved for every ingredientID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -34,16 +34,9 @@ public class StockDB {
 
             statement1 = connection.createStatement();
             resultSet = statement1.executeQuery("SELECT IngredientID, Name, Stock FROM Ingredients");
-           // ResultSetMetaData rsmd = resultSet.getMetaData();
-            //DefaultTableModel model = (DefaultTableModel) table_1.getModel();
             table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
-
-            JFrame f = new JFrame();
-            table_1.setBounds(100,100,300,100);
-            f.add(table_1);
-            f.setVisible(true);
-            f.setSize(700,500);
-
+            connection.close();
+            return table_1;
 /*
             while(resultSet.next()){
                 int ID = resultSet.getInt("IngredientID");
@@ -51,15 +44,14 @@ public class StockDB {
                 double stock = resultSet.getDouble("Stock");
                 System.out.println(ID + " "  + name + " " + stock);
             }
-
-
  */
 
-            connection.close();
+
         }
         catch (Exception e){
             System.out.println(e);
         }
+        return null;
     }
     public void getWaste(){
         //Same as getStock but load wasteQuantity
