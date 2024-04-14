@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class RecipeCreateGUI extends GUI implements ActionListener {
-    private final JButton addToDishButton;
-    private final JButton createDishButton;
-    private final JButton finalizeDishButton;
+    private final JButton addToRecipeButton;
+    private final JButton removeFromRecipeButton;
+    private final JButton createRecipeButton;
+    private final JButton submitForReviewButton;
+    private final JButton saveAsDraftButton;
     private JComboBox<String> recipeComboBox;
     JFrame frame;
     private JButton createButton;
@@ -29,7 +31,7 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         //selectedRecipes = new ArrayList<>();
         JLabel ingredientLabel = new JLabel("Available Ingredients");
         ingredientLabel.setForeground(Color.white);
-        ingredientLabel.setBounds(50, 300, 100, 25);
+        ingredientLabel.setBounds(50, 300, 200, 25);
         add(ingredientLabel);
         JList<String> ingredientList = new JList<>(new String[]{"eggs", "flour", "butter"});
         JScrollPane ingredientScrollPane = new JScrollPane(ingredientList);
@@ -37,43 +39,53 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(ingredientScrollPane);
 
-        JLabel recipeLabel = new JLabel("Recipe");
+        JLabel recipeLabel = new JLabel("Selected Recipe");
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
-        JList<String> recipes = new JList<>(new String[]{"eggs", "flour", "butter"});
-        JScrollPane recipeScrollPane = new JScrollPane(recipes);
+        JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
         recipeScrollPane.setBounds(650,325,200,275);
-        recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
 
         JLabel selectRecipeLabel = new JLabel("Select Recipe");
         selectRecipeLabel.setForeground(Color.white);
         selectRecipeLabel.setBounds(50, 175, 100, 25);
         add(selectRecipeLabel);
-        JComboBox<Object> RecipeComboBox = new JComboBox<>();
-        RecipeComboBox.setBounds(50,200,200,25);
-        add(RecipeComboBox);
+        recipeComboBox = new JComboBox<>();
+        recipeComboBox.setBounds(50,200,200,25);
+        add(recipeComboBox);
 
-        addToDishButton = new JButton("Add to Recipe");
-        addToDishButton.setBounds(50,600,200,25);
-        addToDishButton.addActionListener(this);
-        add(addToDishButton);
+        addToRecipeButton = new JButton("Add to Recipe");
+        addToRecipeButton.setBounds(50,600,200,25);
+        addToRecipeButton.addActionListener(this);
+        add(addToRecipeButton);
 
-        createDishButton = new JButton("Create New Recipe");
-        createDishButton.setBounds(350,250,150,75);
-        createDishButton.addActionListener(this);
-        add(createDishButton);
+        removeFromRecipeButton = new JButton("Remove from Recipe");
+        removeFromRecipeButton.setBounds(650,600,200,25);
+        removeFromRecipeButton.addActionListener(this);
+        add(removeFromRecipeButton);
 
-        finalizeDishButton = new JButton("Submit");
-        finalizeDishButton.setBounds(350,400,150,75);
-        finalizeDishButton.addActionListener(this);
+        createRecipeButton = new JButton("Create New Recipe");
+        createRecipeButton.setBounds(350,250,150,75);
+        createRecipeButton.addActionListener(this);
+        add(createRecipeButton);
+
+        submitForReviewButton = new JButton("Submit for Review");
+        submitForReviewButton.setBounds(350,400,150,75);
+        submitForReviewButton.addActionListener(this);
+        add(submitForReviewButton);
+
+        saveAsDraftButton = new JButton("Save as Draft");
+        saveAsDraftButton.setBounds(350,550,150,75);
+        saveAsDraftButton.addActionListener(this);
+        add(saveAsDraftButton);
 
         revalidate();
         repaint();
     }
 
-    public void createDishGUI(){
+    public void createRecipeGUI(){
         frame = new JFrame();
         frame.setTitle("Create Dish");
         frame.setResizable(false);
@@ -97,15 +109,10 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addToDishButton) {
-            //String selectedDish = (String) scrollPane.getSelectedItem();
-            // selectedDishes.add(selectedDish);
-            // Here you can add the selected dish to the menu
-            // For now, let's just print it
-            //System.out.println("Selected dish: " + selectedDish);
-            //JOptionPane.showMessageDialog(null, "Dish added to menu: " + selectedDish);
-        } if (e.getSource() == createDishButton) {
-            createDishGUI();
+        if (e.getSource() == addToRecipeButton) {
+
+        } if (e.getSource() == createRecipeButton) {
+            createRecipeGUI();
         } if (e.getSource() == createButton) {
             frame.dispose();
         }

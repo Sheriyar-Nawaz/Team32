@@ -40,6 +40,14 @@ public class RecipesMenuGUI extends GUI implements ActionListener {
             dispose();
             RecipeCreateGUI rc = new RecipeCreateGUI(user);
         }
+        if (e.getSource() == reviewButton){
+            dispose();
+            RecipeReviewGUI rr = new RecipeReviewGUI(user);
+        }
+        if (e.getSource() == approveButton){
+            dispose();
+            RecipeApproveGUI ra = new RecipeApproveGUI(user);
+        }
         if (e.getSource() == backButton){
             dispose();
             MainMenuGUI mm = new MainMenuGUI(user);
