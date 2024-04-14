@@ -1,5 +1,21 @@
-public class RecipesDB {
+import java.sql.*;
 
+public class RecipesDB {
+    private String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
+    private String username = "in2033t32_a";
+    private String password = "7VQ_A-ZBz2w";
+    private Connection connection;
+    private Statement statement1;
+    private ResultSet resultSet;
+    public void connect(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
     public void getReviews(){
         //select all the recipe ids and names where the status is "Review"
     }
@@ -9,8 +25,16 @@ public class RecipesDB {
     public void getRecipes(){
         //select all the recipe ids and names
     }
-    public void getRecipeIngredients(){ //parameter recipe id
+    public void getRecipeIngredients(int recipeId){ //parameter recipe id
         //select ingredients ids and names where the recipe id is same as parameter
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT Status FROM Orders WHERE OrderID = ?");
+            pstmt.setInt(1, recipeId);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
     }
     public void getIngredients(){
         //select all ingredients

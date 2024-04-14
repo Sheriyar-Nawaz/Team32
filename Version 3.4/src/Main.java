@@ -5,6 +5,8 @@ public class Main {
     public static void main(String[] args){
         UserPass userPass = new UserPass();
         LoginGUI login = new LoginGUI(userPass.getLogininfo());
+        RecipesDB r = new RecipesDB();
+        r.getRecipeIngredients(1);
         //StockDB s = new StockDB();
         //s.getStock();
         /*
