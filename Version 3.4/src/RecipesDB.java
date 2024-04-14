@@ -24,7 +24,7 @@ public class RecipesDB {
         connect();
         Map<Integer, String> recipes = new HashMap<>();
         try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes WHERE Status = 'Review'");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes WHERE Status = 'Submtted Draft'");
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int recipeId = resultSet.getInt("RecipeID");
@@ -41,7 +41,7 @@ public class RecipesDB {
         connect();
         Map<Integer, String> recipes = new HashMap<>();
         try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes WHERE Status = 'Approve'");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes WHERE Status = 'Reviewed'");
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int recipeId = resultSet.getInt("RecipeID");
