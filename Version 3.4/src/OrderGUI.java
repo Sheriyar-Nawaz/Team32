@@ -23,16 +23,13 @@ public class OrderGUI extends GUI implements ActionListener {
 
         startCookingButton = new JButton("Start Cooking");
         startCookingButton.addActionListener(this);
-        startCookingButton.setBounds(250, 400, 150, 25);
+        startCookingButton.setBounds(250, 550, 150, 25);
         add(startCookingButton);
 
         completeCookingButton = new JButton("Completed Cooking");
         completeCookingButton.addActionListener(this);
-        completeCookingButton.setBounds(430, 400, 150, 25);
+        completeCookingButton.setBounds(430, 550, 150, 25);
         add(completeCookingButton);
-
-        orderTextArea = new JTextArea();
-        orderTextArea.setEditable(false);
 
         // Dummy data for Coursees
         Coursees = new ArrayList<>();
@@ -44,19 +41,21 @@ public class OrderGUI extends GUI implements ActionListener {
 
         JLabel courseLabel = new JLabel("Select Course:");
         courseLabel.setForeground(Color.white);
-        courseLabel.setBounds(390, 150, 150, 25);
+        courseLabel.setBounds(300, 400, 150, 25);
         add(courseLabel);
 
         CourseComboBox = new JComboBox<>(CourseNames);
-        CourseComboBox.setBounds(390, 200, 150, 25);
+        CourseComboBox.setBounds(400, 400, 150, 25);
         add(CourseComboBox);
 
-        tableNumField = new JTextField();
-        add(tableNumField);
+        JLabel tableNumLabel = new JLabel("Table Number:");
+        tableNumLabel.setForeground(Color.white);
+        tableNumLabel.setBounds(300, 450, 150, 25);
+        add(tableNumLabel);
 
-        // Add components to the frame
-        add(new JLabel("Table Number:"));
-        add(new JScrollPane(orderTextArea));
+        tableNumField = new JTextField();
+        tableNumField.setBounds(400, 450, 150, 25);
+        add(tableNumField);
 
         revalidate();
         repaint();
