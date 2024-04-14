@@ -13,17 +13,25 @@ public class KitchenManagementSender implements KitchenManagementSenderInterface
     String username = "in2033t32_d";
     String password = "sE-D4MssL4w";
 
-    Statement statement1 = null;
     PreparedStatement statement2 = null;
     ResultSet resultSet = null;
 
+    class MenuData{
+        String title;
+        List<String> dishes;
+        MenuData(String title){
+            this.title = title;
+            this.dishes = new ArrayList<>();
+        }
 
+        void addDish(String dish){
+            dishes.add(dish);
+        }
+    }
     @Override
     public void sendMenu() {
-        // add String status to Menu table in db
-        // use creation Date to only select the newest created + approved status menu.
         try {
-            HashMap<Integer, List<String>> menuDetails = new HashMap<>();
+            HashMap<Integer, MenuData> menuDetails = new HashMap<>();
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
@@ -31,24 +39,27 @@ public class KitchenManagementSender implements KitchenManagementSenderInterface
             statement2 = connection.prepareStatement("SELECT m.MenuID, m.Title, d.Name FROM Menus m " +
                                                          "LEFT JOIN  MenuDishes md ON m.MenuID = md.MenuID " +
                                                          "LEFT JOIN Dishes d ON md.DishID = d.DishID " +
+                                                         "WHERE m.Status = 'Approved' " +
+                                                         "AND m.CreationDate = (SELECT MAX(CreationDate) FROM Menus WHERE Status = 'Approved') " +
                                                          "ORDER BY m.MenuID, d.DishID");
+
             resultSet = statement2.executeQuery();
             while(resultSet.next()){
                 int menuID = resultSet.getInt("MenuID");
                 String title = resultSet.getString("Title");
                 String dishName = resultSet.getString("Name");
 
-                menuDetails.putIfAbsent(menuID, new ArrayList<>());
+                menuDetails.putIfAbsent(menuID, new MenuData(title));
                 if (dishName != null){
-                    menuDetails.get(menuID).add(title + ": " + dishName);
+                    menuDetails.get(menuID).addDish(dishName);
                 } else{
                     System.out.println("No Dishes");
                 }
             }
 
-            menuDetails.forEach((menuId, dishName) -> {
-                System.out.println("Menu ID: " + menuId);
-                dishName.forEach(System.out::println);
+            menuDetails.forEach((menuId, menuData) -> {
+                System.out.println("Menu ID: " + menuId + " - " + menuData.title);
+                menuData.dishes.forEach(dish -> System.out.println("  " + dish));
             });
 
         } catch (Exception e) {

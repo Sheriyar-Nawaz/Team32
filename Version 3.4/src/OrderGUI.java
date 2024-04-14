@@ -12,6 +12,8 @@ public class OrderGUI extends GUI implements ActionListener {
     private JComboBox<String> CourseComboBox;
     private JTextField tableNumField;
     private List<Course> Coursees;
+    private JTable table_1 = new JTable();
+
 
     public OrderGUI(String user) {
         super(user);
@@ -20,6 +22,14 @@ public class OrderGUI extends GUI implements ActionListener {
         backButton.addActionListener(this);
         logo.setBounds(270,-50,300,300);
         add(logo);
+
+        OrderDB odb = new OrderDB();
+        table_1 = odb.getOrders();
+
+        JScrollPane tableScrollPane = new JScrollPane(table_1);
+        tableScrollPane.setBounds(250,250,350,100);
+        table_1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        add(tableScrollPane);
 
         startCookingButton = new JButton("Start Cooking");
         startCookingButton.addActionListener(this);
