@@ -36,8 +36,22 @@ public class RecipesDB {
         }
         return recipes;
     }
-    public void getApproves(){
+    public Map<Integer, String> getApproves(){
         //select all the recipe ids and names where the status is "Approve" -- this is for recipes awaiting approval not the same as "Approved"
+        connect();
+        Map<Integer, String> recipes = new HashMap<>();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes WHERE Status = 'Approve'");
+            resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                int recipeId = resultSet.getInt("RecipeID");
+                String name = resultSet.getString("Name");
+                recipes.put(recipeId, name);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return recipes;
     }
     public Map<Integer, String> getRecipes() {
         connect();
