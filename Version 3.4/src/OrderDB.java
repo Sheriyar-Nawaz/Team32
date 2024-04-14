@@ -10,12 +10,16 @@ public class OrderDB {
     Statement statement1 = null;
     PreparedStatement statement2 = null;
     ResultSet resultSet = null;
-    public void StartCooking(){
+    public void StartCooking(int orderID){
         //Select OrderID from orders table and update isCooking
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-            //TO-DO
+            statement2 = connection.prepareStatement("UPDATE Orders SET IsCooking = TRUE WHERE OrderID = ? AND IsComplete = FALSE");
+            statement2.setInt(1, orderID);
+
+            int affectedRows = statement2.executeUpdate();
+            System.out.println("Successful, updated isCooking. AffectedRows: " + affectedRows);
 
             connection.close();
         }
