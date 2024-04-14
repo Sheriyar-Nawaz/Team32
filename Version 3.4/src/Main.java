@@ -3,10 +3,10 @@ import com.mysql.cj.x.protobuf.MysqlxCrud;
 public class Main {
 
     public static void main(String[] args){
-        UserPass userPass = new UserPass();
-        LoginGUI login = new LoginGUI(userPass.getLogininfo());
+//        UserPass userPass = new UserPass();
+//        LoginGUI login = new LoginGUI(userPass.getLogininfo());
         RecipesDB r = new RecipesDB();
-        System.out.println(r.getRecipeIngredients(1));
+        r.updateStatus(2, "Approved");
         //StockDB s = new StockDB();
         //s.getStock();
         /*

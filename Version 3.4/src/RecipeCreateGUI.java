@@ -44,7 +44,7 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
         RecipesDB rdb = new RecipesDB();
-        Map<Integer, String> ingredientMap = new HashMap<>()
+        Map<Integer, String> ingredientMap = new HashMap<>();
         JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
         recipeScrollPane.setBounds(650,325,200,275);
         ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;

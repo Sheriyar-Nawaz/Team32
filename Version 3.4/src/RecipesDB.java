@@ -150,8 +150,17 @@ public class RecipesDB {
         }
         return null;
     }
-    public void updateStatus(){ //parameters recipeID and String for status
-        //update the status of the specified dish id to whatever the parameter is i.e. Review/Approve/Approved
+    public void updateStatus(int recipeId, String newStatus) {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE Recipes SET Status = ? WHERE RecipeID = ?");
+            pstmt.setString(1, newStatus);
+            pstmt.setInt(2, recipeId);
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     public void addIngredient(){ //parameters list of strings ingredients and recipe id
         //insert ingredient(s) specified with the specified recipe id -- ensure status is draft, if it's not -- duplicate recipe details with status changed to draft
