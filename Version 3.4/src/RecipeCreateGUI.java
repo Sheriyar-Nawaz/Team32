@@ -41,11 +41,11 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
-        JList<String> dish = new JList<>(new String[]{"1", "2", "3"});
-        JScrollPane dishScrollPane = new JScrollPane(dish);
-        dishScrollPane.setBounds(650,325,200,275);
-        dish.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
-        add(dishScrollPane);
+        JList<String> recipes = new JList<>(new String[]{"eggs", "flour", "butter"});
+        JScrollPane recipeScrollPane = new JScrollPane(recipes);
+        recipeScrollPane.setBounds(650,325,200,275);
+        recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        add(recipeScrollPane);
 
         JLabel selectRecipeLabel = new JLabel("Select Recipe");
         selectRecipeLabel.setForeground(Color.white);
@@ -118,7 +118,7 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         }
         if (e.getSource() == backButton){
             dispose();
-            MainMenuGUI mm = new MainMenuGUI(user);
+            RecipesMenuGUI rm = new RecipesMenuGUI(user);
         }
     }
 }

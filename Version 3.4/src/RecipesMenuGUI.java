@@ -36,7 +36,10 @@ public class RecipesMenuGUI extends GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-
+        if (e.getSource() == createButton){
+            dispose();
+            RecipeCreateGUI rc = new RecipeCreateGUI(user);
+        }
         if (e.getSource() == backButton){
             dispose();
             MainMenuGUI mm = new MainMenuGUI(user);
