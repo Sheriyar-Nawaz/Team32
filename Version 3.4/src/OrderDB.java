@@ -51,12 +51,14 @@ public class OrderDB {
     }
 
     public void AddOrder(String tableNumber){
-        //Insert new orderid into the table.
+        // Insert new orderid into the table.
         // Update tableNumber of that orderID to tableNumber
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-            //TO-DO
+            // TO-DO
+            // Change from Order --> OrderDetails
+            // Reason: OrderDetails table includes the DishID and the quantity of it. Switch isCooking + isCompleted columns
 
             connection.close();
         }
