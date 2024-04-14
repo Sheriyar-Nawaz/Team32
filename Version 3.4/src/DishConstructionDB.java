@@ -46,7 +46,7 @@ public class DishConstructionDB {
             statement2.setInt(2, recipeID);
 
             int affectedRows = statement2.executeUpdate();
-            System.out.println("Successful");
+            System.out.println("Successfully added, affected rows: " + affectedRows);
             connection.close();
         }
         catch (Exception e){
@@ -56,6 +56,7 @@ public class DishConstructionDB {
 
 
     public void getRecipes(){
+
 
     };
 
