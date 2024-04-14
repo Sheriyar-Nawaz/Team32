@@ -1,4 +1,14 @@
 // Interface for communication between Kitchen and Management
-    interface KitchenManagementSender {
-        void sendMenu(MenuCompGUI menu); //Menu has getDishes() -> Dish has getRecipes() -> Recipe has getIngredients()
+interface KitchenManagementSenderInterface {
+    void sendMenu(MenuCompGUI menu);
+}
+
+public class KitchenManagementSender implements KitchenManagementSenderInterface{
+
+    @Override
+    public void sendMenu(MenuCompGUI menu) {
+
     }
+}
+
+

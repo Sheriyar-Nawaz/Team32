@@ -10,17 +10,20 @@ public class OrderDB {
     Statement statement1 = null;
     PreparedStatement statement2 = null;
     ResultSet resultSet = null;
-    public void StartCooking(int orderID){
-        //Select OrderID from orders table and update isCooking
+    public void StartCooking(int orderID, String dishType){
+        //Select OrderID from orders table and update string status to for example: "Mains: Cooking"
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
 
-            statement2 = connection.prepareStatement("UPDATE Orders SET IsCooking = TRUE WHERE OrderID = ? AND IsComplete = FALSE");
-            statement2.setInt(1, orderID);
+            statement2 = connection.prepareStatement("UPDATE Orders SET Status = ? WHERE OrderID = ?");
+            String statusUpdate = dishType + ": Cooking";
+            statement2.setString(1, statusUpdate);
+            statement2.setInt(2, orderID);
+
 
             int affectedRows = statement2.executeUpdate();
-            System.out.println("Successful, updated isCooking. AffectedRows: " + affectedRows);
+            System.out.println("Successful, updated status. AffectedRows: " + affectedRows);
 
             connection.close();
         }
@@ -30,17 +33,20 @@ public class OrderDB {
 
     }
 
-    public void CompleteCooking(int orderID){
-        //Select OrderID and update isComplete to be true and isCooking to be false
+    public void CompleteCooking(int orderID, String dishType){
+        //Select OrderID and update string status to for example: "Starters: Complete"
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
 
-            statement2 = connection.prepareStatement("UPDATE Orders SET IsComplete = TRUE, IsCooking = FALSE WHERE OrderID = ? AND IsCooking = TRUE");
-            statement2.setInt(1, orderID);
+            statement2 = connection.prepareStatement("UPDATE Orders SET Status = ? WHERE OrderID = ?");
+            String statusUpdate = dishType + ": Completed";
+            statement2.setString(1, statusUpdate);
+            statement2.setInt(2, orderID);
+
 
             int affectedRows = statement2.executeUpdate();
-            System.out.println("Successful, updated isCooking. AffectedRows: " + affectedRows);
+            System.out.println("Successful, updated status. AffectedRows: " + affectedRows);
 
             connection.close();
         }
@@ -50,21 +56,4 @@ public class OrderDB {
 
     }
 
-    public void AddOrder(String tableNumber){
-        // Insert new orderid into the table.
-        // Update tableNumber of that orderID to tableNumber
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
-            // TO-DO
-            // Change from Order --> OrderDetails
-            // Reason: OrderDetails table includes the DishID and the quantity of it. Switch isCooking + isCompleted columns
-
-            connection.close();
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
-
-    }
 }

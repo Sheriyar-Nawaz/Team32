@@ -10,6 +10,7 @@ public class StockGUI extends GUI implements ActionListener {
 
     private JComboBox<String> ingredientComboBox;
     private JButton addToStockButton;
+    private JButton addDeliveryButton;
     private JTextField quantityField;
     ;
     private JTable table_1 = new JTable();
@@ -59,6 +60,11 @@ public class StockGUI extends GUI implements ActionListener {
         addToStockButton.addActionListener(this);
         add(addToStockButton);
 
+        addDeliveryButton = new JButton("Add delivery");
+        addDeliveryButton.setBounds(390, 400, 150, 25);
+        addDeliveryButton.addActionListener(this);
+        add(addDeliveryButton);
+
         setVisible(true);
     }
 
@@ -67,9 +73,17 @@ public class StockGUI extends GUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToStockButton) {
             String selectedIngredient = (String) ingredientComboBox.getSelectedItem();
-            String quantity = (String) quantityField.getText();
-            System.out.println("Selected ingredient added to stock: " + selectedIngredient);
-            JOptionPane.showMessageDialog(this, "Added to Stock: " + quantity + " of " + selectedIngredient);
+            String quantityText = (String) quantityField.getText();
+            try{
+                int quantity = Integer.parseInt(quantityText); // convert the quantity to an integer
+                System.out.println("Selected ingredient added to stock: " + selectedIngredient);
+                JOptionPane.showMessageDialog(this, "Added to Stock: " + quantity + " of " + selectedIngredient);
+            } catch(Exception ex){
+                JOptionPane.showMessageDialog(this, "Invalid quantity entered. Please enter a valid number.");
+            }
+        }
+        if(e.getSource() == addDeliveryButton){
+            JOptionPane.showMessageDialog(this, "Added delivery to stock");
         }
         if (e.getSource() == backButton){
             dispose();
