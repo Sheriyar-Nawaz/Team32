@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class RecipeCreateGUI extends GUI implements ActionListener {
     private final JButton addToRecipeButton;
@@ -44,7 +43,8 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
-
+        RecipesDB rdb = new RecipesDB();
+        Map<Integer, String> ingredientMap = new HashMap<>()
         JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
         recipeScrollPane.setBounds(650,325,200,275);
         ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
