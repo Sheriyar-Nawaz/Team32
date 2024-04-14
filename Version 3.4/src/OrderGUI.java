@@ -15,7 +15,6 @@ public class OrderGUI extends GUI implements ActionListener {
 
     public OrderGUI(String user) {
         super(user);
-        setLayout(new GridLayout(4, 1));
 
         add(backButton);
         backButton.addActionListener(this);

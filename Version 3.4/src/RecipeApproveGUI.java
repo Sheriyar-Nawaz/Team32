@@ -27,7 +27,8 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
-        JScrollPane recipeScrollPane = new JScrollPane(recipes);
+        JList<String> ingredientList = new JList<>(new String[]{"eggs", "flour", "butter"});
+        JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
         recipeScrollPane.setBounds(650,325,200,275);
         recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
