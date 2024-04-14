@@ -95,8 +95,12 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         frame.setLayout(null);
         frame.setVisible(true);
 
+        JLabel dishNameLabel = new JLabel("Enter Dish Name: ");
+        dishNameLabel.setBounds(20, 50, 150, 20);
+        frame.add(dishNameLabel);
+
         JTextField dishNameField = new JTextField();
-        dishNameField.setBounds(100, 50, 150, 20);
+        dishNameField.setBounds(120, 50, 150, 20);
         frame.add(dishNameField);
 
         createButton = new JButton("Create");
@@ -182,9 +186,12 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         }
         if (e.getSource() == addButton) {
             frame.dispose();
+            JOptionPane.showMessageDialog(null, "Recipe Added!", "Added", JOptionPane.INFORMATION_MESSAGE);
+
         }
         if (e.getSource() == removeButton){
             frame.dispose();
+            JOptionPane.showMessageDialog(null, "Recipe Removed!", "Removed", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == addButton) {
             String selectedRecipe = (String) recipeComboBox.getSelectedItem();
@@ -193,7 +200,10 @@ public class DishConstructionGUI extends GUI implements ActionListener {
             System.out.println("Selected recipe: " + selectedRecipe);
             JOptionPane.showMessageDialog(this, "Recipe added to dish: " + selectedRecipe);
         }
-        if (e.getSource() == backButton){
+        if (e.getSource() == finalizeDishButton){
+            JOptionPane.showMessageDialog(null, "Dish Finalised", "Finalised!", JOptionPane.INFORMATION_MESSAGE);
+        }
+            if (e.getSource() == backButton){
             dispose();
             MainMenuGUI mm = new MainMenuGUI(user);
         }

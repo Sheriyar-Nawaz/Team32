@@ -184,14 +184,19 @@ public class MenuCompGUI extends GUI implements ActionListener {
         if (e.getSource() == addToMenuButton) {
             createAddGUI();
         }
+        if (e.getSource() == finalizeMenuButton){
+            JOptionPane.showMessageDialog(null, "Menu Finalised", "Finalised!", JOptionPane.INFORMATION_MESSAGE);
+        }
         if (e.getSource() == removeFromMenuButton){
             createRemoveGUI();
         }
         if (e.getSource() == addButton) {
             frame.dispose();
+            JOptionPane.showMessageDialog(null, "Dish Added!", "Added", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == removeButton){
             frame.dispose();
+            JOptionPane.showMessageDialog(null, "Dish Removed!", "Removed", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == finalizeMenuButton) {
             if (!selectedDishes.isEmpty()) {

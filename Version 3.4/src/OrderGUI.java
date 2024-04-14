@@ -35,7 +35,6 @@ public class OrderGUI extends GUI implements ActionListener {
         Coursees = new ArrayList<>();
         Coursees.add(new Course("Starters", 1));
         Coursees.add(new Course("Mains", 2));
-        Coursees.add(new Course("Deserts", 3));
 
         String[] CourseNames = Coursees.stream().map(Course::getName).toArray(String[]::new);
 
