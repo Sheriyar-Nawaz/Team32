@@ -41,6 +41,10 @@ public class MainMenuGUI extends GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getSource() == recipeButton) {
+            dispose();
+            RecipesMenuGUI recipesMenuGUI = new RecipesMenuGUI(user);
+        }
         if (e.getSource() == dishButton) {
             dispose();
             DishConstructionGUI dishGUI = new DishConstructionGUI(user);
