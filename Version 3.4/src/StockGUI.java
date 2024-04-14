@@ -32,7 +32,7 @@ public class StockGUI extends GUI implements ActionListener {
         table_1 = sdb.getStock();
 
         JScrollPane tableScrollPane = new JScrollPane(table_1);
-        tableScrollPane.setBounds(350,200,300,200);
+        tableScrollPane.setBounds(250,250,350,100);
         table_1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(tableScrollPane);
 
@@ -47,7 +47,7 @@ public class StockGUI extends GUI implements ActionListener {
 
         JLabel quantityLabel = new JLabel("Select quantity:");
         quantityLabel.setForeground(Color.white);
-        quantityLabel.setBounds(300, 450, 150, 25);
+        quantityLabel.setBounds(350, 400, 150, 25);
         add(quantityLabel);
 
         quantityField = new JTextField();
