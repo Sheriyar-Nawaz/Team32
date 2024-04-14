@@ -11,16 +11,19 @@ public class WastemGUI extends GUI implements ActionListener {
         super(user);
         setTitle("Waste Management");
 
+        logo.setBounds(300,-50,300,300);
+        add(logo);
+
         JLabel ingredientLabel = new JLabel("Select Ingredient:");
         ingredientLabel.setForeground(Color.white);
-        ingredientLabel.setBounds(50, 50, 150, 25);
+        ingredientLabel.setBounds(300, 250, 150, 25);
         add(ingredientLabel);
 
         add(backButton);
         backButton.addActionListener(this);
 
         ingredientComboBox = new JComboBox<>();
-        ingredientComboBox.setBounds(200, 50, 200, 25);
+        ingredientComboBox.setBounds(410, 250, 200, 25);
         add(ingredientComboBox);
 
         // Adding some sample ingredients
@@ -29,7 +32,7 @@ public class WastemGUI extends GUI implements ActionListener {
         ingredientComboBox.addItem("Ingredient 3");
 
         addToWasteButton = new JButton("Add to Waste");
-        addToWasteButton.setBounds(200, 100, 150, 25);
+        addToWasteButton.setBounds(390, 310, 150, 25);
         addToWasteButton.addActionListener(this);
         add(addToWasteButton);
 
