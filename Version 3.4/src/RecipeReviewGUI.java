@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 public class RecipeReviewGUI extends GUI implements ActionListener {
     private final JButton removeFromRecipeButton;
     private final JButton approveButton;
+    private JFrame frame;
+    private JButton removeButton;
+
     public RecipeReviewGUI(String userType) {
         super(userType);
         add(backButton);
@@ -44,11 +47,46 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
         add(approveButton);
     }
 
+    public void createRemoveGUI(){
+        frame = new JFrame();
+        frame.setTitle("Select Quantity");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel quantityLabel = new JLabel("Enter Quantity: ");
+        quantityLabel.setBounds(10, 50, 150, 20);
+        frame.add(quantityLabel);
+
+        JTextField quantityField = new JTextField();
+        quantityField.setBounds(130, 50, 150, 20);
+        frame.add(quantityField);
+
+        removeButton = new JButton("Remove");
+        removeButton.setBounds(100,100,100,25);
+        removeButton.addActionListener(this);
+        frame.add(removeButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == removeFromRecipeButton){
+            createRemoveGUI();
+        }
+        if (e.getSource() == removeButton) {
+            frame.dispose();
+        }
         if (e.getSource() == backButton){
             dispose();
             RecipesMenuGUI rm = new RecipesMenuGUI(user);
+        }
+        if (e.getSource() == approveButton){
+            JOptionPane.showMessageDialog(null, "Submitted For Approval!", "Reviewed", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

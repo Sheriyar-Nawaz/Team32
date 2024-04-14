@@ -26,7 +26,7 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         add(backButton);
         backButton.addActionListener(this);
 
-        logo.setBounds(270,-50,300,300);
+        logo.setBounds(300,-50,300,300);
         add(logo);
 
         //selectedRecipes = new ArrayList<>();

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WastemGUI extends GUI implements ActionListener {
-    private JComboBox<String> ingredientComboBox;
+    private JTextField ingredientComboBox;
     private JButton addToWasteButton;
 
     public WastemGUI(String user) {
@@ -22,14 +22,9 @@ public class WastemGUI extends GUI implements ActionListener {
         add(backButton);
         backButton.addActionListener(this);
 
-        ingredientComboBox = new JComboBox<>();
+        ingredientComboBox = new JTextField();
         ingredientComboBox.setBounds(410, 250, 200, 25);
         add(ingredientComboBox);
-
-        // Adding some sample ingredients
-        ingredientComboBox.addItem("Ingredient 1");
-        ingredientComboBox.addItem("Ingredient 2");
-        ingredientComboBox.addItem("Ingredient 3");
 
         addToWasteButton = new JButton("Add to Waste");
         addToWasteButton.setBounds(390, 310, 150, 25);
@@ -42,7 +37,7 @@ public class WastemGUI extends GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToWasteButton) {
-            String selectedIngredient = (String) ingredientComboBox.getSelectedItem();
+            String selectedIngredient = (String) ingredientComboBox.getText();
             // Here you can add the selected ingredient to waste
             // For now, let's just print it
             System.out.println("Selected ingredient added to waste: " + selectedIngredient);
