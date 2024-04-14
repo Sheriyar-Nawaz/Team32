@@ -31,10 +31,12 @@ public class RecipesDB {
                 String name = resultSet.getString("Name");
                 recipes.put(recipeId, name);
             }
+            connection.close();
+            return recipes;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return recipes;
+        return null;
     }
     public Map<Integer, String> getApproves(){
         //select all the recipe ids and names where the status is "Approve" -- this is for recipes awaiting approval not the same as "Approved"
@@ -48,10 +50,12 @@ public class RecipesDB {
                 String name = resultSet.getString("Name");
                 recipes.put(recipeId, name);
             }
+            connection.close();
+            return recipes;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return recipes;
+        return null;
     }
     public Map<Integer, String> getRecipes() {
         connect();
@@ -124,10 +128,12 @@ public class RecipesDB {
             if (resultSet.next()) {
                 status = resultSet.getString("Status");
             }
+            connection.close();
+            return status;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return status;
+        return null;
     }
     public void updateStatus(){ //parameters recipeID and String for status
         //update the status of the specified dish id to whatever the parameter is i.e. Review/Approve/Approved
