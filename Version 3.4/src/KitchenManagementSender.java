@@ -20,6 +20,8 @@ public class KitchenManagementSender implements KitchenManagementSenderInterface
 
     @Override
     public void sendMenu() {
+        // add String status to Menu table in db
+        // use creation Date to only select the newest created + approved status menu.
         try {
             HashMap<Integer, List<String>> menuDetails = new HashMap<>();
 
