@@ -1,7 +1,10 @@
 public class WastemDB {
-    public void getIngredients(){}
-    public void addToWaste(String ingredientName){}
-    public void updateStock(String ingredientName){}
-    public void getStock(String ingredientName){}
-    public void updateWaste(){}
+    //Check stock table. May need to be restructured. Is quantityUsed redundant? surely quantity should be updated
+
+    public void getIngredients(){
+        //Load ingredientID and name
+    }
+    public void updateWaste(){
+        //Update wasteQuantity
+    }
 }
