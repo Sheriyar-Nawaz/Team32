@@ -1,4 +1,8 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RecipesDB {
     private String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
@@ -25,16 +29,36 @@ public class RecipesDB {
     public void getRecipes(){
         //select all the recipe ids and names
     }
-    public void getRecipeIngredients(int recipeId){ //parameter recipe id
+    public Map<Integer, String> getRecipeIngredients(int recipeId){ //parameter recipe id
         //select ingredients ids and names where the recipe id is same as parameter
         connect();
         try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT Status FROM Orders WHERE OrderID = ?");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID FROM RecipeIngredients WHERE RecipeID = ?");
             pstmt.setInt(1, recipeId);
+            resultSet = pstmt.executeQuery();
+            List<Integer> ingredientIDs = new ArrayList<>();
+            while(resultSet.next()){
+                int ID = resultSet.getInt("IngredientID");
+                ingredientIDs.add(ID);
+
+            }
+            System.out.println(ingredientIDs);
+            Map<Integer, String> ingredients = new HashMap<>();
+            for(Integer i : ingredientIDs){
+                PreparedStatement pstmt2 = connection.prepareStatement("SELECT Name FROM Ingredients WHERE IngredientID = ?");
+                pstmt2.setInt(1, i);
+                resultSet = pstmt2.executeQuery();
+                if (resultSet.next()) {
+                    String name = resultSet.getString("Name");
+                    ingredients.put(i, name);
+                }
+            } return ingredients;
+
+
         } catch (Exception e){
             System.out.println(e);
         }
-
+        return null;
     }
     public void getIngredients(){
         //select all ingredients
