@@ -114,8 +114,20 @@ public class RecipesDB {
         //select all ingredients
         //more code will be needed to make sure its only available ingredients
     }
-    public void getStatus(){ //parameter recipe id
-        //select the status based off a recipe id
+    public String getStatus(int recipeId) {
+        connect();
+        String status = null;
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT Status FROM Recipes WHERE RecipeID = ?");
+            pstmt.setInt(1, recipeId);
+            resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                status = resultSet.getString("Status");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
     }
     public void updateStatus(){ //parameters recipeID and String for status
         //update the status of the specified dish id to whatever the parameter is i.e. Review/Approve/Approved
