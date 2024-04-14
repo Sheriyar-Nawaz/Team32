@@ -87,16 +87,20 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
 
     public void createRecipeGUI(){
         frame = new JFrame();
-        frame.setTitle("Create Dish");
+        frame.setTitle("Create Recipe");
         frame.setResizable(false);
         frame.setSize(300, 200);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
 
-        JTextField dishNameField = new JTextField();
-        dishNameField.setBounds(100, 50, 150, 20);
-        frame.add(dishNameField);
+        JLabel recipeNameLabel = new JLabel("Enter Recipe Name: ");
+        recipeNameLabel.setBounds(10, 50, 150, 20);
+        frame.add(recipeNameLabel);
+
+        JTextField recipeNameField = new JTextField();
+        recipeNameField.setBounds(130, 50, 150, 20);
+        frame.add(recipeNameField);
 
         createButton = new JButton("Create");
         createButton.setBounds(100,100,100,25);
@@ -107,21 +111,43 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    public void createAddGUI(){
+        frame = new JFrame();
+        frame.setTitle("Select Quantity");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel quantityLabel = new JLabel("Enter Quantity: ");
+        quantityLabel.setBounds(10, 50, 150, 20);
+        frame.add(quantityLabel);
+
+        JTextField quantityField = new JTextField();
+        quantityField.setBounds(130, 50, 150, 20);
+        frame.add(quantityField);
+
+        addButton = new JButton("Add");
+        addButton.setBounds(100,100,100,25);
+        addButton.addActionListener(this);
+        frame.add(addButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToRecipeButton) {
-
+            createAddGUI();
         } if (e.getSource() == createRecipeButton) {
             createRecipeGUI();
         } if (e.getSource() == createButton) {
             frame.dispose();
         }
         if (e.getSource() == addButton) {
-            String selectedRecipe = (String) recipeComboBox.getSelectedItem();
-            // Here you can add the selected recipe to the dish
-            // For now, let's just print it
-            System.out.println("Selected recipe: " + selectedRecipe);
-            JOptionPane.showMessageDialog(this, "Recipe added to dish: " + selectedRecipe);
+            frame.dispose();
         }
         if (e.getSource() == backButton){
             dispose();
