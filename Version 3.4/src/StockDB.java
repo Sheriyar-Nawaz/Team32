@@ -1,4 +1,4 @@
-//import net.proteanit.sql.DbUtils;
+import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +14,7 @@ public class StockDB {
     Statement statement1 = null;
     PreparedStatement statement2 = null;
     ResultSet resultSet = null;
-    private JTable table_1;
+    private JTable table_1 = new JTable();
     public void UpdateStock(String ingredientName, int quantity){
         //Load ingredientID from ingredientName
         //Insert that into stock table
@@ -34,11 +34,17 @@ public class StockDB {
 
             statement1 = connection.createStatement();
             resultSet = statement1.executeQuery("SELECT IngredientID, Name, Stock FROM Ingredients");
-            ResultSetMetaData rsmd = resultSet.getMetaData();
-            DefaultTableModel model = (DefaultTableModel) table_1.getModel();
-            //table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
+           // ResultSetMetaData rsmd = resultSet.getMetaData();
+            //DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+            table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
 
+            JFrame f = new JFrame();
+            table_1.setBounds(100,100,300,100);
+            f.add(table_1);
+            f.setVisible(true);
+            f.setSize(700,500);
 
+/*
             while(resultSet.next()){
                 int ID = resultSet.getInt("IngredientID");
                 String name = resultSet.getString("Name");
@@ -46,6 +52,8 @@ public class StockDB {
                 System.out.println(ID + " "  + name + " " + stock);
             }
 
+
+ */
 
             connection.close();
         }

@@ -4,7 +4,15 @@ public class Main {
 
     public static void main(String[] args){
         UserPass userPass = new UserPass();
-        LoginGUI login = new LoginGUI(userPass.getLogininfo());
+        //LoginGUI login = new LoginGUI(userPass.getLogininfo());
+        StockDB s = new StockDB();
+        s.getStock();
+        /*
+        KitchenFrontOfHouseSender k = new KitchenFrontOfHouseSender();
+        String x = k.getOrderStatus(1);
+        System.out.println(x);
+         */
+
 //      DishConstructionDB DCDB = new DishConstructionDB();
 //      DCDB.getDishes();
 //      DCDB.InsertRecipeToDish(3,2);
