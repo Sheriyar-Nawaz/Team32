@@ -52,7 +52,8 @@ public class RecipesDB {
                     String name = resultSet.getString("Name");
                     ingredients.put(i, name);
                 }
-            } return ingredients;
+            }connection.close();
+            return ingredients;
 
 
         } catch (Exception e){
