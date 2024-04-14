@@ -16,7 +16,9 @@ public class MenuCompGUI extends GUI implements ActionListener {
     private final JButton finalizeMenuButton;
     private List<String> selectedDishes;
 
-    private final JButton removeFromRecipeButton;
+    private final JButton removeFromMenuButton;
+    private JButton addButton;
+    private JButton removeButton;
 
 
     public MenuCompGUI(String user) {
@@ -76,13 +78,65 @@ public class MenuCompGUI extends GUI implements ActionListener {
         add(finalizeMenuButton);
         populateDishes(new String[]{"Spaghetti", "Salad", "Pizza"});
 
-        removeFromRecipeButton = new JButton("Remove from Recipe");
-        removeFromRecipeButton.setBounds(650,600,200,25);
-        removeFromRecipeButton.addActionListener(this);
-        add(removeFromRecipeButton);
+        removeFromMenuButton = new JButton("Remove from Recipe");
+        removeFromMenuButton.setBounds(650,600,200,25);
+        removeFromMenuButton.addActionListener(this);
+        add(removeFromMenuButton);
 
         revalidate();
         repaint();
+    }
+
+    public void createAddGUI(){
+        frame = new JFrame();
+        frame.setTitle("Select Quantity");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel quantityLabel = new JLabel("Enter Quantity: ");
+        quantityLabel.setBounds(10, 50, 150, 20);
+        frame.add(quantityLabel);
+
+        JTextField quantityField = new JTextField();
+        quantityField.setBounds(130, 50, 150, 20);
+        frame.add(quantityField);
+
+        addButton = new JButton("Add");
+        addButton.setBounds(100,100,100,25);
+        addButton.addActionListener(this);
+        frame.add(addButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    public void createRemoveGUI(){
+        frame = new JFrame();
+        frame.setTitle("Select Quantity");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel quantityLabel = new JLabel("Enter Quantity: ");
+        quantityLabel.setBounds(10, 50, 150, 20);
+        frame.add(quantityLabel);
+
+        JTextField quantityField = new JTextField();
+        quantityField.setBounds(130, 50, 150, 20);
+        frame.add(quantityField);
+
+        removeButton = new JButton("Remove");
+        removeButton.setBounds(100,100,100,25);
+        removeButton.addActionListener(this);
+        frame.add(removeButton);
+
+        frame.revalidate();
+        frame.repaint();
     }
 
     public void createMenuGUI(){
@@ -125,6 +179,18 @@ public class MenuCompGUI extends GUI implements ActionListener {
         } if (e.getSource() == createMenuButton) {
             createMenuGUI();
         } if (e.getSource() == createButton) {
+            frame.dispose();
+        }
+        if (e.getSource() == addToMenuButton) {
+            createAddGUI();
+        }
+        if (e.getSource() == removeFromMenuButton){
+            createRemoveGUI();
+        }
+        if (e.getSource() == addButton) {
+            frame.dispose();
+        }
+        if (e.getSource() == removeButton){
             frame.dispose();
         }
         if (e.getSource() == finalizeMenuButton) {

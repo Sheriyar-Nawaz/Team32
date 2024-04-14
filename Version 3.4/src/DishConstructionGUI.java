@@ -19,6 +19,7 @@ public class DishConstructionGUI extends GUI implements ActionListener {
     private final JButton removeFromRecipeButton;
 
     private JButton addButton;
+    private JButton removeButton;
 
     public DishConstructionGUI(String user) {
         super(user);
@@ -107,6 +108,58 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    public void createAddGUI(){
+        frame = new JFrame();
+        frame.setTitle("Select Quantity");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel quantityLabel = new JLabel("Enter Quantity: ");
+        quantityLabel.setBounds(10, 50, 150, 20);
+        frame.add(quantityLabel);
+
+        JTextField quantityField = new JTextField();
+        quantityField.setBounds(130, 50, 150, 20);
+        frame.add(quantityField);
+
+        addButton = new JButton("Add");
+        addButton.setBounds(100,100,100,25);
+        addButton.addActionListener(this);
+        frame.add(addButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    public void createRemoveGUI(){
+        frame = new JFrame();
+        frame.setTitle("Select Quantity");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel quantityLabel = new JLabel("Enter Quantity: ");
+        quantityLabel.setBounds(10, 50, 150, 20);
+        frame.add(quantityLabel);
+
+        JTextField quantityField = new JTextField();
+        quantityField.setBounds(130, 50, 150, 20);
+        frame.add(quantityField);
+
+        removeButton = new JButton("Remove");
+        removeButton.setBounds(100,100,100,25);
+        removeButton.addActionListener(this);
+        frame.add(removeButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToDishButton) {
@@ -119,6 +172,18 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         } if (e.getSource() == createDishButton) {
             createDishGUI();
         } if (e.getSource() == createButton) {
+            frame.dispose();
+        }
+        if (e.getSource() == addToDishButton) {
+            createAddGUI();
+        }
+        if (e.getSource() == removeFromRecipeButton) {
+            createRemoveGUI();
+        }
+        if (e.getSource() == addButton) {
+            frame.dispose();
+        }
+        if (e.getSource() == removeButton){
             frame.dispose();
         }
         if (e.getSource() == addButton) {
