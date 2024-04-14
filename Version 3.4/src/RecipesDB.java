@@ -39,9 +39,31 @@ public class RecipesDB {
     public void getApproves(){
         //select all the recipe ids and names where the status is "Approve" -- this is for recipes awaiting approval not the same as "Approved"
     }
-    public void getRecipes(){
-        //select all the recipe ids and names
+    public Map<Integer, String> getRecipes() {
+        connect();
+        Map<Integer, String> recipes = new HashMap<>();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes");
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                int recipeId = resultSet.getInt("RecipeID");
+                String name = resultSet.getString("Name");
+                recipes.put(recipeId, name);
+            }
+            resultSet.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error while fetching recipes: " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return recipes;
     }
+
     public Map<Integer, String> getRecipeIngredients(int recipeId){ //parameter recipe id
         //select ingredients ids and names where the recipe id is same as parameter
         connect();
@@ -65,7 +87,8 @@ public class RecipesDB {
                     String name = resultSet.getString("Name");
                     ingredients.put(i, name);
                 }
-            } return ingredients;
+            }connection.close();
+            return ingredients;
 
 
         } catch (Exception e){

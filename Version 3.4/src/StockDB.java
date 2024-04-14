@@ -37,14 +37,6 @@ public class StockDB {
             table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
             connection.close();
             return table_1;
-/*
-            while(resultSet.next()){
-                int ID = resultSet.getInt("IngredientID");
-                String name = resultSet.getString("Name");
-                double stock = resultSet.getDouble("Stock");
-                System.out.println(ID + " "  + name + " " + stock);
-            }
- */
 
 
         }

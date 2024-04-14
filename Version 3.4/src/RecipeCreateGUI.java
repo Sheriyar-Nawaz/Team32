@@ -44,6 +44,7 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
+
         JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
         recipeScrollPane.setBounds(650,325,200,275);
         ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
