@@ -15,6 +15,7 @@ public class OrderDB {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
+
             statement2 = connection.prepareStatement("UPDATE Orders SET IsCooking = TRUE WHERE OrderID = ? AND IsComplete = FALSE");
             statement2.setInt(1, orderID);
 
@@ -29,12 +30,17 @@ public class OrderDB {
 
     }
 
-    public void CompleteCooking(){
+    public void CompleteCooking(int orderID){
         //Select OrderID and update isComplete to be true and isCooking to be false
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-            //TO-DO
+
+            statement2 = connection.prepareStatement("UPDATE Orders SET IsComplete = TRUE, IsCooking = FALSE WHERE OrderID = ? AND IsCooking = TRUE");
+            statement2.setInt(1, orderID);
+
+            int affectedRows = statement2.executeUpdate();
+            System.out.println("Successful, updated isCooking. AffectedRows: " + affectedRows);
 
             connection.close();
         }
