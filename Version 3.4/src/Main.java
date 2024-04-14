@@ -23,6 +23,8 @@ public class Main {
 //      ODB.CompleteCooking(2);
 //      MainMenuGUI m = new MainMenuGUI(null);
 //      MenuGUI m = new MenuGUI(null);
+        KitchenManagementSender KMS = new KitchenManagementSender();
+        KMS.sendMenu();
 //<<<<<<< HEAD
 
 
