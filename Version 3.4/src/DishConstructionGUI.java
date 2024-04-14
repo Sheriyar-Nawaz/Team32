@@ -16,6 +16,7 @@ public class DishConstructionGUI extends GUI implements ActionListener {
     JFrame frame;
     private JButton createButton;
 
+    private final JButton removeFromRecipeButton;
 
     private JButton addButton;
 
@@ -74,6 +75,11 @@ public class DishConstructionGUI extends GUI implements ActionListener {
             finalizeDishButton.setEnabled(false);
         }
         add(finalizeDishButton);
+
+        removeFromRecipeButton = new JButton("Remove from Recipe");
+        removeFromRecipeButton.setBounds(650,600,200,25);
+        removeFromRecipeButton.addActionListener(this);
+        add(removeFromRecipeButton);
 
         revalidate();
         repaint();

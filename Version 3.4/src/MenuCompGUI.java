@@ -16,6 +16,9 @@ public class MenuCompGUI extends GUI implements ActionListener {
     private final JButton finalizeMenuButton;
     private List<String> selectedDishes;
 
+    private final JButton removeFromRecipeButton;
+
+
     public MenuCompGUI(String user) {
         super(user);
 
@@ -72,6 +75,11 @@ public class MenuCompGUI extends GUI implements ActionListener {
         }
         add(finalizeMenuButton);
         populateDishes(new String[]{"Spaghetti", "Salad", "Pizza"});
+
+        removeFromRecipeButton = new JButton("Remove from Recipe");
+        removeFromRecipeButton.setBounds(650,600,200,25);
+        removeFromRecipeButton.addActionListener(this);
+        add(removeFromRecipeButton);
 
         revalidate();
         repaint();
