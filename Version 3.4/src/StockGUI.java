@@ -58,7 +58,8 @@ public class StockGUI extends GUI implements ActionListener {
         addDeliveryButton.addActionListener(this);
         add(addDeliveryButton);
 
-        setVisible(true);
+        revalidate();
+        repaint();
     }
 
 
