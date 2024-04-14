@@ -114,9 +114,24 @@ public class RecipesDB {
         }
         return null;
     }
-    public void getIngredients(){
-        //select all ingredients
-        //more code will be needed to make sure its only available ingredients
+      public Map<Integer, String> getIngredients() {
+        connect();
+        Map<Integer, String> ingredients = new HashMap<>();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID, Name FROM Ingredients");
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                int ingredientId = resultSet.getInt("IngredientID");
+                String name = resultSet.getString("Name");
+                ingredients.put(ingredientId, name);
+            }
+            resultSet.close();
+            pstmt.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error while fetching ingredients: " + e.getMessage());
+        }
+        return ingredients;
     }
     public String getStatus(int recipeId) {
         connect();
