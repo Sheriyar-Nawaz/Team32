@@ -8,7 +8,10 @@ public class DishConstructionDB {
     String password = "7VQ_A-ZBz2w";
 
     Statement statement1 = null;
+    PreparedStatement statement2 = null;
     ResultSet resultSet = null;
+
+    //
     public void getDishes() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -32,11 +35,24 @@ public class DishConstructionDB {
 
     }
 
+    // adding existing recipe to an existing Dish
+    public void InsertRecipeToDish(int dishID, int recipeID){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
 
-    public void updateDishes(){
+            statement2 = connection.prepareStatement("INSERT INTO DishRecipes(DishID, RecipeID) VALUES (?,?)");
+            statement2.setInt(1, dishID);
+            statement2.setInt(2, recipeID);
 
-
-    };
+            int affectedRows = statement2.executeUpdate();
+            System.out.println("Successful");
+            connection.close();
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
 
     public void getRecipes(){

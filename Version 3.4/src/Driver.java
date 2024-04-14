@@ -45,9 +45,19 @@ public class Driver {
               /*
               Insert + Update:
               */
-//            String sql2 = "INSERT into Menus "
-//                    + "(MenuID, Title, CreationDate)"
-//                    + "values ('2', 'WeekleyMenu2', '2024-04-12')";
+
+//            String sql2_5 = "INSERT into Recipes"
+//                    + "(RecipeID, Name, Description, isApproved)"
+//                    + "values ('5', 'Test1', 'Test description', '1')";
+//
+//            statement1.executeUpdate(sql2_5);
+//            System.out.println("Insert Complete.");
+
+
+//
+//            String sql2 = "INSERT into Dishes "
+//                    + "(DishID, RecipeID, Name, Price)"
+//                    + "values ('4', '5', 'Test1', '5')";
 //
 //             statement1.executeUpdate(sql2);
 //             System.out.println("Insert Complete.");
