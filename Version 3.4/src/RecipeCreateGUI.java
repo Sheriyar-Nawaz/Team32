@@ -33,21 +33,24 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         ingredientLabel.setForeground(Color.white);
         ingredientLabel.setBounds(50, 300, 200, 25);
         add(ingredientLabel);
-        JList<String> ingredientList = new JList<>(new String[]{"eggs", "flour", "butter"});
-        JScrollPane ingredientScrollPane = new JScrollPane(ingredientList);
+        JList<String> ingredients = new JList<>(new String[]{"eggs", "flour", "butter"});
+        JScrollPane ingredientScrollPane = new JScrollPane(ingredients);
         ingredientScrollPane.setBounds(50,325,200,275);
-        ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        ingredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(ingredientScrollPane);
 
         JLabel recipeLabel = new JLabel("Selected Recipe");
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
+
         RecipesDB rdb = new RecipesDB();
-        Map<Integer, String> ingredientMap = new HashMap<>()
-        JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
+        Map<Integer, String> ingredientMap = rdb.getRecipeIngredients(1);
+        List<String> ingredientList = new ArrayList<>(ingredientMap.values());
+        JList<String> recipeIngredients = new JList<>((ListModel) ingredientList);
+        JScrollPane recipeScrollPane = new JScrollPane();
         recipeScrollPane.setBounds(650,325,200,275);
-        ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        //ingredientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
 
         JLabel selectRecipeLabel = new JLabel("Select Recipe");
