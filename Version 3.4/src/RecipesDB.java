@@ -62,24 +62,18 @@ public class RecipesDB {
         Map<Integer, String> recipes = new HashMap<>();
         try {
             PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes");
-            ResultSet resultSet = pstmt.executeQuery();
+            resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int recipeId = resultSet.getInt("RecipeID");
                 String name = resultSet.getString("Name");
                 recipes.put(recipeId, name);
             }
-            resultSet.close();
-            pstmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error while fetching recipes: " + e.getMessage());
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            connection.close();
+            return recipes;
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return recipes;
+        return null;
     }
 
     public Map<Integer, String> getRecipeIngredients(int recipeId){ //parameter recipe id
