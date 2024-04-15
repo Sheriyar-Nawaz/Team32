@@ -162,8 +162,17 @@ public class RecipesDB {
     public void addQuantity(){ //parameters double quantity, ingredient id and recipe id
         //insert quantity specified for the ingredient with the specified recipe id
     }
-    public void addDescription(){ //parameters String description and recipe id
-        //insert description to the id specified
+    public void addDescription(int recipeId, String description) {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE Recipes SET Description = ? WHERE RecipeID = ?");
+            pstmt.setString(1, description);
+            pstmt.setInt(2, recipeId);
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     public void removeIngredient(int recipeId, List<String> ingredientNames) {
         connect();
