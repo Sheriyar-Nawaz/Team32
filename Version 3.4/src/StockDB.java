@@ -68,7 +68,17 @@ public class StockDB {
         }
         return null;
     }
-    public void getWaste(){
-        //Same as getStock but load wasteQuantity
+    public void getWaste() {
+        // Same as getStock but load wasteQuantity
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            statement1 = connection.createStatement();
+            resultSet = statement1.executeQuery("SELECT IngredientID, Name, WasteQuantity FROM Ingredients");
+            table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
