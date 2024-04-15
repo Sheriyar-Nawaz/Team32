@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class RecipeReviewGUI extends GUI implements ActionListener {
     private final JButton removeFromRecipeButton;
@@ -13,6 +14,10 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
     private JFrame frame;
     private JButton removeButton;
     private JButton submitFeedbackButton;
+    JList<String> recipeIngredients;
+    Map<Integer, String> recipeMap;
+    JList<String> recipes;
+    RecipesDB rdb;
 
     public RecipeReviewGUI(String userType) {
         super(userType);
@@ -26,10 +31,10 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
         recipesLabel.setBounds(50, 300, 200, 25);
         add(recipesLabel);
 
-        RecipesDB rdb = new RecipesDB();
-        Map<Integer, String> recipeMap = rdb.getReviews();
+        rdb = new RecipesDB();
+        recipeMap = rdb.getReviews();
         List<String> recipeList = new ArrayList<>(recipeMap.values());
-        JList<String> recipes = new JList<>((recipeList.toArray(new String[0])));
+        recipes = new JList<>((recipeList.toArray(new String[0])));
         JScrollPane recipesScrollPane = new JScrollPane(recipes);
         recipesScrollPane.setBounds(50,325,200,300);
         recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
@@ -64,6 +69,15 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
         feedbackButton.setBounds(350,500,150,75);
         feedbackButton.addActionListener(this);
         add(feedbackButton);
+    }
+
+    public int getRecipeID(Map<Integer, String> map){
+        for(Map.Entry<Integer, String> entry : map.entrySet()){
+            if (Objects.equals(entry.getValue(), Objects.requireNonNull(recipes.getSelectedValue()))){
+                return entry.getKey();
+            }
+        }
+        return 0;
     }
 
     public void createRemoveGUI(){
@@ -138,6 +152,7 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
             RecipesMenuGUI rm = new RecipesMenuGUI(user);
         }
         if (e.getSource() == approveButton){
+            rdb.updateStatus(getRecipeID(recipeMap), "Reviewed");
             JOptionPane.showMessageDialog(null, "Submitted For Approval!", "Reviewed", JOptionPane.INFORMATION_MESSAGE);
         }
     }

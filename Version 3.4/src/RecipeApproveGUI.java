@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class RecipeApproveGUI extends GUI implements ActionListener {
     private final JButton removeFromRecipeButton;
@@ -13,7 +14,10 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
     private JButton removeButton;
     private JButton submitFeedbackButton;
     private JButton feedbackButton;
-
+    JList<String> recipeIngredients;
+    Map<Integer, String> recipeMap;
+    JList<String> recipes;
+    RecipesDB rdb;
     public RecipeApproveGUI(String userType) {
         super(userType);
         add(backButton);
@@ -26,10 +30,10 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipesLabel.setBounds(50, 300, 200, 25);
         add(recipesLabel);
 
-        RecipesDB rdb = new RecipesDB();
-        Map<Integer, String> recipeMap = rdb.getApproves();
+        rdb = new RecipesDB();
+        recipeMap = rdb.getApproves();
         List<String> recipeList = new ArrayList<>(recipeMap.values());
-        JList<String> recipes = new JList<>((recipeList.toArray(new String[0])));
+        recipes = new JList<>((recipeList.toArray(new String[0])));
         JScrollPane recipesScrollPane = new JScrollPane(recipes);
         recipesScrollPane.setBounds(50,325,200,300);
         recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
@@ -44,7 +48,7 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
 
         Map<Integer, String> ingredientMap = rdb.getRecipeIngredients(4);
         List<String> ingredientList = new ArrayList<>(ingredientMap.values());
-        JList<String> recipeIngredients = new JList<>((ingredientList.toArray(new String[0])));
+        recipeIngredients = new JList<>((ingredientList.toArray(new String[0])));
         JScrollPane recipeScrollPane = new JScrollPane(recipeIngredients);
         recipeScrollPane.setBounds(650,325,200,275);
         recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
@@ -68,6 +72,14 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         add(feedbackButton);
     }
 
+    public int getRecipeID(Map<Integer, String> map){
+        for(Map.Entry<Integer, String> entry : map.entrySet()){
+            if (Objects.equals(entry.getValue(), Objects.requireNonNull(recipes.getSelectedValue()))){
+                return entry.getKey();
+            }
+        }
+        return 0;
+    }
     public void createRemoveGUI(){
         frame = new JFrame();
         frame.setTitle("Select Quantity");
@@ -129,6 +141,7 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
             RecipesMenuGUI rm = new RecipesMenuGUI(user);
         }
         if (e.getSource() == approveButton){
+            rdb.updateStatus(getRecipeID(recipeMap), "Approved");
             JOptionPane.showMessageDialog(null, "Recipe Approved!", "Approved", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == removeFromRecipeButton){
