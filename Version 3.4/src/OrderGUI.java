@@ -27,7 +27,7 @@ public class OrderGUI extends GUI implements ActionListener {
         table_1 = odb.getOrders();
 
         JScrollPane tableScrollPane = new JScrollPane(table_1);
-        tableScrollPane.setBounds(250,250,350,100);
+        tableScrollPane.setBounds(175,250,500,100);
         table_1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(tableScrollPane);
 

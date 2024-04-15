@@ -13,22 +13,24 @@ public class MainMenuGUI extends GUI implements ActionListener {
 
     public MainMenuGUI(String user) {
         super(user);
-        recipeButton.setBounds(100, 150, 200, 100);
+        logo.setBounds(300,-50,300,300);
+        add(logo);
+        recipeButton.setBounds(100, 250, 200, 100);
         recipeButton.addActionListener(this);
         add(recipeButton);
-        dishButton.setBounds(350, 150, 200, 100);
+        dishButton.setBounds(350, 250, 200, 100);
         dishButton.addActionListener(this);
         add(dishButton);
-        menusButton.setBounds(600, 150, 200, 100);
+        menusButton.setBounds(600, 250, 200, 100);
         menusButton.addActionListener(this);
         add(menusButton);
-        orderButton.setBounds(100, 350, 200, 100);
+        orderButton.setBounds(100, 450, 200, 100);
         orderButton.addActionListener(this);
         add(orderButton);
-        stockButton.setBounds(350, 350, 200, 100);
+        stockButton.setBounds(350, 450, 200, 100);
         stockButton.addActionListener(this);
         add(stockButton);
-        wasteButton.setBounds(600, 350, 200, 100);
+        wasteButton.setBounds(600, 450, 200, 100);
         wasteButton.addActionListener(this);
         add(wasteButton);
 
