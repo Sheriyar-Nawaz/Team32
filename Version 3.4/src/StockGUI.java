@@ -35,7 +35,7 @@ public class StockGUI extends GUI implements ActionListener {
         add(ingredientLabel);
 
         ingredientField = new JTextField();
-        ingredientField.setBounds(410, 400, 200, 25);
+        ingredientField.setBounds(410, 400, 150, 25);
         add(ingredientField);
 
         JLabel quantityLabel = new JLabel("Enter quantity:");
@@ -56,7 +56,7 @@ public class StockGUI extends GUI implements ActionListener {
         addDeliveryButton = new JButton("Add delivery");
         addDeliveryButton.setBounds(390, 540, 150, 25);
         addDeliveryButton.addActionListener(this);
-        add(addDeliveryButton);
+        //add(addDeliveryButton);
 
         revalidate();
         repaint();
@@ -66,15 +66,8 @@ public class StockGUI extends GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToStockButton) {
-            String selectedIngredient = (String) ingredientField.getText();
-            String quantityText = (String) quantityField.getText();
-            try{
-                int quantity = Integer.parseInt(quantityText); // convert the quantity to an integer
-                System.out.println("Selected ingredient added to stock: " + selectedIngredient);
-                JOptionPane.showMessageDialog(this, "Added to Stock: " + quantity + " of " + selectedIngredient);
-            } catch(Exception ex){
-                JOptionPane.showMessageDialog(this, "Invalid quantity entered. Please enter a valid number.");
-            }
+            StockDB sdb = new StockDB();
+            sdb.updateStock(Integer.parseInt(ingredientField.getText()),Double.parseDouble(quantityField.getText()));
         }
         if(e.getSource() == addDeliveryButton){
             JOptionPane.showMessageDialog(this, "Added delivery to stock");

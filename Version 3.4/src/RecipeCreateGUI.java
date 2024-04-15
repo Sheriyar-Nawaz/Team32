@@ -18,6 +18,13 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
     private JButton createButton;
     private JButton addButton;
     private JButton removeButton;
+    Map<Integer, String> recipeMap;
+    Map<Integer, String> recipeIngredientMap;
+    Map<Integer, String> ingredientsMap;
+    JList<String> recipeIngredients;
+    JList<String> ingredients;
+    RecipesDB rdb;
+    JTextField quantityField;
 
     public RecipeCreateGUI(String user) {
         super(user);
@@ -34,10 +41,10 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         ingredientLabel.setBounds(50, 300, 200, 25);
         add(ingredientLabel);
 
-        RecipesDB rdb = new RecipesDB();
-        Map<Integer, String> ingredientsMap = rdb.getIngredients();
+        rdb = new RecipesDB();
+        ingredientsMap = rdb.getIngredients();
         List<String> ingredientsList = new ArrayList<>(ingredientsMap.values());
-        JList<String> ingredients = new JList<>((ingredientsList.toArray(new String[0])));
+        ingredients = new JList<>((ingredientsList.toArray(new String[0])));
         JScrollPane ingredientScrollPane = new JScrollPane(ingredients);
         ingredientScrollPane.setBounds(50,325,200,275);
         ingredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -49,13 +56,7 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         add(recipeLabel);
 
 
-        Map<Integer, String> recipeIngredientMap = rdb.getRecipeIngredients(4);
-        List<String> recipeIngredientList = new ArrayList<>(recipeIngredientMap.values());
-        JList<String> recipeIngredients = new JList<>((recipeIngredientList.toArray(new String[0])));
-        JScrollPane recipeScrollPane = new JScrollPane(recipeIngredients);
-        recipeScrollPane.setBounds(650,325,200,275);
-        recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
-        add(recipeScrollPane);
+
 
 
 
@@ -63,9 +64,21 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         selectRecipeLabel.setForeground(Color.white);
         selectRecipeLabel.setBounds(50, 175, 100, 25);
         add(selectRecipeLabel);
-        recipeComboBox = new JComboBox<>();
+
+        recipeMap = rdb.getRecipes();
+        List<String> recipeList = new ArrayList<>(recipeMap.values());
+        recipeComboBox = new JComboBox<>(recipeList.toArray(new String[0]));
         recipeComboBox.setBounds(50,200,200,25);
+        recipeComboBox.addActionListener(this);
         add(recipeComboBox);
+
+        recipeIngredientMap = rdb.getRecipeIngredients(getRecipeID(recipeMap));
+        List<String> recipeIngredientList = new ArrayList<>(recipeIngredientMap.values());
+        recipeIngredients = new JList<>((recipeIngredientList.toArray(new String[0])));
+        JScrollPane recipeScrollPane = new JScrollPane(recipeIngredients);
+        recipeScrollPane.setBounds(650,325,200,275);
+        recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        add(recipeScrollPane);
 
         addToRecipeButton = new JButton("Add to Recipe");
         addToRecipeButton.setBounds(50,600,200,25);
@@ -78,22 +91,40 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         add(removeFromRecipeButton);
 
         createRecipeButton = new JButton("Create New Recipe");
-        createRecipeButton.setBounds(350,250,150,75);
+        createRecipeButton.setBounds(375,250,150,75);
         createRecipeButton.addActionListener(this);
         add(createRecipeButton);
 
         submitForReviewButton = new JButton("Submit for Review");
-        submitForReviewButton.setBounds(350,400,150,75);
+        submitForReviewButton.setBounds(375,400,150,75);
         submitForReviewButton.addActionListener(this);
         add(submitForReviewButton);
 
         saveAsDraftButton = new JButton("Save as Draft");
-        saveAsDraftButton.setBounds(350,550,150,75);
+        saveAsDraftButton.setBounds(375,550,150,75);
         saveAsDraftButton.addActionListener(this);
         add(saveAsDraftButton);
 
         revalidate();
         repaint();
+    }
+
+    public int getRecipeID(Map<Integer, String> map){
+        for(Map.Entry<Integer, String> entry : map.entrySet()){
+            if (Objects.equals(entry.getValue(), Objects.requireNonNull(recipeComboBox.getSelectedItem()).toString())){
+                return entry.getKey();
+            }
+        }
+        return 0;
+    }
+
+    public int getIngredientID(Map<Integer, String> map){
+        for(Map.Entry<Integer, String> entry : map.entrySet()){
+            if (Objects.equals(entry.getValue(), Objects.requireNonNull(ingredients.getSelectedValue()))){
+                return entry.getKey();
+            }
+        }
+        return 0;
     }
 
     public void createRecipeGUI(){
@@ -135,7 +166,7 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         quantityLabel.setBounds(10, 50, 150, 20);
         frame.add(quantityLabel);
 
-        JTextField quantityField = new JTextField();
+        quantityField = new JTextField();
         quantityField.setBounds(130, 50, 150, 20);
         frame.add(quantityField);
 
@@ -190,9 +221,32 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         }
         if (e.getSource() == addButton) {
             frame.dispose();
+            int ingredientID = getIngredientID(ingredientsMap);
+            int recipeID = getRecipeID(recipeMap);
+            double quantity = Double.parseDouble(quantityField.getText());
+            rdb.addIngredientToRecipe(ingredientID,recipeID, quantity);
+
         }
         if (e.getSource() == removeButton){
             frame.dispose();
+        }
+        if (e.getSource() == recipeComboBox){
+            // Clear the selection in the JList
+            recipeIngredients.clearSelection();
+
+            // Get the ID of the selected recipe
+            int recipeId = getRecipeID(recipeMap);
+
+            // Get the ingredients for the selected recipe
+            recipeIngredientMap = rdb.getRecipeIngredients(recipeId);
+            List<String> recipeIngredientList = new ArrayList<>(recipeIngredientMap.values());
+
+            // Update the data in the existing JList
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            for (String ingredient : recipeIngredientList) {
+                listModel.addElement(ingredient);
+            }
+            recipeIngredients.setModel(listModel);
         }
         if (e.getSource() == submitForReviewButton){
             JOptionPane.showMessageDialog(null, "Submitted For Review", "Submitted", JOptionPane.INFORMATION_MESSAGE);

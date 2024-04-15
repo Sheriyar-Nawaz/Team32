@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderGUI extends GUI implements ActionListener {
     private JButton startCookingButton;
@@ -57,7 +58,7 @@ public class OrderGUI extends GUI implements ActionListener {
         CourseComboBox.setBounds(400, 400, 150, 25);
         add(CourseComboBox);
 
-        JLabel tableNumLabel = new JLabel("Table Number:");
+        JLabel tableNumLabel = new JLabel("Order ID:");
         tableNumLabel.setForeground(Color.white);
         tableNumLabel.setBounds(300, 450, 150, 25);
         add(tableNumLabel);
@@ -74,19 +75,11 @@ public class OrderGUI extends GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startCookingButton) {
-            int selectedIndex = CourseComboBox.getSelectedIndex();
-            Course selectedCourse = Coursees.get(selectedIndex);
-            int tableNum;
-            try {
-                tableNum = Integer.parseInt(tableNumField.getText());
-                selectedCourse.setTableNum(tableNum);
-                orderTextArea.append(selectedCourse.toString() + "\n");
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid table number.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            OrderDB odb = new OrderDB();
+            odb.StartCooking(Integer.parseInt(tableNumField.getText()), (Objects.requireNonNull(CourseComboBox.getSelectedItem()).toString()));
         } else if (e.getSource() == completeCookingButton) {
-            // Handle submitting the order
-            // You can implement this based on your requirements
+            OrderDB odb = new OrderDB();
+            odb.CompleteCooking(Integer.parseInt(tableNumField.getText()), (Objects.requireNonNull(CourseComboBox.getSelectedItem()).toString()));
             JOptionPane.showMessageDialog(null, "Order Completed!");
         }
         if (e.getSource() == backButton){

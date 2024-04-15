@@ -26,19 +26,13 @@ public class StockDB {
             System.out.println(e);
         }
     }
-    public void updateStock(String ingredientName, int quantity) {
+    public void updateStock(int ingredientId, double quantity) {
         connect();
         try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID FROM Ingredients WHERE Name = ?");
-            pstmt.setString(1, ingredientName);
-            resultSet = pstmt.executeQuery();
-            if (resultSet.next()) {
-                int ingredientId = resultSet.getInt("IngredientID");
                 PreparedStatement pstmt3 = connection.prepareStatement("UPDATE Ingredients SET Stock = Stock + ? WHERE IngredientID = ?");
-                pstmt3.setInt(1, quantity);
+                pstmt3.setDouble(1, quantity);
                 pstmt3.setInt(2, ingredientId);
                 pstmt3.executeUpdate();
-            }
             connection.close();
         } catch (Exception e) {
             System.out.println(e);

@@ -62,7 +62,7 @@ public class RecipesDB {
         connect();
         Map<Integer, String> recipes = new HashMap<>();
         try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes WHERE Status != 'Approved'");
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int recipeId = resultSet.getInt("RecipeID");
@@ -113,7 +113,7 @@ public class RecipesDB {
         connect();
         Map<Integer, String> ingredients = new HashMap<>();
         try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID, Name FROM Ingredients WHERE Stock > 0");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID, Name FROM Ingredients");
             ResultSet resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int ingredientId = resultSet.getInt("IngredientID");
@@ -157,40 +157,17 @@ public class RecipesDB {
             System.out.println(e);
         }
     }
-    public void addIngredient(List<String> ingredients, int recipeId) {
+    public void addIngredientToRecipe(int ingredientId, int recipeId, double quantity) {
         connect();
         try {
-            for (String ingredient : ingredients) {
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO Ingredients(Name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-                pstmt.setString(1, ingredient);
-                pstmt.executeUpdate();
-
-                ResultSet generatedKeys = pstmt.getGeneratedKeys();
-                int ingredientId;
-                if (generatedKeys.next()) {
-                    ingredientId = generatedKeys.getInt(1);
-                } else {
-                    throw new Exception("Failed to get generated ingredient ID.");
-                }
-
-                pstmt.close();
-
-                pstmt = connection.prepareStatement("INSERT INTO RecipeIngredients(RecipeID, IngredientID) VALUES (?, ?)");
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO RecipeIngredients(RecipeID, IngredientID, QuantityRequired) VALUES (?, ?, ?)");
                 pstmt.setInt(1, recipeId);
                 pstmt.setInt(2, ingredientId);
+                pstmt.setDouble(3, quantity);
                 pstmt.executeUpdate();
-                pstmt.close();
-            }
+                connection.close();
         } catch (Exception e) {
-            System.out.println("Error while adding ingredient: " + e.getMessage());
-        } finally {
-            try {
-                if (connection != null && !connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Error while closing connection: " + e.getMessage());
-            }
+            System.out.println(e);
         }
     }
     public void addQuantity(int recipeId, int ingredientId, double quantity) {
