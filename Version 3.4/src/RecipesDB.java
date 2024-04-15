@@ -31,10 +31,12 @@ public class RecipesDB {
                 String name = resultSet.getString("Name");
                 recipes.put(recipeId, name);
             }
+            connection.close();
+            return recipes;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return recipes;
+        return null;
     }
     public Map<Integer, String> getApproves(){
         //select all the recipe ids and names where the status is "Approve" -- this is for recipes awaiting approval not the same as "Approved"
@@ -48,34 +50,30 @@ public class RecipesDB {
                 String name = resultSet.getString("Name");
                 recipes.put(recipeId, name);
             }
+            connection.close();
+            return recipes;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return recipes;
+        return null;
     }
     public Map<Integer, String> getRecipes() {
         connect();
         Map<Integer, String> recipes = new HashMap<>();
         try {
             PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes");
-            ResultSet resultSet = pstmt.executeQuery();
+            resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int recipeId = resultSet.getInt("RecipeID");
                 String name = resultSet.getString("Name");
                 recipes.put(recipeId, name);
             }
-            resultSet.close();
-            pstmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error while fetching recipes: " + e.getMessage());
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            connection.close();
+            return recipes;
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return recipes;
+        return null;
     }
 
     public Map<Integer, String> getRecipeIngredients(int recipeId){ //parameter recipe id
@@ -110,15 +108,53 @@ public class RecipesDB {
         }
         return null;
     }
-    public void getIngredients(){
-        //select all ingredients
-        //more code will be needed to make sure its only available ingredients
+      public Map<Integer, String> getIngredients() {
+        connect();
+        Map<Integer, String> ingredients = new HashMap<>();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID, Name FROM Ingredients");
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                int ingredientId = resultSet.getInt("IngredientID");
+                String name = resultSet.getString("Name");
+                ingredients.put(ingredientId, name);
+            }
+            resultSet.close();
+            pstmt.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error while fetching ingredients: " + e.getMessage());
+        }
+        return ingredients;
     }
-    public void getStatus(){ //parameter recipe id
-        //select the status based off a recipe id
+    public String getStatus(int recipeId) {
+        connect();
+        String status = null;
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT Status FROM Recipes WHERE RecipeID = ?");
+            pstmt.setInt(1, recipeId);
+            resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                status = resultSet.getString("Status");
+            }
+            connection.close();
+            return status;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
-    public void updateStatus(){ //parameters recipeID and String for status
-        //update the status of the specified dish id to whatever the parameter is i.e. Review/Approve/Approved
+    public void updateStatus(int recipeId, String newStatus) {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE Recipes SET Status = ? WHERE RecipeID = ?");
+            pstmt.setString(1, newStatus);
+            pstmt.setInt(2, recipeId);
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     public void addIngredient(){ //parameters list of strings ingredients and recipe id
         //insert ingredient(s) specified with the specified recipe id -- ensure status is draft, if it's not -- duplicate recipe details with status changed to draft
@@ -126,10 +162,36 @@ public class RecipesDB {
     public void addQuantity(){ //parameters double quantity, ingredient id and recipe id
         //insert quantity specified for the ingredient with the specified recipe id
     }
-    public void addDescription(){ //parameters String description and recipe id
-        //insert description to the id specified
+    public void addDescription(int recipeId, String description) {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE Recipes SET Description = ? WHERE RecipeID = ?");
+            pstmt.setString(1, description);
+            pstmt.setInt(2, recipeId);
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
-    public void removeIngredient(){ //parameters list of strings ingredients and recipe id
-        //delete the ingredient(s) specified from the specified recipe id
+    public void removeIngredient(int recipeId, List<String> ingredientNames) {
+        connect();
+        try {
+            for (String ingredientName : ingredientNames) {
+                PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID FROM Ingredients WHERE Name = ?");
+                pstmt.setString(1, ingredientName);
+                resultSet = pstmt.executeQuery();
+                if (resultSet.next()) {
+                    int ingredientId = resultSet.getInt("IngredientID");
+                    PreparedStatement pstmt2 = connection.prepareStatement("DELETE FROM RecipeIngredients WHERE RecipeID = ? AND IngredientID = ?");
+                    pstmt2.setInt(1, recipeId);
+                    pstmt2.setInt(2, ingredientId);
+                    pstmt2.executeUpdate();
+                }
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
