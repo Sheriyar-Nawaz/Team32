@@ -11,6 +11,8 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
     private final JButton approveButton;
     private JFrame frame;
     private JButton removeButton;
+    private JButton submitFeedbackButton;
+    private JButton feedbackButton;
 
     public RecipeApproveGUI(String userType) {
         super(userType);
@@ -52,6 +54,11 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         approveButton.setBounds(350,400,150,75);
         approveButton.addActionListener(this);
         add(approveButton);
+
+        feedbackButton = new JButton("Submit Feedback");
+        feedbackButton.setBounds(350,500,150,75);
+        feedbackButton.addActionListener(this);
+        add(feedbackButton);
     }
 
     public void createRemoveGUI(){
@@ -80,6 +87,34 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    public void createFeedbackGUI(){
+        frame = new JFrame();
+        frame.setTitle("Feedback");
+        frame.setResizable(false);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+        frame.setVisible(true);
+
+        JLabel feedbackLabel = new JLabel("Enter Feedback: ");
+        feedbackLabel.setBounds(10, 0, 150, 20);
+        frame.add(feedbackLabel);
+
+        JTextArea feedbackField = new JTextArea();
+        feedbackField.setBounds(120, 0, 150, 150);
+        feedbackField.setLineWrap(true);
+        feedbackField.setWrapStyleWord(true);
+        frame.add(feedbackField);
+
+        submitFeedbackButton = new JButton("Submit");
+        submitFeedbackButton.setBounds(0,100,100,25);
+        submitFeedbackButton.addActionListener(this);
+        frame.add(submitFeedbackButton);
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton){
@@ -93,6 +128,12 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
             createRemoveGUI();
         }
         if (e.getSource() == removeButton) {
+            frame.dispose();
+        }
+        if (e.getSource() == feedbackButton){
+            createFeedbackGUI();
+        }
+        if (e.getSource() == submitFeedbackButton) {
             frame.dispose();
         }
     }
