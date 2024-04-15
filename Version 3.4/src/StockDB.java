@@ -45,9 +45,27 @@ public class StockDB {
         }
     }
 
-    public void AddOrder(int dishID, int quantity){
-        //Add new OrderID into table
-        //Insert dishID and quantity
+    public void AddOrder(int dishID, int quantity) {
+        try {
+            // Establishing a connection
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            // Inserting data into the Orders table
+            String sql = "INSERT INTO Orders (DishID, Quantity) VALUES (?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, dishID);
+            pstmt.setInt(2, quantity);
+
+            // Executing the query
+            pstmt.executeUpdate();
+
+            // Closing resources
+            pstmt.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error while adding order: " + e.getMessage());
+        }
     }
 
     public JTable getStock(){
