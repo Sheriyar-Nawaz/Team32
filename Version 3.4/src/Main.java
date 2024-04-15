@@ -10,6 +10,7 @@ public class Main {
         UserPass userPass = new UserPass();
         LoginGUI login = new LoginGUI(userPass.getLogininfo());
 
+
 //        List<String> ingredients = Arrays.asList("Tomatoes", "Basil", "Olive Oil");
 //
 //        RecipesDB r = new RecipesDB();

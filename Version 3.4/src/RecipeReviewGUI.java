@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class RecipeReviewGUI extends GUI implements ActionListener {
     private final JButton removeFromRecipeButton;
@@ -20,7 +23,11 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
         recipesLabel.setForeground(Color.white);
         recipesLabel.setBounds(50, 300, 200, 25);
         add(recipesLabel);
-        JList<String> recipes = new JList<>(new String[]{"recipe 1", "recipe 2", "recipe 3"});
+
+        RecipesDB rdb = new RecipesDB();
+        Map<Integer, String> recipeMap = rdb.getReviews();
+        List<String> recipeList = new ArrayList<>(recipeMap.values());
+        JList<String> recipes = new JList<>((recipeList.toArray(new String[0])));
         JScrollPane recipesScrollPane = new JScrollPane(recipes);
         recipesScrollPane.setBounds(50,325,200,300);
         recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
@@ -30,10 +37,14 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
-        JList<String> ingredientList = new JList<>(new String[]{"eggs", "flour", "butter"});
-        JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
+
+
+        Map<Integer, String> ingredientMap = rdb.getRecipeIngredients(4);
+        List<String> ingredientList = new ArrayList<>(ingredientMap.values());
+        JList<String> recipeIngredients = new JList<>((ingredientList.toArray(new String[0])));
+        JScrollPane recipeScrollPane = new JScrollPane(recipeIngredients);
         recipeScrollPane.setBounds(650,325,200,275);
-        recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
 
         removeFromRecipeButton = new JButton("Remove from Recipe");

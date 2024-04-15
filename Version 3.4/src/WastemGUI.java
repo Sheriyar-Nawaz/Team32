@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WastemGUI extends GUI implements ActionListener {
-    private final JTable table_1;
+    //private final JTable table_1;
     private JTextField ingredientComboBox;
     private JButton addToWasteButton;
 
