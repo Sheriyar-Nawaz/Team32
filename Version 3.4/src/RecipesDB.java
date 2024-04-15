@@ -156,8 +156,41 @@ public class RecipesDB {
             System.out.println(e);
         }
     }
-    public void addIngredient(){ //parameters list of strings ingredients and recipe id
-        //insert ingredient(s) specified with the specified recipe id -- ensure status is draft, if it's not -- duplicate recipe details with status changed to draft
+     public void addIngredient(List<String> ingredients, int recipeId) {
+        connect();
+        try {
+            for (String ingredient : ingredients) {
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO Ingredients(Name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, ingredient);
+                pstmt.executeUpdate();
+
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                int ingredientId;
+                if (generatedKeys.next()) {
+                    ingredientId = generatedKeys.getInt(1);
+                } else {
+                    throw new Exception("Failed to get generated ingredient ID.");
+                }
+
+                pstmt.close();
+
+                pstmt = connection.prepareStatement("INSERT INTO RecipeIngredients(RecipeID, IngredientID) VALUES (?, ?)");
+                pstmt.setInt(1, recipeId);
+                pstmt.setInt(2, ingredientId);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error while adding ingredient: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error while closing connection: " + e.getMessage());
+            }
+        }
     }
     public void addQuantity(int recipeId, int ingredientId, double quantity) {
         connect();

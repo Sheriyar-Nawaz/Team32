@@ -13,8 +13,8 @@ public class Main {
 //
 //        RecipesDB r = new RecipesDB();
 //        r.addQuantity(2, 3, 2);
-        //StockDB s = new StockDB();
-        //s.getStock();
+        StockDB s = new StockDB();
+        s.updateStock("Flour", 20);
         /*
         KitchenFrontOfHouseSender k = new KitchenFrontOfHouseSender();
         String x = k.getOrderStatus(1);
