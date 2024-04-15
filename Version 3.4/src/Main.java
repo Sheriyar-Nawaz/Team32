@@ -1,12 +1,17 @@
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args){
-//        UserPass userPass = new UserPass();
-//        LoginGUI login = new LoginGUI(userPass.getLogininfo());
-        RecipesDB r = new RecipesDB();
-        r.updateStatus(2, "Approved");
+        UserPass userPass = new UserPass();
+        LoginGUI login = new LoginGUI(userPass.getLogininfo());
+//        List<String> ingredients = Arrays.asList("Tomatoes", "Basil", "Olive Oil");
+//
+//        RecipesDB r = new RecipesDB();
+//        r.removeIngredient(1, ingredients);
         //StockDB s = new StockDB();
         //s.getStock();
         /*

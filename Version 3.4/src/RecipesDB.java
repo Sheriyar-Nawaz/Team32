@@ -165,7 +165,24 @@ public class RecipesDB {
     public void addDescription(){ //parameters String description and recipe id
         //insert description to the id specified
     }
-    public void removeIngredient(){ //parameters list of strings ingredients and recipe id
-        //delete the ingredient(s) specified from the specified recipe id
+    public void removeIngredient(int recipeId, List<String> ingredientNames) {
+        connect();
+        try {
+            for (String ingredientName : ingredientNames) {
+                PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID FROM Ingredients WHERE Name = ?");
+                pstmt.setString(1, ingredientName);
+                resultSet = pstmt.executeQuery();
+                if (resultSet.next()) {
+                    int ingredientId = resultSet.getInt("IngredientID");
+                    PreparedStatement pstmt2 = connection.prepareStatement("DELETE FROM RecipeIngredients WHERE RecipeID = ? AND IngredientID = ?");
+                    pstmt2.setInt(1, recipeId);
+                    pstmt2.setInt(2, ingredientId);
+                    pstmt2.executeUpdate();
+                }
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
