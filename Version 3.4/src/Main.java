@@ -31,6 +31,9 @@ public class Main {
 //      MenuGUI m = new MenuGUI(null);
 //      KitchenManagementSender KMS = new KitchenManagementSender();
 //      KMS.sendMenu();
+        MenuCompDB MCDB = new MenuCompDB();
+        List<String> availableDishes = MCDB.getDishes(1);
+        availableDishes.forEach(System.out::println);
 //<<<<<<< HEAD
 
 
