@@ -10,6 +10,7 @@ public class RecipesDB {
     private String password = "7VQ_A-ZBz2w";
     private Connection connection;
     private Statement statement1;
+    private PreparedStatement statement2;
     private ResultSet resultSet;
     public void connect(){
         try {
@@ -156,7 +157,7 @@ public class RecipesDB {
             System.out.println(e);
         }
     }
-     public void addIngredient(List<String> ingredients, int recipeId) {
+    public void addIngredient(List<String> ingredients, int recipeId) {
         connect();
         try {
             for (String ingredient : ingredients) {

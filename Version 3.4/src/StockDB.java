@@ -62,7 +62,6 @@ public class StockDB {
             connection.close();
             return table_1;
 
-
         }
         catch (Exception e){
             System.out.println(e);
