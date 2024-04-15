@@ -19,7 +19,7 @@ public class Main {
         KitchenFrontOfHouseSender k = new KitchenFrontOfHouseSender();
         String x = k.getOrderStatus(1);
         System.out.println(x);
-         */
+
 
 //      DishConstructionDB DCDB = new DishConstructionDB();
 //      DCDB.getDishes();
@@ -35,7 +35,7 @@ public class Main {
         List<String> availableDishes = MCDB.getDishes(1);
         availableDishes.forEach(System.out::println);
 //<<<<<<< HEAD
-
+*/
 
 
 //>>>>>>> e277b40984dd885437e530a68fd22473157f477d

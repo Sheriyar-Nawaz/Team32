@@ -113,7 +113,7 @@ public class RecipesDB {
         connect();
         Map<Integer, String> ingredients = new HashMap<>();
         try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID, Name FROM Ingredients");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID, Name FROM Ingredients WHERE Stock > 0");
             ResultSet resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int ingredientId = resultSet.getInt("IngredientID");

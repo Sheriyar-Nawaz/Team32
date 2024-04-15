@@ -40,7 +40,6 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
 
-
         Map<Integer, String> ingredientMap = rdb.getRecipeIngredients(4);
         List<String> ingredientList = new ArrayList<>(ingredientMap.values());
         JList<String> recipeIngredients = new JList<>((ingredientList.toArray(new String[0])));
@@ -48,6 +47,8 @@ public class RecipeReviewGUI extends GUI implements ActionListener {
         recipeScrollPane.setBounds(650,325,200,275);
         recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
+
+
 
         removeFromRecipeButton = new JButton("Remove from Recipe");
         removeFromRecipeButton.setBounds(650,600,200,25);

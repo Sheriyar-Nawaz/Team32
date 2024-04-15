@@ -25,7 +25,11 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipesLabel.setForeground(Color.white);
         recipesLabel.setBounds(50, 300, 200, 25);
         add(recipesLabel);
-        JList<String> recipes = new JList<>(new String[]{"recipe 1", "recipe 2", "recipe 3"});
+
+        RecipesDB rdb = new RecipesDB();
+        Map<Integer, String> recipeMap = rdb.getApproves();
+        List<String> recipeList = new ArrayList<>(recipeMap.values());
+        JList<String> recipes = new JList<>((recipeList.toArray(new String[0])));
         JScrollPane recipesScrollPane = new JScrollPane(recipes);
         recipesScrollPane.setBounds(50,325,200,300);
         recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
@@ -36,7 +40,8 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
 
-        RecipesDB rdb = new RecipesDB();
+
+
         Map<Integer, String> ingredientMap = rdb.getRecipeIngredients(4);
         List<String> ingredientList = new ArrayList<>(ingredientMap.values());
         JList<String> recipeIngredients = new JList<>((ingredientList.toArray(new String[0])));
@@ -44,6 +49,8 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipeScrollPane.setBounds(650,325,200,275);
         recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
+
+
 
         removeFromRecipeButton = new JButton("Remove from Recipe");
         removeFromRecipeButton.setBounds(650,600,200,25);
