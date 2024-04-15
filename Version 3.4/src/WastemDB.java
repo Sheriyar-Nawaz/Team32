@@ -1,9 +1,8 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 import net.proteanit.sql.DbUtils;
+
+import javax.swing.*;
 
 public class WastemDB {
     String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
@@ -11,6 +10,8 @@ public class WastemDB {
     String password = "7VQ_A-ZBz2w";
     private Connection connection;
     private ResultSet resultSet;
+    private Statement statement1;
+    private JTable table_1;
 
     public void connect(){
         try {
@@ -38,5 +39,9 @@ public class WastemDB {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public JTable getWaste(){
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WastemGUI extends GUI implements ActionListener {
+    private final JTable table_1;
     private JTextField ingredientComboBox;
     private JButton addToWasteButton;
 
@@ -14,20 +15,28 @@ public class WastemGUI extends GUI implements ActionListener {
         logo.setBounds(300,-50,300,300);
         add(logo);
 
+//        WastemDB wastemDB = new WastemDB();
+//        table_1 = wastemDB.getWaste();
+//
+//        JScrollPane tableScrollPane = new JScrollPane(table_1);
+//        tableScrollPane.setBounds(250,250,350,100);
+//        table_1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//        add(tableScrollPane);
+
         JLabel ingredientLabel = new JLabel("Select Ingredient:");
         ingredientLabel.setForeground(Color.white);
-        ingredientLabel.setBounds(300, 250, 150, 25);
+        ingredientLabel.setBounds(300, 400, 150, 25);
         add(ingredientLabel);
 
         add(backButton);
         backButton.addActionListener(this);
 
         ingredientComboBox = new JTextField();
-        ingredientComboBox.setBounds(410, 250, 200, 25);
+        ingredientComboBox.setBounds(410, 400, 200, 25);
         add(ingredientComboBox);
 
         addToWasteButton = new JButton("Add to Waste");
-        addToWasteButton.setBounds(390, 310, 150, 25);
+        addToWasteButton.setBounds(390, 550, 150, 25);
         addToWasteButton.addActionListener(this);
         add(addToWasteButton);
 
