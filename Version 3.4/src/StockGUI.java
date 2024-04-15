@@ -29,7 +29,7 @@ public class StockGUI extends GUI implements ActionListener {
         table_1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(tableScrollPane);
 
-        JLabel ingredientLabel = new JLabel("Enter Ingredient:");
+        JLabel ingredientLabel = new JLabel("Ingredient ID:");
         ingredientLabel.setForeground(Color.white);
         ingredientLabel.setBounds(300, 400, 150, 25);
         add(ingredientLabel);

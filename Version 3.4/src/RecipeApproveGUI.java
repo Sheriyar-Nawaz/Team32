@@ -55,7 +55,7 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         removeFromRecipeButton = new JButton("Remove from Recipe");
         removeFromRecipeButton.setBounds(650,600,200,25);
         removeFromRecipeButton.addActionListener(this);
-        add(removeFromRecipeButton);
+        //add(removeFromRecipeButton);
 
         approveButton = new JButton("Approve Recipe");
         approveButton.setBounds(350,400,150,75);

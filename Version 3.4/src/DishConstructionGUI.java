@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class DishConstructionGUI extends GUI implements ActionListener {
     private final JButton addToDishButton;
@@ -20,6 +19,13 @@ public class DishConstructionGUI extends GUI implements ActionListener {
 
     private JButton addButton;
     private JButton removeButton;
+    JComboBox<Object> dishComboBox;
+    Map<Integer, String> recipeMap;
+    Map<Integer, String> recipeIngredientMap;
+    Map<Integer, String> ingredientsMap;
+    JList<String> recipeIngredients;
+    JList<String> ingredients;
+    RecipesDB rdb = new RecipesDB();
 
     public DishConstructionGUI(String user) {
         super(user);
@@ -35,17 +41,20 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(50, 300, 100, 25);
         add(recipeLabel);
-        JList<String> recipeList = new JList<>(new String[]{"1", "2", "3"});
-        JScrollPane recipeScrollPane = new JScrollPane(recipeList);
+
+        recipeMap = rdb.getRecipes();
+        List<String> recipeList = new ArrayList<>(recipeMap.values());
+        JList<String> recipeJList = new JList<>(recipeList.toArray(new String[0]));
+        JScrollPane recipeScrollPane = new JScrollPane(recipeJList);
         recipeScrollPane.setBounds(50,325,200,275);
-        recipeList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        recipeJList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(recipeScrollPane);
 
         JLabel dishLabel = new JLabel("Dish");
         dishLabel.setForeground(Color.white);
         dishLabel.setBounds(650, 300, 100, 25);
         add(dishLabel);
-        JList<String> dish = new JList<>(new String[]{"1", "2", "3"});
+        JList<String> dish = new JList<>(new String[]{"Tomatoes"});
         JScrollPane dishScrollPane = new JScrollPane(dish);
         dishScrollPane.setBounds(650,325,200,275);
         dish.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
@@ -55,8 +64,13 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         selectDishLabel.setForeground(Color.white);
         selectDishLabel.setBounds(50, 175, 100, 25);
         add(selectDishLabel);
-        JComboBox<Object> dishComboBox = new JComboBox<>();
+
+        DishConstructionDB dcdb = new DishConstructionDB();
+        Map<Integer, String> dishMap = dcdb.getDishes();
+        List<String> dishList = new ArrayList<>(dishMap.values());
+        dishComboBox = new JComboBox<>(dishList.toArray(new String[0]));
         dishComboBox.setBounds(50,200,200,25);
+        dishComboBox.addActionListener(this);
         add(dishComboBox);
 
         addToDishButton = new JButton("Add to Dish");
@@ -67,7 +81,7 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         createDishButton = new JButton("Create New Dish");
         createDishButton.setBounds(350,250,150,75);
         createDishButton.addActionListener(this);
-        add(createDishButton);
+        //add(createDishButton);
 
         finalizeDishButton = new JButton("Finalise Dish");
         finalizeDishButton.setBounds(350,400,150,75);
@@ -80,7 +94,7 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         removeFromRecipeButton = new JButton("Remove from Recipe");
         removeFromRecipeButton.setBounds(650,600,200,25);
         removeFromRecipeButton.addActionListener(this);
-        add(removeFromRecipeButton);
+        //add(removeFromRecipeButton);
 
         revalidate();
         repaint();
@@ -167,12 +181,7 @@ public class DishConstructionGUI extends GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToDishButton) {
-            //String selectedDish = (String) scrollPane.getSelectedItem();
-            // selectedDishes.add(selectedDish);
-            // Here you can add the selected dish to the menu
-            // For now, let's just print it
-            //System.out.println("Selected dish: " + selectedDish);
-            //JOptionPane.showMessageDialog(null, "Dish added to menu: " + selectedDish);
+
         } if (e.getSource() == createDishButton) {
             createDishGUI();
         } if (e.getSource() == createButton) {

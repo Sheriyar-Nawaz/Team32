@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DishConstructionDB {
     String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
@@ -12,27 +14,26 @@ public class DishConstructionDB {
     ResultSet resultSet = null;
 
     //
-    public void getDishes() {
+    public Map<Integer, String> getDishes() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
 
-            statement1 = connection.createStatement();
-            resultSet = statement1.executeQuery("SELECT DishID, Name FROM Dishes");
+            Map<Integer, String> dishes = new HashMap<>();
 
-            while(resultSet.next()){
-                int dishID = resultSet.getInt("DishID");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DishID, Name FROM Dishes");
+            ResultSet resultSet = pstmt.executeQuery(); // Add declaration for ResultSet
+            while (resultSet.next()) {
+                int dishId = resultSet.getInt("DishID"); // Correct column name to "DishID"
                 String name = resultSet.getString("Name");
-                System.out.println(dishID + " "  + name);
+                dishes.put(dishId, name);
             }
-
-
             connection.close();
-        }
-        catch (Exception e){
+            return dishes;
+        } catch (Exception e) {
             System.out.println(e);
         }
-
+        return null;
     }
 
     // adding existing recipe to an existing Dish

@@ -88,12 +88,12 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         removeFromRecipeButton = new JButton("Remove from Recipe");
         removeFromRecipeButton.setBounds(650,600,200,25);
         removeFromRecipeButton.addActionListener(this);
-        add(removeFromRecipeButton);
+        //add(removeFromRecipeButton);
 
         createRecipeButton = new JButton("Create New Recipe");
         createRecipeButton.setBounds(375,250,150,75);
         createRecipeButton.addActionListener(this);
-        add(createRecipeButton);
+        //add(createRecipeButton);
 
         submitForReviewButton = new JButton("Submit for Review");
         submitForReviewButton.setBounds(375,400,150,75);

@@ -67,7 +67,7 @@ public class MenuCompGUI extends GUI implements ActionListener {
         createMenuButton = new JButton("Create New Menu");
         createMenuButton.setBounds(350,250,150,75);
         createMenuButton.addActionListener(this);
-        add(createMenuButton);
+        //add(createMenuButton);
 
         finalizeMenuButton = new JButton("Finalise Menu");
         finalizeMenuButton.setBounds(350,400,150,75);
