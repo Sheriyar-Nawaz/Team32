@@ -159,8 +159,18 @@ public class RecipesDB {
     public void addIngredient(){ //parameters list of strings ingredients and recipe id
         //insert ingredient(s) specified with the specified recipe id -- ensure status is draft, if it's not -- duplicate recipe details with status changed to draft
     }
-    public void addQuantity(){ //parameters double quantity, ingredient id and recipe id
-        //insert quantity specified for the ingredient with the specified recipe id
+    public void addQuantity(int recipeId, int ingredientId, double quantity) {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE RecipeIngredients SET QuantityRequired = ? WHERE RecipeID = ? AND IngredientID = ?");
+            pstmt.setDouble(1, quantity);
+            pstmt.setInt(2, recipeId);
+            pstmt.setInt(3, ingredientId);
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     public void addDescription(int recipeId, String description) {
         connect();

@@ -12,7 +12,7 @@ public class Main {
 //        List<String> ingredients = Arrays.asList("Tomatoes", "Basil", "Olive Oil");
 //
 //        RecipesDB r = new RecipesDB();
-//        r.removeIngredient(1, ingredients);
+//        r.addQuantity(2, 3, 2);
         //StockDB s = new StockDB();
         //s.getStock();
         /*
