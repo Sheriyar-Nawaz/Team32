@@ -203,11 +203,11 @@ public class DishConstructionGUI extends GUI implements ActionListener {
             JOptionPane.showMessageDialog(null, "Recipe Removed!", "Removed", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == addButton) {
-            String selectedRecipe = (String) recipeComboBox.getSelectedItem();
+            //String selectedRecipe = (String) recipeComboBox.getSelectedItem();
             // Here you can add the selected recipe to the dish
             // For now, let's just print it
-            System.out.println("Selected recipe: " + selectedRecipe);
-            JOptionPane.showMessageDialog(this, "Recipe added to dish: " + selectedRecipe);
+           // System.out.println("Selected recipe: " + selectedRecipe);
+           // JOptionPane.showMessageDialog(this, "Recipe added to dish: " + selectedRecipe);
         }
         if (e.getSource() == finalizeDishButton){
             JOptionPane.showMessageDialog(null, "Dish Finalised", "Finalised!", JOptionPane.INFORMATION_MESSAGE);
