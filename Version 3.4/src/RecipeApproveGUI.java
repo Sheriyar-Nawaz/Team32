@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class RecipeApproveGUI extends GUI implements ActionListener {
     private final JButton removeFromRecipeButton;
@@ -30,10 +33,14 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
-        JList<String> ingredientList = new JList<>(new String[]{"eggs", "flour", "butter"});
-        JScrollPane recipeScrollPane = new JScrollPane(ingredientList);
+
+        RecipesDB rdb = new RecipesDB();
+        Map<Integer, String> ingredientMap = rdb.getRecipeIngredients(4);
+        List<String> ingredientList = new ArrayList<>(ingredientMap.values());
+        JList<String> recipeIngredients = new JList<>((ingredientList.toArray(new String[0])));
+        JScrollPane recipeScrollPane = new JScrollPane(recipeIngredients);
         recipeScrollPane.setBounds(650,325,200,275);
-        recipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
+        recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
 
         removeFromRecipeButton = new JButton("Remove from Recipe");
