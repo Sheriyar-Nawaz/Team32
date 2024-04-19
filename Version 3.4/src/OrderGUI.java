@@ -6,26 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents the graphical user interface for managing orders.
+ * Extends GUI class and implements ActionListener interface.
+ */
 public class OrderGUI extends GUI implements ActionListener {
-    private JButton startCookingButton;
-    private JButton completeCookingButton;
-    private JTextArea orderTextArea;
-    private JComboBox<String> CourseComboBox;
-    private JTextField tableNumField;
-    private List<Course> Coursees;
-    private JTable table_1 = new JTable();
+    private final JButton startCookingButton; // Button for starting cooking
+    private final JButton completeCookingButton; // Button for completing cooking
+    private JTextArea orderTextArea; // Text area for displaying orders
+    private final JComboBox<String> CourseComboBox; // Combo box for selecting course
+    private final JTextField tableNumField; // Text field for entering order ID
+    private List<Course> Courses; // List to store Course objects
 
-
+    /**
+     * Constructs a new OrderGUI object with the specified user.
+     *
+     * @param user The logged-in user.
+     */
     public OrderGUI(String user) {
-        super(user);
+        super(user); // Calls the constructor of the superclass with the logged-in user
 
+        // Set properties for back button (logout button)
         add(backButton);
         backButton.addActionListener(this);
-        logo.setBounds(270,-50,300,300);
-        add(logo);
+        logo.setBounds(270,-50,300,300); // Set position and size of the logo
+        add(logo); // Add logo to the GUI
 
         OrderDB odb = new OrderDB();
-        table_1 = odb.getOrders();
+        JTable table_1 = odb.getOrders();
 
         JScrollPane tableScrollPane = new JScrollPane(table_1);
         tableScrollPane.setBounds(175,250,500,100);
@@ -42,12 +50,12 @@ public class OrderGUI extends GUI implements ActionListener {
         completeCookingButton.setBounds(430, 550, 150, 25);
         add(completeCookingButton);
 
-        // Dummy data for Coursees
-        Coursees = new ArrayList<>();
-        Coursees.add(new Course("Starters", 1));
-        Coursees.add(new Course("Mains", 2));
+        // Dummy data for Courses
+        Courses = new ArrayList<>();
+        Courses.add(new Course("Starters", 1));
+        Courses.add(new Course("Mains", 2));
 
-        String[] CourseNames = Coursees.stream().map(Course::getName).toArray(String[]::new);
+        String[] CourseNames = Courses.stream().map(Course::getName).toArray(String[]::new);
 
         JLabel courseLabel = new JLabel("Select Course:");
         courseLabel.setForeground(Color.white);
@@ -69,9 +77,13 @@ public class OrderGUI extends GUI implements ActionListener {
 
         revalidate();
         repaint();
-
     }
 
+    /**
+     * Invoked when an action occurs, such as clicking on a button.
+     *
+     * @param e The ActionEvent that occurred.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startCookingButton) {
@@ -116,4 +128,3 @@ public class OrderGUI extends GUI implements ActionListener {
         }
     }
 }
-
