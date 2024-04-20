@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The RecipesDB class represents a database utility for managing recipe-related data.
+ * It provides methods to interact with the recipe database.
+ */
 public class RecipesDB {
     private String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
     private String username = "in2033t32_a";
@@ -12,15 +16,24 @@ public class RecipesDB {
     private Statement statement1;
     private PreparedStatement statement2;
     private ResultSet resultSet;
-    public void connect(){
+
+    /**
+     * Establishes a connection to the database.
+     */
+    public void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
+
+    /**
+     * Retrieves recipes awaiting review from the database.
+     *
+     * @return A map containing recipe IDs and names.
+     */
     public Map<Integer, String> getReviews() {
         connect();
         Map<Integer, String> recipes = new HashMap<>();
@@ -39,8 +52,13 @@ public class RecipesDB {
         }
         return null;
     }
-    public Map<Integer, String> getApproves(){
-        //select all the recipe ids and names where the status is "Approve" -- this is for recipes awaiting approval not the same as "Approved"
+
+    /**
+     * Retrieves recipes awaiting approval from the database.
+     *
+     * @return A map containing recipe IDs and names.
+     */
+    public Map<Integer, String> getApproves() {
         connect();
         Map<Integer, String> recipes = new HashMap<>();
         try {
@@ -58,6 +76,12 @@ public class RecipesDB {
         }
         return null;
     }
+
+    /**
+     * Retrieves all recipes from the database that are not approved.
+     *
+     * @return A map containing recipe IDs and names.
+     */
     public Map<Integer, String> getRecipes() {
         connect();
         Map<Integer, String> recipes = new HashMap<>();
@@ -77,22 +101,25 @@ public class RecipesDB {
         return null;
     }
 
-    public Map<Integer, String> getRecipeIngredients(int recipeId){ //parameter recipe id
-        //select ingredients ids and names where the recipe id is same as parameter
+    /**
+     * Retrieves ingredients for a given recipe from the database.
+     *
+     * @param recipeId The ID of the recipe.
+     * @return A map containing ingredient IDs and names.
+     */
+    public Map<Integer, String> getRecipeIngredients(int recipeId) {
         connect();
         try {
             PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID FROM RecipeIngredients WHERE RecipeID = ?");
             pstmt.setInt(1, recipeId);
             resultSet = pstmt.executeQuery();
             List<Integer> ingredientIDs = new ArrayList<>();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int ID = resultSet.getInt("IngredientID");
                 ingredientIDs.add(ID);
-
             }
-            System.out.println(ingredientIDs);
             Map<Integer, String> ingredients = new HashMap<>();
-            for(Integer i : ingredientIDs){
+            for (Integer i : ingredientIDs) {
                 PreparedStatement pstmt2 = connection.prepareStatement("SELECT Name FROM Ingredients WHERE IngredientID = ?");
                 pstmt2.setInt(1, i);
                 resultSet = pstmt2.executeQuery();
@@ -100,16 +127,21 @@ public class RecipesDB {
                     String name = resultSet.getString("Name");
                     ingredients.put(i, name);
                 }
-            }connection.close();
+            }
+            connection.close();
             return ingredients;
-
-
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return null;
     }
-      public Map<Integer, String> getIngredients() {
+
+    /**
+     * Retrieves all ingredients from the database.
+     *
+     * @return A map containing ingredient IDs and names.
+     */
+    public Map<Integer, String> getIngredients() {
         connect();
         Map<Integer, String> ingredients = new HashMap<>();
         try {
@@ -128,6 +160,13 @@ public class RecipesDB {
         }
         return ingredients;
     }
+
+    /**
+     * Retrieves the status of a recipe from the database.
+     *
+     * @param recipeId The ID of the recipe.
+     * @return The status of the recipe.
+     */
     public String getStatus(int recipeId) {
         connect();
         String status = null;
@@ -145,6 +184,13 @@ public class RecipesDB {
         }
         return null;
     }
+
+    /**
+     * Updates the status of a recipe in the database.
+     *
+     * @param recipeId  The ID of the recipe.
+     * @param newStatus The new status of the recipe.
+     */
     public void updateStatus(int recipeId, String newStatus) {
         connect();
         try {
@@ -157,19 +203,35 @@ public class RecipesDB {
             System.out.println(e);
         }
     }
+
+    /**
+     * Adds an ingredient to a recipe in the database.
+     *
+     * @param ingredientId The ID of the ingredient.
+     * @param recipeId     The ID of the recipe.
+     * @param quantity     The quantity of the ingredient required.
+     */
     public void addIngredientToRecipe(int ingredientId, int recipeId, double quantity) {
         connect();
         try {
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO RecipeIngredients(RecipeID, IngredientID, QuantityRequired) VALUES (?, ?, ?)");
-                pstmt.setInt(1, recipeId);
-                pstmt.setInt(2, ingredientId);
-                pstmt.setDouble(3, quantity);
-                pstmt.executeUpdate();
-                connection.close();
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO RecipeIngredients(RecipeID, IngredientID, QuantityRequired) VALUES (?, ?, ?)");
+            pstmt.setInt(1, recipeId);
+            pstmt.setInt(2, ingredientId);
+            pstmt.setDouble(3, quantity);
+            pstmt.executeUpdate();
+            connection.close();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
+    /**
+     * Updates the quantity of an ingredient in a recipe in the database.
+     *
+     * @param recipeId     The ID of the recipe.
+     * @param ingredientId The ID of the ingredient.
+     * @param quantity     The new quantity of the ingredient required.
+     */
     public void addQuantity(int recipeId, int ingredientId, double quantity) {
         connect();
         try {
@@ -183,6 +245,13 @@ public class RecipesDB {
             System.out.println(e);
         }
     }
+
+    /**
+     * Adds a description to a recipe in the database.
+     *
+     * @param recipeId    The ID of the recipe.
+     * @param description The description to be added.
+     */
     public void addDescription(int recipeId, String description) {
         connect();
         try {
@@ -195,6 +264,13 @@ public class RecipesDB {
             System.out.println(e);
         }
     }
+
+    /**
+     * Removes ingredients from a recipe in the database.
+     *
+     * @param recipeId        The ID of the recipe.
+     * @param ingredientNames The names of the ingredients to be removed.
+     */
     public void removeIngredient(int recipeId, List<String> ingredientNames) {
         connect();
         try {
