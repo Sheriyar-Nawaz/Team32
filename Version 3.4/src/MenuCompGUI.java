@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
+/**
+ * The MenuCompGUI class represents the graphical user interface for managing menus.
+ * It allows users to create, edit, and finalize menus.
+ */
 public class MenuCompGUI extends GUI implements ActionListener {
     private final JButton addToMenuButton;
     private final JButton createMenuButton;
@@ -20,7 +24,11 @@ public class MenuCompGUI extends GUI implements ActionListener {
     private JButton addButton;
     private JButton removeButton;
 
-
+    /**
+     * Constructs a MenuCompGUI object.
+     *
+     * @param user The user type.
+     */
     public MenuCompGUI(String user) {
         super(user);
 
@@ -87,6 +95,9 @@ public class MenuCompGUI extends GUI implements ActionListener {
         repaint();
     }
 
+    /**
+     * Creates the GUI for adding a dish to the menu.
+     */
     public void createAddGUI(){
         frame = new JFrame();
         frame.setTitle("Select Quantity");
@@ -113,6 +124,9 @@ public class MenuCompGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    /**
+     * Creates the GUI for removing a dish from the menu.
+     */
     public void createRemoveGUI(){
         frame = new JFrame();
         frame.setTitle("Select Quantity");
@@ -139,6 +153,9 @@ public class MenuCompGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    /**
+     * Creates the GUI for creating a new menu.
+     */
     public void createMenuGUI(){
         frame = new JFrame();
         frame.setTitle("Create Menu");
@@ -171,7 +188,7 @@ public class MenuCompGUI extends GUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addToMenuButton) {
             //String selectedDish = (String) scrollPane.getSelectedItem();
-           // selectedDishes.add(selectedDish);
+            // selectedDishes.add(selectedDish);
             // Here you can add the selected dish to the menu
             // For now, let's just print it
             //System.out.println("Selected dish: " + selectedDish);
@@ -215,11 +232,15 @@ public class MenuCompGUI extends GUI implements ActionListener {
     }
 
 
+    /**
+     * Populates the list of available dishes.
+     *
+     * @param dishNames An array of dish names.
+     */
     // Dummy dish data for demonstration
     public void populateDishes(String[] dishNames) {
-       // for (String dishName : dishNames) {
-            //dishComboBox.addItem(dishName);
+        // for (String dishName : dishNames) {
+        //dishComboBox.addItem(dishName);
         //}
     }
 }
-
