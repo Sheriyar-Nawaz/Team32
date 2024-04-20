@@ -1,6 +1,6 @@
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * The MenuCompDB class represents a component of the menu database operations.
@@ -14,6 +14,7 @@ public class MenuCompDB {
     private Statement statement1;
     private PreparedStatement statement2;
     private ResultSet resultSet;
+    private Menu menu;
 
     /**
      * Establishes a connection to the database.
@@ -58,21 +59,75 @@ public class MenuCompDB {
     /**
      * Retrieves details of a selected menu.
      */
-    public void getMenu() {
-        // Get selected Menu and return details of that Menu
+    public Menu getMenu(String title) {
+        try {
+            connect();
+            statement2 = connection.prepareStatement("SELECT MenuID, Title, CreationDate, Status FROM Menus WHERE Title = ?");
+            statement2.setString(1, title);
+            resultSet = statement2.executeQuery();
+
+            while (resultSet.next()) {
+                int menuId = resultSet.getInt("MenuID");
+                String name = resultSet.getString("Title");
+                Date date = resultSet.getDate("CreationDate");
+                String status = resultSet.getString("Status");
+                menu = new Menu(menuId, name, date, status);
+            }
+            resultSet.close();
+            statement2.close();
+            connection.close();
+            return menu;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     /**
      * Retrieves all menus that are not approved.
      */
-    public void getAllMenus() {
-        // Get all Menus that are not approved
+    public List<Menu> getAllMenus() {
+        connect();
+        List<Menu> menus = new ArrayList<>();
+        try {
+            statement2 = connection.prepareStatement("SELECT MenuID, Title, CreationDate, Status FROM Menus ");
+            resultSet = statement2.executeQuery();
+
+            while (resultSet.next()) {
+                int menuId = resultSet.getInt("MenuID");
+                String name = resultSet.getString("Title");
+                Date date = resultSet.getDate("CreationDate");
+                String status = resultSet.getString("Status");
+                menus.add(new Menu(menuId, name, date, status));
+            }
+            resultSet.close();
+            statement2.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return menus;
     }
 
     /**
      * Inserts a new menu into the database.
      */
-    public void addMenu() {
-        // Insert new menu
+    public void addMenu(int id, String name) {
+        connect();
+        try {
+            Calendar calendar = Calendar.getInstance();
+            Date creationDate = new Date(calendar.getTime().getTime());
+
+            statement2 = connection.prepareStatement("INSERT INTO Menus (MenuID, Title, CreationDate, Status) VALUES (?, ?, ?, ?)");
+            statement2.setInt(1, id);
+            statement2.setString(2, name);
+            statement2.setDate(3, creationDate);
+            statement2.setString(4, "Draft");
+            statement2.executeUpdate();
+            statement2.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

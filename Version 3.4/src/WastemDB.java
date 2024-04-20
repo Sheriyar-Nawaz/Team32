@@ -1,6 +1,7 @@
 import java.sql.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * This class handles interactions with the database related to waste management.
@@ -69,7 +70,33 @@ public class WastemDB {
      *
      * @return JTable containing waste information
      */
-    public JTable getWaste(){
-        return null; // Placeholder for future implementation
+    public JTable getWaste() {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID, WasteQuantity FROM Stock");
+            resultSet = pstmt.executeQuery();
+            String[] columnNames = {"Ingredient Name", "Waste Quantity"};
+            DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+            while (resultSet.next()) {
+                int ingredientId = resultSet.getInt("IngredientID");
+                int wasteQuantity = resultSet.getInt("WasteQuantity");
+                PreparedStatement pstmt2 = connection.prepareStatement("SELECT Name FROM Ingredients WHERE IngredientID = ?");
+                pstmt2.setInt(1, ingredientId);
+                ResultSet resultSet2 = pstmt2.executeQuery();
+                if (resultSet2.next()) {
+                    String ingredientName = resultSet2.getString("Name");
+                    Object[] row = {ingredientName, wasteQuantity};
+                    tableModel.addRow(row);
+                }
+                resultSet2.close();
+                pstmt2.close();
+            }
+            connection.close();
+            JTable table = new JTable(tableModel);
+            return table;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

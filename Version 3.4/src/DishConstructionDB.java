@@ -71,7 +71,26 @@ public class DishConstructionDB {
      * Placeholder method for retrieving recipes from the database.
      * Actual implementation is not provided.
      */
-    public void getRecipes() {
-        // Implementation to be added
+    public Map<Integer, String> getRecipes() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            Map<Integer, String> recipes = new HashMap<>();
+
+            // Execute SQL query to fetch recipes
+            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes");
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                int recipeId = resultSet.getInt("RecipeID");
+                String name = resultSet.getString("Name");
+                recipes.put(recipeId, name);
+            }
+            connection.close();
+            return recipes;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

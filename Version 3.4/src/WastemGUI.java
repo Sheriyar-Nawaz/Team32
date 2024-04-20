@@ -10,6 +10,8 @@ public class WastemGUI extends GUI implements ActionListener {
     // Components
     private JTextField ingredientComboBox;
     private JButton addToWasteButton;
+    private JTable wasteTable;
+    private JScrollPane wasteScrollPane;
 
     /**
      * Constructs the waste management GUI.
@@ -25,20 +27,26 @@ public class WastemGUI extends GUI implements ActionListener {
 
         JLabel ingredientLabel = new JLabel("Select Ingredient:"); // Create a label for ingredient selection
         ingredientLabel.setForeground(Color.white); // Set text color to white
-        ingredientLabel.setBounds(300, 400, 150, 25); // Set label position
+        ingredientLabel.setBounds(300, 500, 150, 25); // Set label position
         add(ingredientLabel); // Adds label to the frame
 
         add(backButton); // Adds back button to the frame
         backButton.addActionListener(this); // Add action listener to back button
 
         ingredientComboBox = new JTextField(); // Creates a text field for ingredient selection
-        ingredientComboBox.setBounds(410, 400, 200, 25); // Sets text field position
+        ingredientComboBox.setBounds(410, 500, 200, 25); // Sets text field position
         add(ingredientComboBox); // Adds text field to the frame
 
         addToWasteButton = new JButton("Add to Waste"); // Creates a button to add ingredient to waste
         addToWasteButton.setBounds(390, 550, 150, 25); // Sets button position
         addToWasteButton.addActionListener(this); // Adds action listener to the button
         add(addToWasteButton); // Adds button to the frame
+
+        WastemDB wastemDB = new WastemDB();
+        wasteTable = wastemDB.getWaste();
+        wasteScrollPane = new JScrollPane(wasteTable);
+        wasteScrollPane.setBounds(30, 300, 800, 150);
+        add(wasteScrollPane);
     }
 
     /**
