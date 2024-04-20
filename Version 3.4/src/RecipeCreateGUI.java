@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
+/**
+ * The RecipeCreateGUI class represents the graphical user interface for creating recipes.
+ * It allows users to select ingredients, add them to a recipe, and submit the recipe for review or save it as a draft.
+ */
 public class RecipeCreateGUI extends GUI implements ActionListener {
     private final JButton addToRecipeButton;
     private final JButton removeFromRecipeButton;
@@ -14,18 +18,23 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
     private final JButton submitForReviewButton;
     private final JButton saveAsDraftButton;
     private JComboBox<String> recipeComboBox;
-    JFrame frame;
+    private JFrame frame;
     private JButton createButton;
     private JButton addButton;
     private JButton removeButton;
-    Map<Integer, String> recipeMap;
-    Map<Integer, String> recipeIngredientMap;
-    Map<Integer, String> ingredientsMap;
-    JList<String> recipeIngredients;
-    JList<String> ingredients;
-    RecipesDB rdb;
-    JTextField quantityField;
+    private Map<Integer, String> recipeMap;
+    private Map<Integer, String> recipeIngredientMap;
+    private Map<Integer, String> ingredientsMap;
+    private JList<String> recipeIngredients;
+    private JList<String> ingredients;
+    private RecipesDB rdb;
+    private JTextField quantityField;
 
+    /**
+     * Constructs a RecipeCreateGUI object with the specified user type.
+     *
+     * @param user The type of user.
+     */
     public RecipeCreateGUI(String user) {
         super(user);
 
@@ -35,7 +44,6 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         logo.setBounds(300,-50,300,300);
         add(logo);
 
-        //selectedRecipes = new ArrayList<>();
         JLabel ingredientLabel = new JLabel("Available Ingredients");
         ingredientLabel.setForeground(Color.white);
         ingredientLabel.setBounds(50, 300, 200, 25);
@@ -54,11 +62,6 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
-
-
-
-
-
 
         JLabel selectRecipeLabel = new JLabel("Select Recipe");
         selectRecipeLabel.setForeground(Color.white);
@@ -88,12 +91,10 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         removeFromRecipeButton = new JButton("Remove from Recipe");
         removeFromRecipeButton.setBounds(650,600,200,25);
         removeFromRecipeButton.addActionListener(this);
-        //add(removeFromRecipeButton);
 
         createRecipeButton = new JButton("Create New Recipe");
         createRecipeButton.setBounds(375,250,150,75);
         createRecipeButton.addActionListener(this);
-        //add(createRecipeButton);
 
         submitForReviewButton = new JButton("Submit for Review");
         submitForReviewButton.setBounds(375,400,150,75);
@@ -109,6 +110,12 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         repaint();
     }
 
+    /**
+     * Retrieves the ID of the selected recipe from the map.
+     *
+     * @param map The map containing recipe IDs and names.
+     * @return The ID of the selected recipe.
+     */
     public int getRecipeID(Map<Integer, String> map){
         for(Map.Entry<Integer, String> entry : map.entrySet()){
             if (Objects.equals(entry.getValue(), Objects.requireNonNull(recipeComboBox.getSelectedItem()).toString())){
@@ -118,6 +125,12 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         return 0;
     }
 
+    /**
+     * Retrieves the ID of the selected ingredient from the map.
+     *
+     * @param map The map containing ingredient IDs and names.
+     * @return The ID of the selected ingredient.
+     */
     public int getIngredientID(Map<Integer, String> map){
         for(Map.Entry<Integer, String> entry : map.entrySet()){
             if (Objects.equals(entry.getValue(), Objects.requireNonNull(ingredients.getSelectedValue()))){
@@ -127,6 +140,9 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         return 0;
     }
 
+    /**
+     * Creates the GUI for creating a new recipe.
+     */
     public void createRecipeGUI(){
         frame = new JFrame();
         frame.setTitle("Create Recipe");
@@ -153,6 +169,9 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    /**
+     * Creates the GUI for adding ingredients to the recipe.
+     */
     public void createAddGUI(){
         frame = new JFrame();
         frame.setTitle("Select Quantity");
@@ -179,6 +198,9 @@ public class RecipeCreateGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    /**
+     * Creates the GUI for removing ingredients from the recipe.
+     */
     public void createRemoveGUI(){
         frame = new JFrame();
         frame.setTitle("Select Quantity");
