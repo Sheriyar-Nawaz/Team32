@@ -4,8 +4,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
-
-
+/**
+ * The StockDB class represents the database operations related to stock management.
+ */
 public class StockDB {
     String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
     String username = "in2033t32_a";
@@ -17,6 +18,9 @@ public class StockDB {
     private JTable table_1 = new JTable();
     private Connection connection;
 
+    /**
+     * Establishes a connection to the database.
+     */
     public void connect(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -26,35 +30,43 @@ public class StockDB {
             System.out.println(e);
         }
     }
+
+    /**
+     * Updates the stock quantity for a given ingredient.
+     *
+     * @param ingredientId The ID of the ingredient to update.
+     * @param quantity     The quantity to add to the stock.
+     */
     public void updateStock(int ingredientId, double quantity) {
         connect();
         try {
-                PreparedStatement pstmt3 = connection.prepareStatement("UPDATE Ingredients SET Stock = Stock + ? WHERE IngredientID = ?");
-                pstmt3.setDouble(1, quantity);
-                pstmt3.setInt(2, ingredientId);
-                pstmt3.executeUpdate();
+            PreparedStatement pstmt3 = connection.prepareStatement("UPDATE Ingredients SET Stock = Stock + ? WHERE IngredientID = ?");
+            pstmt3.setDouble(1, quantity);
+            pstmt3.setInt(2, ingredientId);
+            pstmt3.executeUpdate();
             connection.close();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+    /**
+     * Adds an order for a dish to the database.
+     *
+     * @param dishID   The ID of the dish being ordered.
+     * @param quantity The quantity of the dish being ordered.
+     */
     public void AddOrder(int dishID, int quantity) {
         try {
-            // Establishing a connection
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
 
-            // Inserting data into the Orders table
             String sql = "INSERT INTO Orders (DishID, Quantity) VALUES (?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, dishID);
             pstmt.setInt(2, quantity);
-
-            // Executing the query
             pstmt.executeUpdate();
 
-            // Closing resources
             pstmt.close();
             connection.close();
         } catch (Exception e) {
@@ -62,34 +74,77 @@ public class StockDB {
         }
     }
 
-    public JTable getStock(){
-        //Load all records from stock table. Get quantity recieved for every ingredientID
+    /**
+     * Retrieves the stock information from the database.
+     *
+     * @return A JTable containing the stock information.
+     */
+    /**
+     * Retrieves stock information from the database and returns it as a JTable.
+     * This method fetches the stock quantity for each ingredient and populates it into the JTable.
+     *
+     * @return JTable containing stock information for ingredients
+     */
+    /**
+     * Retrieves stock information from the database and returns it as a JTable.
+     * This method fetches the stock quantity for each ingredient and populates it into the JTable.
+     *
+     * @return JTable containing stock information for ingredients
+     */
+    public JTable getStock() {
         try {
+            // Load the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish connection to the database
             Connection connection = DriverManager.getConnection(url, username, password);
 
+            // Create a statement for executing SQL queries
             statement1 = connection.createStatement();
-            resultSet = statement1.executeQuery("SELECT IngredientID, Name, Stock FROM Ingredients");
-            table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
-            connection.close();
-            return table_1;
 
-        }
-        catch (Exception e){
+            // Execute SQL query to retrieve stock information
+            resultSet = statement1.executeQuery("SELECT IngredientID, Name, Stock FROM Ingredients");
+
+            // Set the table model with the retrieved data
+            table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+            // Close the database connection
+            connection.close();
+
+            // Return the JTable with stock information
+            return table_1;
+        } catch (Exception e) {
+            // Print any exceptions that occur during execution
             System.out.println(e);
         }
+        // Return null if an exception occurs
         return null;
     }
+
+
+
+    /**
+     * Retrieves the waste information from the database.
+     */
     public void getWaste() {
-        // Same as getStock but load wasteQuantity
         try {
+            // Establishing connection
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
+
+            // Creating statement
             statement1 = connection.createStatement();
+
+            // Executing query to retrieve waste information
             resultSet = statement1.executeQuery("SELECT IngredientID, Name, WasteQuantity FROM Ingredients");
+
+            // Setting the table model with the retrieved data
             table_1.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+            // Closing the connection
             connection.close();
         } catch (Exception e) {
+            // Handling any exceptions
             System.out.println(e);
         }
     }
