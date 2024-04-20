@@ -19,25 +19,7 @@ public class Main {
         UserPass userPass = new UserPass(); // Create a new UserPass object to manage user credentials
         LoginGUI login = new LoginGUI(userPass.getLogininfo()); // Create a new LoginGUI object with the login information
 
-        //Tests for methods added
-        /*
-        DishConstructionDB dishConstructionDB = new DishConstructionDB();
-        Map<Integer, String> recipes = dishConstructionDB.getRecipes();
-        for (Map.Entry<Integer, String> entry : recipes.entrySet()) {
-            int recipeId = entry.getKey();
-            String name = entry.getValue();
-            System.out.println("Recipe ID: " + recipeId + ", Name: " + name);
-        }
-*/
-        MenuCompDB menuCompDB = new MenuCompDB();
-        List<Menu> menus = menuCompDB.getAllMenus();
-        for (Menu menu: menus) {
-            System.out.println(menu.getMenuId() + " " + menu.getMenuName() + " " + menu.getCreationDate() + " " + menu.getStatus());
-        }
-
-        Menu menu = menuCompDB.getMenu("Spring Specials");
-        System.out.println(menu.getMenuId() + " " + menu.getMenuName() + " " + menu.getCreationDate() + " " + menu.getStatus());
-
-
+        RecipesDB recipesDB = new RecipesDB();
+        recipesDB.deleteRecipe(5);
     }
 }

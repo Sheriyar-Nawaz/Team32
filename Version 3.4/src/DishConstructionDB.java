@@ -93,4 +93,31 @@ public class DishConstructionDB {
         }
         return null;
     }
+
+    public void addDish(int DishID, String name) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            statement2 = connection.prepareStatement("INSERT INTO Dishes(DishID, Name) VALUES (?, ?)");
+            statement2.setInt(1, DishID);
+            statement2.setString(2, name);
+            statement2.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void deleteDish(int DishID) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            statement2 = connection.prepareStatement("DELETE FROM Dishes WHERE DishID = ?");
+            statement2.setInt(1, DishID);
+            statement2.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

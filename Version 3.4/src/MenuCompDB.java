@@ -90,7 +90,8 @@ public class MenuCompDB {
         connect();
         List<Menu> menus = new ArrayList<>();
         try {
-            statement2 = connection.prepareStatement("SELECT MenuID, Title, CreationDate, Status FROM Menus ");
+            statement2 = connection.prepareStatement("SELECT MenuID, Title, CreationDate, Status FROM Menus WHERE Status != ?");
+            statement2.setString(1, "Approved");
             resultSet = statement2.executeQuery();
 
             while (resultSet.next()) {
@@ -123,6 +124,32 @@ public class MenuCompDB {
             statement2.setString(2, name);
             statement2.setDate(3, creationDate);
             statement2.setString(4, "Draft");
+            statement2.executeUpdate();
+            statement2.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void deleteDishFromMenu(int menuId, int dishId) {
+        try {
+            connect();
+            statement2 = connection.prepareStatement("DELETE FROM MenuDishes WHERE MenuID = ? AND DishID = ?");
+            statement2.setInt(1, menuId);
+            statement2.setInt(2, dishId);
+            statement2.executeUpdate();
+            statement2.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteMenu(int menuId) {
+        try {
+            connect();
+            statement2 = connection.prepareStatement("DELETE FROM Menus WHERE MenuID = ?");
+            statement2.setInt(1, menuId);
             statement2.executeUpdate();
             statement2.close();
             connection.close();

@@ -291,4 +291,31 @@ public class RecipesDB {
             System.out.println(e);
         }
     }
+
+    public void createRecipe(int recipeId, String name, String description) {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO Recipes(RecipeID, Name, Description, Status) VALUES (?, ?, ?, ?)");
+            pstmt.setInt(1, recipeId);
+            pstmt.setString(2, name);
+            pstmt.setString(3, description);
+            pstmt.setString(4, "Draft");
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void deleteRecipe(int recipeId) {
+        connect();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("DELETE FROM Recipes WHERE RecipeID = ?");
+            pstmt.setInt(1, recipeId);
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
