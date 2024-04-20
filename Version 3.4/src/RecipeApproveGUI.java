@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * The RecipeApproveGUI class represents the graphical user interface for approving recipes.
+ * It allows users to view recipes for approval, approve recipes, and submit feedback.
+ */
 public class RecipeApproveGUI extends GUI implements ActionListener {
     private final JButton removeFromRecipeButton;
     private final JButton approveButton;
@@ -14,10 +18,16 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
     private JButton removeButton;
     private JButton submitFeedbackButton;
     private JButton feedbackButton;
-    JList<String> recipeIngredients;
-    Map<Integer, String> recipeMap;
-    JList<String> recipes;
-    RecipesDB rdb;
+    private JList<String> recipeIngredients;
+    private Map<Integer, String> recipeMap;
+    private JList<String> recipes;
+    private RecipesDB rdb;
+
+    /**
+     * Constructs a RecipeApproveGUI object with the specified user type.
+     *
+     * @param userType The type of user.
+     */
     public RecipeApproveGUI(String userType) {
         super(userType);
         add(backButton);
@@ -44,8 +54,6 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipeLabel.setBounds(650, 300, 100, 25);
         add(recipeLabel);
 
-
-
         Map<Integer, String> ingredientMap = rdb.getRecipeIngredients(4);
         List<String> ingredientList = new ArrayList<>(ingredientMap.values());
         recipeIngredients = new JList<>((ingredientList.toArray(new String[0])));
@@ -53,8 +61,6 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         recipeScrollPane.setBounds(650,325,200,275);
         recipeIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(recipeScrollPane);
-
-
 
         removeFromRecipeButton = new JButton("Remove from Recipe");
         removeFromRecipeButton.setBounds(650,600,200,25);
@@ -72,6 +78,12 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         add(feedbackButton);
     }
 
+    /**
+     * Retrieves the ID of the selected recipe from the map.
+     *
+     * @param map The map containing recipe IDs and names.
+     * @return The ID of the selected recipe.
+     */
     public int getRecipeID(Map<Integer, String> map){
         for(Map.Entry<Integer, String> entry : map.entrySet()){
             if (Objects.equals(entry.getValue(), Objects.requireNonNull(recipes.getSelectedValue()))){
@@ -80,6 +92,10 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         }
         return 0;
     }
+
+    /**
+     * Creates the GUI for removing a recipe from the database.
+     */
     public void createRemoveGUI(){
         frame = new JFrame();
         frame.setTitle("Select Quantity");
@@ -106,6 +122,9 @@ public class RecipeApproveGUI extends GUI implements ActionListener {
         frame.repaint();
     }
 
+    /**
+     * Creates the GUI for submitting feedback on a recipe.
+     */
     public void createFeedbackGUI(){
         frame = new JFrame();
         frame.setTitle("Feedback");
