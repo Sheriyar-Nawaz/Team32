@@ -1,47 +1,75 @@
 import java.sql.*;
 
-import net.proteanit.sql.DbUtils;
-
 import javax.swing.*;
 
+/**
+ * This class handles interactions with the database related to waste management.
+ */
 public class WastemDB {
-    String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
-    String username = "in2033t32_a";
-    String password = "7VQ_A-ZBz2w";
+    // Database connection details
+    private String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
+    private String username = "in2033t32_a";
+    private String password = "7VQ_A-ZBz2w";
+
+    // Database connection and result set
     private Connection connection;
     private ResultSet resultSet;
-    private Statement statement1;
+
+    // Swing component for displaying waste information
     private JTable table_1;
 
+    /**
+     * Establishes a connection to the database.
+     */
     public void connect(){
         try {
+            // Load the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connect to the database
             connection = DriverManager.getConnection(url, username, password);
         }
         catch (Exception e){
-            System.out.println(e);
-        }
-    }
-    public void updateWaste(String ingredientName, int quantity) {
-        connect();
-        try {
-            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID FROM Ingredients WHERE Name = ?");
-            pstmt.setString(1, ingredientName);
-            resultSet = pstmt.executeQuery();
-            if (resultSet.next()) {
-                int ingredientId = resultSet.getInt("IngredientID");
-                PreparedStatement pstmt2 = connection.prepareStatement("UPDATE Stock SET WasteQuantity = WasteQuantity + ? WHERE IngredientID = ?");
-                pstmt2.setInt(1, quantity);
-                pstmt2.setInt(2, ingredientId);
-                pstmt2.executeUpdate();
-            }
-            connection.close();
-        } catch (Exception e) {
+            // Print any exceptions that occur during connection
             System.out.println(e);
         }
     }
 
+    /**
+     * Updates the waste quantity for a specific ingredient in the database.
+     *
+     * @param ingredientName Name of the ingredient
+     * @param quantity       Quantity of waste to be added
+     */
+    public void updateWaste(String ingredientName, int quantity) {
+        connect(); // Establish database connection
+        try {
+            // Prepare SQL statement to retrieve ingredient ID
+            PreparedStatement pstmt = connection.prepareStatement("SELECT IngredientID FROM Ingredients WHERE Name = ?");
+            pstmt.setString(1, ingredientName);
+            // Execute the query
+            resultSet = pstmt.executeQuery();
+            // If the result set is not empty
+            if (resultSet.next()) {
+                // Get the ingredient ID
+                int ingredientId = resultSet.getInt("IngredientID");
+                // Prepare SQL statement to update waste quantity
+                PreparedStatement pstmt2 = connection.prepareStatement("UPDATE Stock SET WasteQuantity = WasteQuantity + ? WHERE IngredientID = ?");
+                pstmt2.setInt(1, quantity);
+                pstmt2.setInt(2, ingredientId);
+                pstmt2.executeUpdate(); // Execute the update query
+            }
+            connection.close(); // Close the database connection
+        } catch (Exception e) {
+            System.out.println(e); // Print any exceptions that occur
+        }
+    }
+
+    /**
+     * Retrieves waste information from the database and returns it as a JTable.
+     *
+     * @return JTable containing waste information
+     */
     public JTable getWaste(){
-        return null;
+        return null; // Placeholder for future implementation
     }
 }
