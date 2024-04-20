@@ -2,107 +2,65 @@ import java.awt.*;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+
+/**
+ * The Driver class demonstrates basic JDBC operations such as connecting to a database,
+ * executing queries, and performing insert, update, and delete operations.
+ */
 public class Driver {
 
+    /**
+     * The main method of the Driver class.
+     *
+     * @param args The command-line arguments.
+     */
     public static void main(String[] args) {
+        // Database connection details
         String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
         String username = "in2033t32_a";
         String password = "7VQ_A-ZBz2w";
 
+        // JDBC objects
         Statement statement1 = null;
         PreparedStatement statement2 = null;
         ResultSet resultSet = null;
 
         try {
+            // Load the JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+            // Establish connection to the database
             Connection connection = DriverManager.getConnection(url, username, password);
             statement1 = connection.createStatement(); // For Simple Queries (creationStatement)
-//          statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
 
+            /*
+             * Example queries and operations
+             */
+            // Insert Example:
+            // String sql1 = "INSERT into Recipes (...) values (...)";
+            // statement1.executeUpdate(sql1);
 
-              /*
-              Small ResultSet Query
-               */
-//            resultSet = statement1.executeQuery("SELECT * FROM Dishes");
-//
-//            while(resultSet.next()){
-//                System.out.println(resultSet.getInt(1) + " " + resultSet.getInt(2) + " " + resultSet.getString(3) + " " + resultSet.getBigDecimal(4));
-//            }
+            // Insert + Update Example:
+            // String sql2 = "INSERT into Dishes (...) values (...)";
+            // statement1.executeUpdate(sql2);
+            // String sql3 = "UPDATE MenuDishes set MenuID = 2 where DishID = 2";
+            // statement1.executeUpdate(sql3);
 
+            // Delete Example:
+            // String sql4 = "DELETE from Recipes WHERE RecipeID = 5";
+            // statement1.executeUpdate(sql4);
 
-              /*
-              Insert Example:
-              */
-//            String sql1 = "INSERT into Recipes "
-//                    + "(RecipeID, Name, Description, isApproved)"
-//                    + "values ('5', 'Test_1', 'Test_DELETE', '1')";
-//
-//            statement1.executeUpdate(sql1);
-//            System.out.println("Insert Complete.");
+            // Larger Query example:
+            // statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?");
+            // statement2.setInt(1, 1);
+            // statement2.setInt(2, 1);
+            // resultSet = statement2.executeQuery();
 
-
-              /*
-              Insert + Update:
-              */
-
-//            String sql2_5 = "INSERT into Recipes"
-//                    + "(RecipeID, Name, Description, isApproved)"
-//                    + "values ('5', 'Test1', 'Test description', '1')";
-//
-//            statement1.executeUpdate(sql2_5);
-//            System.out.println("Insert Complete.");
-
-
-//
-//            String sql2 = "INSERT into Dishes "
-//                    + "(DishID, RecipeID, Name, Price)"
-//                    + "values ('4', '5', 'Test1', '5')";
-//
-//             statement1.executeUpdate(sql2);
-//             System.out.println("Insert Complete.");
-
-//            String sql3 = "UPDATE MenuDishes "
-//                    + " set MenuID = 2"
-//                    + " where DishID = 2";
-//
-//            statement1.executeUpdate(sql3);
-//            System.out.println("Update Complete.");
-
-
-              /*
-              Delete Example:
-              */
-//            String sql4 = "DELETE from Recipes WHERE RecipeID = 5";
-//            int rowsAffected = statement.executeUpdate(sql4);
-//
-//            System.out.println("Rows Affected: " + rowsAffected);
-//            System.out.println("Delete Complete.");
-
-
-              /*
-              Larger Query example:
-              */
-//            statement2 = connection.prepareStatement("SELECT * from Recipes where RecipeID > ? and isApproved = ?"); // Larger Queries (prepareStatement)
-//            statement2.setInt(1, 1);
-//            statement2.setInt(2, 1);
-//
-//            resultSet = statement2.executeQuery();
-//
-//            while(resultSet.next()){
-//                int recID = resultSet.getInt("RecipeID");
-//                String name = resultSet.getString("Name");
-//                String desc = resultSet.getString("Description");
-//                int isApproved = resultSet.getInt("isApproved");
-//
-//                System.out.println(recID + " " + name + " " + desc + " " + isApproved);
-//            }
-
+            // Close the connection
             connection.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
+            // Handle exceptions
             System.out.println(e);
         }
     }
-
 }

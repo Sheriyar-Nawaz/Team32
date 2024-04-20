@@ -1,26 +1,61 @@
+/**
+ * The Ingredient class represents an ingredient with its unique ID, name, and stock quantity.
+ */
 public class Ingredient {
-    private String ingredientld;
+    /** The unique ID of the ingredient. */
+    private String ingredientId;
+
+    /** The name of the ingredient. */
     private String ingredientName;
+
+    /** The stock quantity of the ingredient. */
     private int stock;
 
-    public Ingredient(String ingredientld, String ingredientName, int stock) {
-        this.ingredientld = ingredientld;
+    /**
+     * Constructs a new Ingredient with the specified ID, name, and stock quantity.
+     *
+     * @param ingredientId   The unique ID of the ingredient.
+     * @param ingredientName The name of the ingredient.
+     * @param stock          The stock quantity of the ingredient.
+     */
+    public Ingredient(String ingredientId, String ingredientName, int stock) {
+        this.ingredientId = ingredientId;
         this.ingredientName = ingredientName;
         this.stock = stock;
     }
 
-    public void updateStock(int quantity){
+    /**
+     * Updates the stock quantity of the ingredient.
+     *
+     * @param quantity The new stock quantity to set.
+     */
+    public void updateStock(int quantity) {
         this.stock = quantity;
     }
 
-    public int getStock(){
+    /**
+     * Retrieves the stock quantity of the ingredient.
+     *
+     * @return The stock quantity of the ingredient.
+     */
+    public int getStock() {
         return stock;
     }
 
-    public String getIngredientld() {
-        return ingredientld;
+    /**
+     * Retrieves the unique ID of the ingredient.
+     *
+     * @return The unique ID of the ingredient.
+     */
+    public String getIngredientId() {
+        return ingredientId;
     }
 
+    /**
+     * Retrieves the name of the ingredient.
+     *
+     * @return The name of the ingredient.
+     */
     public String getIngredientName() {
         return ingredientName;
     }
