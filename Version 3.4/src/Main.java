@@ -18,8 +18,5 @@ public class Main {
     public static void main(String[] args){
         UserPass userPass = new UserPass(); // Create a new UserPass object to manage user credentials
         LoginGUI login = new LoginGUI(userPass.getLogininfo()); // Create a new LoginGUI object with the login information
-
-        RecipesDB recipesDB = new RecipesDB();
-        recipesDB.deleteRecipe(5);
     }
 }

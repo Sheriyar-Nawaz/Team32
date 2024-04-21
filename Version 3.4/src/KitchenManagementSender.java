@@ -3,31 +3,57 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-// Interface for communication between Kitchen and Management
+/**
+ * An interface representing the sender in the kitchen management communication.
+ */
 interface KitchenManagementSenderInterface {
+    /**
+     * Sends the menu data to the kitchen management system.
+     */
     void sendMenu();
 }
 
+/**
+ * A class representing the sender in the kitchen management communication.
+ */
 public class KitchenManagementSender implements KitchenManagementSenderInterface {
-    String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
-    String username = "in2033t32_d";
-    String password = "sE-D4MssL4w";
+    private final String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
+    private final String username = "in2033t32_d";
+    private final String password = "sE-D4MssL4w";
 
-    PreparedStatement statement2 = null;
-    ResultSet resultSet = null;
+    private PreparedStatement statement2 = null;
+    private ResultSet resultSet = null;
 
-    class MenuData{
+    /**
+     * Inner class to hold menu data.
+     */
+    class MenuData {
         String title;
         List<String> dishes;
-        MenuData(String title){
+
+        /**
+         * Constructs a MenuData object with the given title.
+         *
+         * @param title The title of the menu.
+         */
+        MenuData(String title) {
             this.title = title;
             this.dishes = new ArrayList<>();
         }
 
-        void addDish(String dish){
+        /**
+         * Adds a dish to the menu data.
+         *
+         * @param dish The name of the dish to add.
+         */
+        void addDish(String dish) {
             dishes.add(dish);
         }
     }
+
+    /**
+     * Sends the menu data to the kitchen management system.
+     */
     @Override
     public void sendMenu() {
         try {
@@ -37,22 +63,22 @@ public class KitchenManagementSender implements KitchenManagementSenderInterface
             Connection connection = DriverManager.getConnection(url, username, password);
 
             statement2 = connection.prepareStatement("SELECT m.MenuID, m.Title, d.Name FROM Menus m " +
-                                                         "LEFT JOIN  MenuDishes md ON m.MenuID = md.MenuID " +
-                                                         "LEFT JOIN Dishes d ON md.DishID = d.DishID " +
-                                                         "WHERE m.Status = 'Approved' " +
-                                                         "AND m.CreationDate = (SELECT MAX(CreationDate) FROM Menus WHERE Status = 'Approved') " +
-                                                         "ORDER BY m.MenuID, d.DishID");
+                    "LEFT JOIN  MenuDishes md ON m.MenuID = md.MenuID " +
+                    "LEFT JOIN Dishes d ON md.DishID = d.DishID " +
+                    "WHERE m.Status = 'Approved' " +
+                    "AND m.CreationDate = (SELECT MAX(CreationDate) FROM Menus WHERE Status = 'Approved') " +
+                    "ORDER BY m.MenuID, d.DishID");
 
             resultSet = statement2.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int menuID = resultSet.getInt("MenuID");
                 String title = resultSet.getString("Title");
                 String dishName = resultSet.getString("Name");
 
                 menuDetails.putIfAbsent(menuID, new MenuData(title));
-                if (dishName != null){
+                if (dishName != null) {
                     menuDetails.get(menuID).addDish(dishName);
-                } else{
+                } else {
                     System.out.println("No Dishes");
                 }
             }
@@ -67,5 +93,3 @@ public class KitchenManagementSender implements KitchenManagementSenderInterface
         }
     }
 }
-
-

@@ -37,14 +37,6 @@ public class OrderDB {
         }
         catch (Exception e){
             System.out.println(e);
-            /*
-            while(resultSet.next()){
-                int ID = resultSet.getInt("IngredientID");
-                String name = resultSet.getString("Name");
-                double stock = resultSet.getDouble("Stock");
-                System.out.println(ID + " "  + name + " " + stock);
-            }
- */
         }
         return null;
     }

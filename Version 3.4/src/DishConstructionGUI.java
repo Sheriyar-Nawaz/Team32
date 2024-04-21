@@ -21,11 +21,8 @@ public class DishConstructionGUI extends GUI implements ActionListener {
     /** Button for finalizing the dish */
     private final JButton finalizeDishButton;
 
-    /** Combo box for selecting recipes */
-    private JComboBox<String> recipeComboBox;
-
     /** Frame for creating dishes */
-    JFrame frame;
+    private JFrame frame;
 
     /** Button for creating dishes */
     private JButton createButton;
@@ -33,36 +30,28 @@ public class DishConstructionGUI extends GUI implements ActionListener {
     /** Button for removing ingredients from the recipe */
     private final JButton removeFromRecipeButton;
 
-    /** Button for adding ingredients */
-    private JButton addButton;
-    JTextField dishNameField;
-
-    /** Button for removing ingredients */
-    private JButton removeButton;
-
     /** Combo box for selecting dishes */
-    JComboBox<Object> dishComboBox;
-    Map<Integer, String> dishMap;
+    private final JComboBox<Object> dishComboBox;
+
+    /** Map to store dish IDs and names */
+    private final Map<Integer, String> dishMap;
 
     /** Map to store recipe IDs and names */
-    Map<Integer, String> recipeMap;
+    private final Map<Integer, String> recipeMap;
 
     /** Map to store recipe IDs and ingredient names */
-    Map<Integer, String> dishRecipeMap;
-
-    /** Map to store ingredient IDs and names */
-    Map<Integer, String> ingredientsMap;
+    private Map<Integer, String> dishRecipeMap;
 
     /** List for displaying recipe ingredients */
-    JList<String> dishRecipes;
-    JList<String> recipeJList;
+    private JList<String> dishRecipes;
+
+    private JTextField dishNameField;
 
     /** List for displaying available ingredients */
-    JList<String> ingredients;
+    private final JList<String> recipeJList;
 
-    /** Database object for accessing recipes */
-    RecipesDB rdb = new RecipesDB();
-    DishConstructionDB dcdb;
+    /** Database object for accessing dish construction data */
+    private final DishConstructionDB dcdb;
 
     /**
      * Constructs a new DishConstructionGUI object with the specified user.
@@ -86,7 +75,10 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         selectDishLabel.setBounds(50, 175, 100, 25);
         add(selectDishLabel);
 
+        // Initialize DishConstructionDB object
         dcdb = new DishConstructionDB();
+
+        // Get the map of available dishes
         dishMap = dcdb.getDishes();
         List<String> dishList = new ArrayList<>(dishMap.values());
         dishComboBox = new JComboBox<>(dishList.toArray(new String[0]));
@@ -94,36 +86,37 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         dishComboBox.addActionListener(this);
         add(dishComboBox);
 
-        // Get available recipes
+        // Display label for available recipes
         JLabel recipeLabel = new JLabel("Available Recipes:");
         recipeLabel.setForeground(Color.white);
         recipeLabel.setBounds(50, 300, 125, 25);
         add(recipeLabel);
 
+        // Get the map of available recipes
+        /** Database object for accessing recipes */
+        RecipesDB rdb = new RecipesDB();
         recipeMap = rdb.getRecipes();
         List<String> recipeList = new ArrayList<>(recipeMap.values());
         recipeJList = new JList<>(recipeList.toArray(new String[0]));
         JScrollPane recipeScrollPane = new JScrollPane(recipeJList);
         recipeScrollPane.setBounds(50,325,200,275);
-        //recipeJList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         add(recipeScrollPane);
 
-        // Display dish label and selection
+        // Display label for selected dish recipes
         JLabel dishLabel = new JLabel("Selected Dish Recipes:");
         dishLabel.setForeground(Color.white);
         dishLabel.setBounds(650, 300, 125, 25);
         add(dishLabel);
 
+        // Get the recipes for the selected dish
         dishRecipeMap = dcdb.getDishRecipes(getDishID(dishMap));
         if (dishRecipeMap != null) {
-            List<String> DishRecipeList = new ArrayList<>(dishRecipeMap.values());
-            dishRecipes = new JList<>((DishRecipeList.toArray(new String[0])));
+            List<String> dishRecipeList = new ArrayList<>(dishRecipeMap.values());
+            dishRecipes = new JList<>((dishRecipeList.toArray(new String[0])));
         }
         JScrollPane dishRecipeScrollPane = new JScrollPane(dishRecipes);
         dishRecipeScrollPane.setBounds(650,325,200,275);
-        //dishRecipes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);;
         add(dishRecipeScrollPane);
-
 
         // Add buttons for dish operations
         addToDishButton = new JButton("Add to Dish");
@@ -153,7 +146,12 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         repaint();
     }
 
-
+    /**
+     * Retrieves the ID of the selected dish from the dish map.
+     *
+     * @param map The map containing dish IDs and names.
+     * @return The ID of the selected dish.
+     */
     public int getDishID(Map<Integer, String> map){
         for(Map.Entry<Integer, String> entry : map.entrySet()){
             if (Objects.equals(entry.getValue(), Objects.requireNonNull(dishComboBox.getSelectedItem()).toString())){
@@ -163,14 +161,22 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         return 0;
     }
 
-    public int getRecipeID(Map<Integer, String> map, JList<String> jlist){
-        for(Map.Entry<Integer, String> entry : map.entrySet()){
-            if (Objects.equals(entry.getValue(), Objects.requireNonNull(jlist.getSelectedValue()))){
-                return entry.getKey();
-            }
+/**
+ * Retrieves the ID of the selected recipe from the recipe map.
+ *
+ * @param map The map containing recipe IDs and names.
+ * @param jlist The JList component displaying available recipes.
+ * @return The ID of the selected recipe.
+ */
+
+public int getRecipeID(Map<Integer, String> map, JList<String> jlist){
+    for(Map.Entry<Integer, String> entry : map.entrySet()){
+        if (Objects.equals(entry.getValue(), Objects.requireNonNull(jlist.getSelectedValue()))){
+            return entry.getKey();
         }
-        return 0;
     }
+    return 0;
+}
 
     /**
      * Creates the GUI for creating a new dish.
@@ -216,20 +222,13 @@ public class DishConstructionGUI extends GUI implements ActionListener {
             JOptionPane.showMessageDialog(null, "Dish Added!", "Added", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == addToDishButton) {
-            dcdb.InsertRecipeToDish(getDishID(dishMap), getRecipeID(recipeMap, recipeJList));
+            dcdb.insertRecipeToDish(getDishID(dishMap), getRecipeID(recipeMap, recipeJList));
         }
         if (e.getSource() == removeFromRecipeButton) {
             dcdb.removeFromDish(getRecipeID(dishRecipeMap, dishRecipes));
         }
-        if (e.getSource() == addButton) {
-            frame.dispose();
-            JOptionPane.showMessageDialog(null, "Recipe Added!", "Added", JOptionPane.INFORMATION_MESSAGE);
-        }
-        if (e.getSource() == removeButton){
-            frame.dispose();
-            JOptionPane.showMessageDialog(null, "Recipe Removed!", "Removed", JOptionPane.INFORMATION_MESSAGE);
-        }
         if (e.getSource() == finalizeDishButton){
+            dcdb.finaliseDish(getDishID(dishMap));
             JOptionPane.showMessageDialog(null, "Dish Finalised", "Finalised!", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == dishComboBox){
@@ -256,4 +255,3 @@ public class DishConstructionGUI extends GUI implements ActionListener {
         }
     }
 }
-

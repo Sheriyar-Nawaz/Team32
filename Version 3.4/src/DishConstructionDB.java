@@ -1,20 +1,17 @@
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Provides methods to interact with the database for dish construction.
  */
 public class DishConstructionDB {
-    String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
-    String username = "in2033t32_a";
-    String password = "7VQ_A-ZBz2w";
+    private final String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t32";
+    private final String username = "in2033t32_a";
+    private final String password = "7VQ_A-ZBz2w";
 
-    Statement statement1 = null;
-    PreparedStatement statement2 = null;
-    ResultSet resultSet = null;
+    private PreparedStatement statement2;
+    private ResultSet resultSet;
 
     /**
      * Retrieves a map of dish IDs and names from the database.
@@ -25,10 +22,7 @@ public class DishConstructionDB {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-
             Map<Integer, String> dishes = new HashMap<>();
-
-            // Execute SQL query to fetch dishes
             PreparedStatement pstmt = connection.prepareStatement("SELECT DishID, Name FROM Dishes WHERE IsFinalised = ?");
             pstmt.setInt(1, 0);
             ResultSet resultSet = pstmt.executeQuery();
@@ -51,19 +45,14 @@ public class DishConstructionDB {
      * @param dishID   The ID of the dish.
      * @param recipeID The ID of the recipe to be inserted into the dish.
      */
-    public void InsertRecipeToDish(int dishID, int recipeID) {
+    public void insertRecipeToDish(int dishID, int recipeID) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-
-            // Prepare SQL statement for inserting recipe into dish
             statement2 = connection.prepareStatement("INSERT INTO DishRecipes(DishID, RecipeID) VALUES (?,?)");
             statement2.setInt(1, dishID);
             statement2.setInt(2, recipeID);
-
-            // Execute SQL update
-            int affectedRows = statement2.executeUpdate();
-            //System.out.println("Successfully added, affected rows: " + affectedRows);
+            statement2.executeUpdate();
             connection.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -71,8 +60,10 @@ public class DishConstructionDB {
     }
 
     /**
-     * Placeholder method for retrieving recipes from the database.
-     * Actual implementation is not provided.
+     * Retrieves recipes associated with a dish from the database.
+     *
+     * @param dishID The ID of the dish.
+     * @return A map containing recipe IDs as keys and recipe names as values.
      */
     public Map<Integer, String> getDishRecipes(int dishID) {
         try {
@@ -81,19 +72,15 @@ public class DishConstructionDB {
             PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID FROM DishRecipes WHERE DishID = ?");
             pstmt.setInt(1, dishID);
             resultSet = pstmt.executeQuery();
-            List<Integer> recipeIDs = new ArrayList<>();
+            Map<Integer, String> recipes = new HashMap<>();
             while (resultSet.next()) {
                 int ID = resultSet.getInt("RecipeID");
-                recipeIDs.add(ID);
-            }
-            Map<Integer, String> recipes = new HashMap<>();
-            for (Integer i : recipeIDs) {
                 PreparedStatement pstmt2 = connection.prepareStatement("SELECT Name FROM Recipes WHERE RecipeID = ?");
-                pstmt2.setInt(1, i);
-                resultSet = pstmt2.executeQuery();
-                if (resultSet.next()) {
-                    String name = resultSet.getString("Name");
-                    recipes.put(i, name);
+                pstmt2.setInt(1, ID);
+                ResultSet resultSet2 = pstmt2.executeQuery();
+                if (resultSet2.next()) {
+                    String name = resultSet2.getString("Name");
+                    recipes.put(ID, name);
                 }
             }
             connection.close();
@@ -104,6 +91,11 @@ public class DishConstructionDB {
         return null;
     }
 
+    /**
+     * Creates a new dish in the database.
+     *
+     * @param name The name of the new dish.
+     */
     public void createNewDish(String name) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -117,6 +109,30 @@ public class DishConstructionDB {
         }
     }
 
+    /**
+     * Marks a dish as finalized in the database.
+     *
+     * @param dishId The ID of the dish to be finalized.
+     */
+    public void finaliseDish(int dishId) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE Dishes SET IsFinalised = ? WHERE DishID = ?");
+            pstmt.setInt(1, 1);
+            pstmt.setInt(2, dishId);
+            pstmt.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Removes a recipe from a dish in the database.
+     *
+     * @param recipeID The ID of the recipe to be removed.
+     */
     public void removeFromDish(int recipeID) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -130,12 +146,17 @@ public class DishConstructionDB {
         }
     }
 
-    public void deleteDish(int DishID) {
+    /**
+     * Deletes a dish from the database.
+     *
+     * @param dishID The ID of the dish to be deleted.
+     */
+    public void deleteDish(int dishID) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
             statement2 = connection.prepareStatement("DELETE FROM Dishes WHERE DishID = ?");
-            statement2.setInt(1, DishID);
+            statement2.setInt(1, dishID);
             statement2.executeUpdate();
             connection.close();
         } catch (Exception e) {
@@ -143,3 +164,4 @@ public class DishConstructionDB {
         }
     }
 }
+
