@@ -1,5 +1,7 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,7 +29,8 @@ public class DishConstructionDB {
             Map<Integer, String> dishes = new HashMap<>();
 
             // Execute SQL query to fetch dishes
-            PreparedStatement pstmt = connection.prepareStatement("SELECT DishID, Name FROM Dishes");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DishID, Name FROM Dishes WHERE IsFinalised = ?");
+            pstmt.setInt(1, 0);
             ResultSet resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int dishId = resultSet.getInt("DishID");
@@ -60,7 +63,7 @@ public class DishConstructionDB {
 
             // Execute SQL update
             int affectedRows = statement2.executeUpdate();
-            System.out.println("Successfully added, affected rows: " + affectedRows);
+            //System.out.println("Successfully added, affected rows: " + affectedRows);
             connection.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -71,20 +74,27 @@ public class DishConstructionDB {
      * Placeholder method for retrieving recipes from the database.
      * Actual implementation is not provided.
      */
-    public Map<Integer, String> getRecipes() {
+    public Map<Integer, String> getDishRecipes(int dishID) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-
-            Map<Integer, String> recipes = new HashMap<>();
-
-            // Execute SQL query to fetch recipes
-            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID, Name FROM Recipes");
-            ResultSet resultSet = pstmt.executeQuery();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT RecipeID FROM DishRecipes WHERE DishID = ?");
+            pstmt.setInt(1, dishID);
+            resultSet = pstmt.executeQuery();
+            List<Integer> recipeIDs = new ArrayList<>();
             while (resultSet.next()) {
-                int recipeId = resultSet.getInt("RecipeID");
-                String name = resultSet.getString("Name");
-                recipes.put(recipeId, name);
+                int ID = resultSet.getInt("RecipeID");
+                recipeIDs.add(ID);
+            }
+            Map<Integer, String> recipes = new HashMap<>();
+            for (Integer i : recipeIDs) {
+                PreparedStatement pstmt2 = connection.prepareStatement("SELECT Name FROM Recipes WHERE RecipeID = ?");
+                pstmt2.setInt(1, i);
+                resultSet = pstmt2.executeQuery();
+                if (resultSet.next()) {
+                    String name = resultSet.getString("Name");
+                    recipes.put(i, name);
+                }
             }
             connection.close();
             return recipes;
@@ -94,13 +104,25 @@ public class DishConstructionDB {
         return null;
     }
 
-    public void addDish(int DishID, String name) {
+    public void createNewDish(String name) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-            statement2 = connection.prepareStatement("INSERT INTO Dishes(DishID, Name) VALUES (?, ?)");
-            statement2.setInt(1, DishID);
-            statement2.setString(2, name);
+            statement2 = connection.prepareStatement("INSERT INTO Dishes(Name) VALUES (?)");
+            statement2.setString(1, name);
+            statement2.executeUpdate();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void removeFromDish(int recipeID) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            statement2 = connection.prepareStatement("DELETE FROM DishRecipes WHERE RecipeID = ?");
+            statement2.setInt(1, recipeID);
             statement2.executeUpdate();
             connection.close();
         } catch (Exception e) {
